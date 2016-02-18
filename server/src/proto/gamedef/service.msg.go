@@ -9,6 +9,5 @@ import (
 func init() {
 	cellnet.RegisterMessage("gamedef.ServiceDefine", (*ServiceDefine)(nil))
 	cellnet.RegisterMessage("gamedef.ServiceFile", (*ServiceFile)(nil))
-	cellnet.RegisterMessage("gamedef.ServiceMap", (*ServiceMap)(nil))
 	cellnet.RegisterMessage("gamedef.LocalConfig", (*LocalConfig)(nil))
 }

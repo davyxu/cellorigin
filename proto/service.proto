@@ -7,12 +7,12 @@ package gamedef;
 message ServiceDefine
 {	
 	// 底层相关参数
-	repeated string IPArray = 11;		// @String2ListSpliter: ";" # 地址列表
+	repeated string IPArray = 11;		// [tabtoy] String2ListSpliter: ";" # 地址列表
 	int32 PortOffset = 13;				// 端口偏移
 	
 	// BI及GM相关, 非逻辑, 非底层
 	int32 Version = 201;				// 版本
-	string Name = 205;					// 服务器辨识名
+	string Name = 205;					// [table] MapKey: true # 服务器辨识名
 	string DisplayName = 206;			// 服务器显示名
 	int32 WorldID = 210;				// AutoID 生成时需要的分组
 	
@@ -20,10 +20,11 @@ message ServiceDefine
 	string ZoneName = 221;				// 归属大区名
 }
 
-// 服务配置, 所有服务通用
+//# 服务配置, 所有服务通用
+//[table] GenTableCode: true
 message ServiceFile
 {
-	repeated ServiceDefine Service = 1;
+	repeated ServiceDefine Service = 1; //
 }
 
 

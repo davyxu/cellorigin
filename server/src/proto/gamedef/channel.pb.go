@@ -14,7 +14,6 @@ It has these top-level messages:
 	ChannelFile
 	ServiceDefine
 	ServiceFile
-	ServiceMap
 	LocalConfig
 */
 package gamedef

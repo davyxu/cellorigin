@@ -2,3 +2,5 @@
 /server/pkg
 /server/bin
 /server/src/gamesvc/*.exe
+/tool/src/protoc-gen-table/protoc-gen-table.exe
+/tool/ServiceMonitor/ServiceMonitor.exe
