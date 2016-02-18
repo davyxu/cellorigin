@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package gamedef;
+
+// 通信线路定义
+message ChannelDefine
+{
+	string 	Name = 1;	// 名字
+	int32 	Port = 2;	// 默认端口号
+	int32 	IPIndex = 3;	// 使用的IP索引
+}
+
+// 通信线路文件
+message ChannelFile
+{
+	repeated ChannelDefine Channel = 1;
+}
