@@ -1,3 +1,4 @@
 call gen_go.bat ^
 channel.proto ^
-service.proto
+service.proto ^
+tool.proto

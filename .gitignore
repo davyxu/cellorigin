@@ -4,3 +4,4 @@
 /server/src/gamesvc/*.exe
 /tool/src/protoc-gen-table/protoc-gen-table.exe
 /tool/ServiceMonitor/ServiceMonitor.exe
+tool/bin/protoc-gen-table.exe

@@ -12,19 +12,19 @@ message ServiceDefine
 	
 	// BI及GM相关, 非逻辑, 非底层
 	int32 Version = 201;				// 版本
-	string Name = 205;					// [table] MapKey: true # 服务器辨识名
+	string Name = 205;					// [table] GenMapKey: true # 服务器辨识名
 	string DisplayName = 206;			// 服务器显示名
-	int32 WorldID = 210;				// AutoID 生成时需要的分组
+	int32 WorldID = 210;				// [table] GenMapKey: true # AutoID 生成时需要的分组
 	
 	string VisibleZone = 220;			// 可见大区对应的配置(登陆后可看到同大区的所有服务器名)
 	string ZoneName = 221;				// 归属大区名
 }
 
-//# 服务配置, 所有服务通用
-//[table] GenTableCode: true
+
+// [table] GenTableCode: true # 服务配置, 所有服务通用
 message ServiceFile
 {
-	repeated ServiceDefine Service = 1; //
+	repeated ServiceDefine Service = 1; 
 }
 
 

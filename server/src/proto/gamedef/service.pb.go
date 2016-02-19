@@ -33,7 +33,7 @@ func (*ServiceDefine) ProtoMessage()               {}
 func (*ServiceDefine) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{0} }
 
 // # 服务配置, 所有服务通用
-// @ GenTableCode: true
+// [table] GenTableCode: true
 type ServiceFile struct {
 	Service []*ServiceDefine `protobuf:"bytes,1,rep,name=Service" json:"Service,omitempty"`
 }
