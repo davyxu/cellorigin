@@ -7,8 +7,7 @@ package gamedef;
 message ServiceDefine
 {	
 	// 底层相关参数
-	repeated string IPArray = 11;		// [tabtoy] String2ListSpliter: ";" # 地址列表
-	int32 PortOffset = 13;				// 端口偏移
+	repeated string IPArray = 11;		// [tabtoy] String2ListSpliter: ";" # 地址列表	
 	
 	// BI及GM相关, 非逻辑, 非底层
 	int32 Version = 201;				// 版本

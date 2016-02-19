@@ -5,3 +5,9 @@
 /tool/src/protoc-gen-table/protoc-gen-table.exe
 /tool/ServiceMonitor/ServiceMonitor.exe
 tool/bin/protoc-gen-table.exe
+/tool/protoc-gen-go.exe
+/tool/protoc-gen-meta.exe
+/tool/protoc-gen-msg.exe
+/tool/protoc.exe
+/tool/tabtoy.exe
+/table/game.pb
