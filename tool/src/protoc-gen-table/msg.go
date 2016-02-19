@@ -109,32 +109,10 @@ func printMessage(gen *Generator, msg *pbmeta.Descriptor, file *pbmeta.FileDescr
 	iterateMapKey(rowMsgType, func(keyName string, keyType string) {
 
 		// 声明映射类型
-		gen.Println("var ", lowerName, keyName, "Map = make(map[", keyType, "]*gamedef.", name, "Define)")
-		gen.Println()
-
-		lowerKey := strings.ToLower(keyName)
-
-		// 声明映射获取函数
-		gen.Println("func Get", name, "By", keyName, "(", lowerKey, " ", keyType, ") *gamedef.", name, "Define {")
-		gen.In()
-
-		gen.Println("if def, ok := ", lowerName, keyName, "Map[", lowerKey, "]; ok {")
-		gen.In()
-		gen.Println("return def")
-		gen.Out()
-		gen.Println("}")
-
-		gen.Println()
-		gen.Println("return nil")
-		gen.Println()
-
-		gen.Out()
-		gen.Println("}")
+		gen.Println("var ", name, keyName, "Map = make(map[", keyType, "]*gamedef.", name, "Define)")
 		gen.Println()
 
 	})
-
-	gen.Println()
 
 	gen.Println("var ", lowerName, "File gamedef.", name, "File")
 	gen.Println()
@@ -160,7 +138,7 @@ func printMessage(gen *Generator, msg *pbmeta.Descriptor, file *pbmeta.FileDescr
 
 	// 建立索引
 	iterateMapKey(rowMsgType, func(keyName string, keyType string) {
-		gen.Println(lowerName, keyName, "Map[def.", keyName, "] = def")
+		gen.Println(name, keyName, "Map[def.", keyName, "] = def")
 		gen.Println()
 	})
 

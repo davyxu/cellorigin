@@ -35,9 +35,9 @@ const _ = proto.ProtoPackageIsVersion1
 
 // 通信线路定义
 type ChannelDefine struct {
-	Name    string `protobuf:"bytes,1,opt,name=Name" json:"Name,omitempty"`
-	Port    int32  `protobuf:"varint,2,opt,name=Port" json:"Port,omitempty"`
-	IPIndex int32  `protobuf:"varint,3,opt,name=IPIndex" json:"IPIndex,omitempty"`
+	Name    string `protobuf:"bytes,1,opt,name=Name,json=name" json:"Name,omitempty"`
+	Port    int32  `protobuf:"varint,2,opt,name=Port,json=port" json:"Port,omitempty"`
+	IPIndex int32  `protobuf:"varint,3,opt,name=IPIndex,json=iPIndex" json:"IPIndex,omitempty"`
 }
 
 func (m *ChannelDefine) Reset()                    { *m = ChannelDefine{} }
@@ -47,7 +47,7 @@ func (*ChannelDefine) Descriptor() ([]byte, []int) { return fileDescriptor0, []i
 
 // 通信线路文件
 type ChannelFile struct {
-	Channel []*ChannelDefine `protobuf:"bytes,1,rep,name=Channel" json:"Channel,omitempty"`
+	Channel []*ChannelDefine `protobuf:"bytes,1,rep,name=Channel,json=channel" json:"Channel,omitempty"`
 }
 
 func (m *ChannelFile) Reset()                    { *m = ChannelFile{} }

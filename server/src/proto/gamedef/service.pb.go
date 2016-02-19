@@ -16,14 +16,14 @@ var _ = math.Inf
 // 一个服务的配置类型
 type ServiceDefine struct {
 	// 底层相关参数
-	IPArray []string `protobuf:"bytes,11,rep,name=IPArray" json:"IPArray,omitempty"`
+	IPArray []string `protobuf:"bytes,11,rep,name=IPArray,json=iPArray" json:"IPArray,omitempty"`
 	// BI及GM相关, 非逻辑, 非底层
-	Version     int32  `protobuf:"varint,201,opt,name=Version" json:"Version,omitempty"`
-	Name        string `protobuf:"bytes,205,opt,name=Name" json:"Name,omitempty"`
-	DisplayName string `protobuf:"bytes,206,opt,name=DisplayName" json:"DisplayName,omitempty"`
-	WorldID     int32  `protobuf:"varint,210,opt,name=WorldID" json:"WorldID,omitempty"`
-	VisibleZone string `protobuf:"bytes,220,opt,name=VisibleZone" json:"VisibleZone,omitempty"`
-	ZoneName    string `protobuf:"bytes,221,opt,name=ZoneName" json:"ZoneName,omitempty"`
+	Version     int32  `protobuf:"varint,201,opt,name=Version,json=version" json:"Version,omitempty"`
+	Name        string `protobuf:"bytes,205,opt,name=Name,json=name" json:"Name,omitempty"`
+	DisplayName string `protobuf:"bytes,206,opt,name=DisplayName,json=displayName" json:"DisplayName,omitempty"`
+	WorldID     int32  `protobuf:"varint,210,opt,name=WorldID,json=worldID" json:"WorldID,omitempty"`
+	VisibleZone string `protobuf:"bytes,220,opt,name=VisibleZone,json=visibleZone" json:"VisibleZone,omitempty"`
+	ZoneName    string `protobuf:"bytes,221,opt,name=ZoneName,json=zoneName" json:"ZoneName,omitempty"`
 }
 
 func (m *ServiceDefine) Reset()                    { *m = ServiceDefine{} }
@@ -33,7 +33,7 @@ func (*ServiceDefine) Descriptor() ([]byte, []int) { return fileDescriptor1, []i
 
 // [table] GenTableCode: true # 服务配置, 所有服务通用
 type ServiceFile struct {
-	Service []*ServiceDefine `protobuf:"bytes,1,rep,name=Service" json:"Service,omitempty"`
+	Service []*ServiceDefine `protobuf:"bytes,1,rep,name=Service,json=service" json:"Service,omitempty"`
 }
 
 func (m *ServiceFile) Reset()                    { *m = ServiceFile{} }
@@ -50,7 +50,7 @@ func (m *ServiceFile) GetService() []*ServiceDefine {
 
 // 对ServiceDefine配置的选择
 type LocalConfig struct {
-	ServiceConfig string `protobuf:"bytes,1,opt,name=ServiceConfig" json:"ServiceConfig,omitempty"`
+	ServiceConfig string `protobuf:"bytes,1,opt,name=ServiceConfig,json=serviceConfig" json:"ServiceConfig,omitempty"`
 }
 
 func (m *LocalConfig) Reset()                    { *m = LocalConfig{} }

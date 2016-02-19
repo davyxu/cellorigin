@@ -14,8 +14,8 @@ var _ = fmt.Errorf
 var _ = math.Inf
 
 type TableCodeOption struct {
-	GenTableCode bool `protobuf:"varint,1,opt,name=GenTableCode" json:"GenTableCode,omitempty"`
-	GenMapKey    bool `protobuf:"varint,2,opt,name=GenMapKey" json:"GenMapKey,omitempty"`
+	GenTableCode bool `protobuf:"varint,1,opt,name=GenTableCode,json=genTableCode" json:"GenTableCode,omitempty"`
+	GenMapKey    bool `protobuf:"varint,2,opt,name=GenMapKey,json=genMapKey" json:"GenMapKey,omitempty"`
 }
 
 func (m *TableCodeOption) Reset()                    { *m = TableCodeOption{} }
