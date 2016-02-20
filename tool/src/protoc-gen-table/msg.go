@@ -105,12 +105,15 @@ func printMessage(gen *Generator, msg *pbmeta.Descriptor, file *pbmeta.FileDescr
 	gen.Println(")")
 	gen.Println()
 
+	var keyCount int
+
 	// 声明索引
 	iterateMapKey(rowMsgType, func(keyName string, keyType string) {
 
 		// 声明映射类型
 		gen.Println("var ", name, keyName, "Map = make(map[", keyType, "]*gamedef.", name, "Define)")
 		gen.Println()
+		keyCount++
 
 	})
 
@@ -131,19 +134,21 @@ func printMessage(gen *Generator, msg *pbmeta.Descriptor, file *pbmeta.FileDescr
 	gen.Println("}")
 	gen.Println()
 
-	gen.Println("for _, def := range ", lowerName, "File.", name, " {")
-	gen.In()
+	if keyCount > 0 {
+		gen.Println("for _, def := range ", lowerName, "File.", name, " {")
+		gen.In()
 
-	gen.Println()
-
-	// 建立索引
-	iterateMapKey(rowMsgType, func(keyName string, keyType string) {
-		gen.Println(name, keyName, "Map[def.", keyName, "] = def")
 		gen.Println()
-	})
 
-	gen.Out()
-	gen.Println("}")
+		// 建立索引
+		iterateMapKey(rowMsgType, func(keyName string, keyType string) {
+			gen.Println(name, keyName, "Map[def.", keyName, "] = def")
+			gen.Println()
+		})
+
+		gen.Out()
+		gen.Println("}")
+	}
 
 	gen.Out()
 	gen.Println("}")

@@ -8,6 +8,7 @@ Package gamedef is a generated protocol buffer package.
 It is generated from these files:
 	channel.proto
 	service.proto
+	game.proto
 	tool.proto
 
 It has these top-level messages:
@@ -15,7 +16,9 @@ It has these top-level messages:
 	ChannelFile
 	ServiceDefine
 	ServiceFile
-	LocalConfig
+	LocalFile
+	EnterGameREQ
+	EnterGameACK
 	TableCodeOption
 */
 package gamedef

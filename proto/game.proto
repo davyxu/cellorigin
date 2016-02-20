@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package gamedef;
+
+
+// client->game
+message EnterGameREQ
+{
+	
+}
+
+// game->client
+message EnterGameACK
+{
+	
+}

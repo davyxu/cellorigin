@@ -8,5 +8,5 @@ import (
 )
 
 func init() {
-	cellnet.RegisterMessage("gamedef.TableCodeOption", (*TableCodeOption)(nil))
+	cellnet.RegisterMessageMeta("gamedef.TableCodeOption", (*TableCodeOption)(nil))
 }

@@ -8,6 +8,6 @@ import (
 )
 
 func init() {
-	cellnet.RegisterMessage("gamedef.ChannelDefine", (*ChannelDefine)(nil))
-	cellnet.RegisterMessage("gamedef.ChannelFile", (*ChannelFile)(nil))
+	cellnet.RegisterMessageMeta("gamedef.ChannelDefine", (*ChannelDefine)(nil))
+	cellnet.RegisterMessageMeta("gamedef.ChannelFile", (*ChannelFile)(nil))
 }
