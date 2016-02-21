@@ -14,3 +14,8 @@ tool/bin/protoc-gen-table.exe
 tool/protoc-gen-sharpnet.exe
 tool/MyUpdate3rd.bat
 server/src/cfg/Local.pbt
+*.exe
+server/src/gatesvc/gatesvc_Build.bat
+/tool/ServiceMonitor/profile.json
+server/src/RunAll.bat
+server/src/gamesvc/gamesvc_Build.bat

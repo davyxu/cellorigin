@@ -2,6 +2,7 @@ package table
 
 import (
 	"flag"
+	"fmt"
 	"proto/gamedef"
 	"share"
 )
@@ -11,18 +12,29 @@ var PeerMap = make(map[string]*gamedef.ServiceDefine)
 
 var ServiceConfig *gamedef.ServiceDefine
 
-func GetPeerDefineList(peerName string) []*gamedef.ServiceDefine {
+func GetPeerAddressList(peerName string) []string {
 
-	deflist := make([]*gamedef.ServiceDefine, 0)
+	addrlist := make([]string, 0)
 
 	for name, def := range PeerMap {
 
 		if name == peerName {
-			deflist = append(deflist, def)
+			addrlist = append(addrlist, fmt.Sprintf("%s:%d", def.IP, def.Port))
 		}
 	}
 
-	return deflist
+	return addrlist
+}
+
+func GetPeerAddress(peerName string) string {
+	for name, def := range PeerMap {
+
+		if name == peerName && GetSvcIndex() == def.PeerIndex {
+			return fmt.Sprintf("%s:%d", def.IP, def.Port)
+		}
+	}
+
+	return ""
 }
 
 func makeServiceConfig(name string, svcindex int32) {
@@ -59,6 +71,10 @@ func makeServiceConfig(name string, svcindex int32) {
 // 通过命令行提供服务索引
 var paramSvcIndex = flag.Int("index", 0, "service index")
 
+func GetSvcIndex() int32 {
+	return int32(*paramSvcIndex)
+}
+
 func LoadServiceTable() {
 
 	var localFile gamedef.LocalFile
@@ -70,6 +86,6 @@ func LoadServiceTable() {
 	}
 
 	// 根据配置名, 在Service表中找到对应名字的, 提出来
-	makeServiceConfig(localFile.ServiceConfig, int32(*paramSvcIndex))
+	makeServiceConfig(localFile.ServiceConfig, GetSvcIndex())
 
 }

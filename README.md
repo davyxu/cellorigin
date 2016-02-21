@@ -12,3 +12,17 @@ Protobuf为核心的大量自动代码
 
 
 项目施工中, 完善后将开放游览, 敬请期待
+
+
+
+目录结构
+proto	协议,配置定义
+server	服务器代码, GOPATH
+	src
+		gamesvc	游戏服务器及组件代码
+		gatesvc	网关服务器及组件代码
+		proto	生成的协议,结构代码
+		share	服务共享的代码
+		table	表格读取及接口代码
+table	表格,数据, 配置
+tool	工具及代码, GOPATH

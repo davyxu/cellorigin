@@ -1,8 +1,7 @@
 package main
 
 import (
-	"fmt"
-	"gamesvc/benchmark"
+	//	"gamesvc/benchmark"
 	"table"
 
 	"github.com/davyxu/cellnet"
@@ -16,21 +15,14 @@ func main() {
 
 	table.LoadServiceTable()
 
-	gate.DebugMode = true
+	//gate.DebugMode = true
 
 	pipe := cellnet.NewEventPipe()
 
-	// 准备gate的连接地址
-	gateAddrList := make([]string, 0)
-
-	for _, def := range table.GetPeerDefineList("game->gate") {
-		gateAddrList = append(gateAddrList, fmt.Sprintf("%s:%d", def.IP, def.Port))
-	}
-
-	gate.StartGateConnector(pipe, gateAddrList)
+	gate.StartGateConnector(pipe, table.GetPeerAddressList("svc->gate"))
 
 	// 组消息初始化
-	benchmark.Start(pipe)
+	Start(pipe)
 
 	pipe.Start()
 

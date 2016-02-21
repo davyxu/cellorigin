@@ -1,7 +1,8 @@
-package benchmark
+package main
 
 import (
 	"proto/gamedef"
+	"sync"
 
 	"time"
 
@@ -10,18 +11,25 @@ import (
 	"github.com/davyxu/golog"
 )
 
-var log *golog.Logger = golog.New("main")
+//var log *golog.Logger = golog.New("main")
 
 func Start(pipe cellnet.EventPipe) {
 
+	golog.SetLevelByString("socket", "info")
+
 	timeEvq := pipe.AddQueue()
 
+	var qpsGuard sync.Mutex
 	var qps int
 
 	cellnet.NewTimer(timeEvq, time.Second, func(t *cellnet.Timer) {
 
+		qpsGuard.Lock()
+
+		defer qpsGuard.Unlock()
+
 		if qps > 0 {
-			log.Debugf("QPS: %d", qps)
+			log.Infof("QPS: %d", qps)
 		}
 
 		qps = 0
@@ -31,7 +39,11 @@ func Start(pipe cellnet.EventPipe) {
 
 		//msg := content.(*gamedef.EnterGameREQ)
 
+		qpsGuard.Lock()
+
 		qps++
+
+		qpsGuard.Unlock()
 
 		gate.SendToClient(gateSes, clientid, &gamedef.EnterGameACK{})
 

@@ -1,17 +1,24 @@
 package main
 
 import (
+	"table"
+
 	"github.com/davyxu/cellnet"
 	"github.com/davyxu/cellnet/gate"
+	"github.com/davyxu/golog"
 )
 
 func main() {
 
+	golog.SetLevelByString("socket", "info")
+
+	table.LoadServiceTable()
+
 	pipe := cellnet.NewEventPipe()
 
-	gate.StartBackendAcceptor(pipe, gatecfg.InternalAddress)
+	gate.StartBackendAcceptor(pipe, table.GetPeerAddress("svc->gate"))
 
-	gate.StartClientAcceptor(pipe, gatecfg.ExternalAddress)
+	gate.StartClientAcceptor(pipe, table.GetPeerAddress("client->gate"))
 
 	pipe.Start()
 
