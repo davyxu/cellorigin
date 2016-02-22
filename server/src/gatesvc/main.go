@@ -14,13 +14,16 @@ func main() {
 
 	table.LoadServiceTable()
 
-	pipe := cellnet.NewEventPipe()
+	// 后台与前台在两个线程
+	backendPipe := cellnet.NewEventPipe()
+	frontendPipe := cellnet.NewEventPipe()
 
-	gate.StartBackendAcceptor(pipe, table.GetPeerAddress("svc->gate"))
+	gate.StartBackendAcceptor(backendPipe, table.GetPeerAddress("svc->gate"))
+	gate.StartClientAcceptor(frontendPipe, table.GetPeerAddress("client->gate"))
 
-	gate.StartClientAcceptor(pipe, table.GetPeerAddress("client->gate"))
+	backendPipe.Start()
+	frontendPipe.Start()
 
-	pipe.Start()
-
-	pipe.Wait()
+	backendPipe.Wait()
+	frontendPipe.Wait()
 }
