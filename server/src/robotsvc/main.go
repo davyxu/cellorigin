@@ -1,8 +1,10 @@
 package main
 
 import (
-	"proto/gamedef"
+	"robotsvc/benchmark"
 	"table"
+
+	"flag"
 
 	"github.com/davyxu/cellnet"
 	"github.com/davyxu/cellnet/socket"
@@ -13,26 +15,15 @@ var log *golog.Logger = golog.New("main")
 
 func main() {
 
-	//golog.SetLevelByString("socket", "info")
+	flag.Parse()
 
 	table.LoadServiceTable()
 
 	pipe := cellnet.NewEventPipe()
 
 	conn := socket.NewConnector(pipe)
-
 	evq := conn.Start(table.GetPeerAddress("client->gate"))
-
-	socket.RegisterSessionMessage(evq, "gamedef.EnterGameACK", func(content interface{}, ses cellnet.Session) {
-
-		ses.Send(&gamedef.EnterGameREQ{})
-	})
-
-	socket.RegisterSessionMessage(evq, "coredef.SessionConnected", func(content interface{}, ses cellnet.Session) {
-
-		ses.Send(&gamedef.EnterGameREQ{})
-
-	})
+	benchmark.Start(pipe, evq)
 
 	pipe.Start()
 

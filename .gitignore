@@ -19,3 +19,5 @@ server/src/gatesvc/gatesvc_Build.bat
 /tool/ServiceMonitor/profile.json
 server/src/RunAll.bat
 server/src/gamesvc/gamesvc_Build.bat
+server/BuildAll.bat
+server/StartAll.bat

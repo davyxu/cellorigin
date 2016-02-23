@@ -12,13 +12,14 @@ var PeerMap = make(map[string]*gamedef.ServiceDefine)
 
 var ServiceConfig *gamedef.ServiceDefine
 
+// 获取给定peerName的所有可用地址列表
 func GetPeerAddressList(peerName string) []string {
 
 	addrlist := make([]string, 0)
 
-	for name, def := range PeerMap {
+	for _, def := range PeerMap {
 
-		if name == peerName {
+		if def.PeerName == peerName {
 			addrlist = append(addrlist, fmt.Sprintf("%s:%d", def.IP, def.Port))
 		}
 	}
@@ -26,15 +27,18 @@ func GetPeerAddressList(peerName string) []string {
 	return addrlist
 }
 
+// 根据peerName和当前进程的index获取到地址
 func GetPeerAddress(peerName string) string {
-	for name, def := range PeerMap {
 
-		if name == peerName && GetSvcIndex() == def.PeerIndex {
-			return fmt.Sprintf("%s:%d", def.IP, def.Port)
-		}
+	if def, ok := PeerMap[makeMapKey(peerName, GetSvcIndex())]; ok {
+		return fmt.Sprintf("%s:%d", def.IP, def.Port)
 	}
 
 	return ""
+}
+
+func makeMapKey(name string, index int32) string {
+	return fmt.Sprintf("%s#%d", name, index)
 }
 
 func makeServiceConfig(name string, svcindex int32) {
@@ -47,6 +51,8 @@ func makeServiceConfig(name string, svcindex int32) {
 		return
 	}
 
+	log.Infoln("service table loaded")
+
 	for _, def := range serviceFile.Service {
 
 		if def.Name != name {
@@ -58,13 +64,15 @@ func makeServiceConfig(name string, svcindex int32) {
 			ServiceConfig = def
 		}
 
+		thisKey := makeMapKey(def.PeerName, def.PeerIndex)
+
 		// peer名重名
-		if _, ok := PeerMap[def.PeerName]; ok {
+		if _, ok := PeerMap[thisKey]; ok {
 			log.Warnln("duplicate peer name", def.PeerName)
 			continue
 		}
 
-		PeerMap[def.PeerName] = def
+		PeerMap[thisKey] = def
 	}
 }
 
@@ -76,6 +84,8 @@ func GetSvcIndex() int32 {
 }
 
 func LoadServiceTable() {
+
+	log.Infof("svc index: %d", *paramSvcIndex)
 
 	var localFile gamedef.LocalFile
 

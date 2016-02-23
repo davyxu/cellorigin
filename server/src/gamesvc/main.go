@@ -1,7 +1,7 @@
 package main
 
 import (
-	//	"gamesvc/benchmark"
+	"gamesvc/benchmark"
 	"table"
 
 	"github.com/davyxu/cellnet"
@@ -15,16 +15,20 @@ func main() {
 
 	table.LoadServiceTable()
 
-	//gate.DebugMode = true
-
 	pipe := cellnet.NewEventPipe()
+
+	log.Debugln("start gate connector")
 
 	gate.StartGateConnector(pipe, table.GetPeerAddressList("svc->gate"))
 
+	log.Debugln("benchmark.Start")
 	// 组消息初始化
-	Start(pipe)
+	benchmark.Start(pipe)
+
+	log.Debugln("pipe start")
 
 	pipe.Start()
 
+	log.Debugln("done")
 	pipe.Wait()
 }

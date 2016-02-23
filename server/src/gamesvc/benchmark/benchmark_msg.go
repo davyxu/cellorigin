@@ -1,4 +1,4 @@
-package main
+package benchmark
 
 import (
 	"proto/gamedef"
@@ -11,7 +11,7 @@ import (
 	"github.com/davyxu/golog"
 )
 
-//var log *golog.Logger = golog.New("main")
+var log *golog.Logger = golog.New("benchmark")
 
 func Start(pipe cellnet.EventPipe) {
 
