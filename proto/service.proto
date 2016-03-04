@@ -13,6 +13,7 @@ message ServiceDefine
 	uint32 Port = 12;			// 端口
 	string PeerName = 13;		// Peer名称
 	int32 PeerIndex = 14;		// Peer的索引, 处理多台同功能服务器case
+	bool Enable = 15;			// 是否启用
 	
 	// 基础服务
 	int32 Version = 201;		// 版本

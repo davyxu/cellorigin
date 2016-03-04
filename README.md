@@ -18,6 +18,8 @@ Protobuf为核心的大量自动代码
 目录结构
 proto	协议,配置定义
 server	服务器代码, GOPATH
+	bin	服务器二进制
+	cfg 服务器配置
 	src
 		gamesvc	游戏服务器及组件代码
 		gatesvc	网关服务器及组件代码

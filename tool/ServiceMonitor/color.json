@@ -4,15 +4,14 @@
 {"KeyWords":"[FATAL]","C":"Red"},
 {"KeyWords":"[WARN]","C":"Yellow"},
 
-{"KeyWords":"#DBQuery","C":"Green"},
-{"KeyWords":"#DBUpdate","C":"Green"},
-{"KeyWords":"#DBExec","C":"Green"},
-{"KeyWords":"#DBInsert","C":"Green"},
+{"KeyWords":"#recv","C":"MediumOrchid"},
+{"KeyWords":"#send","C":"RosyBrown"},
 
-{"KeyWords":"#recvpacket","C":"MediumOrchid"},
-{"KeyWords":"#sendpacket","C":"RosyBrown"},
-{"KeyWords":"#connected","C":"CadetBlue"},
-{"KeyWords":"#accepted","C":"CadetBlue"},
+{"KeyWords":"gate->backend","C":"MediumOrchid"},
+{"KeyWords":"backend->gate","C":"RosyBrown"},
+
+{"KeyWords":"client->backend","C":"MediumOrchid"},
+{"KeyWords":"backend->client","C":"RosyBrown"},
 
 {"KeyWords":"#postpacket","C":"Thistle"},
 {"KeyWords":"#closed","C":"DarkGoldenrod"}

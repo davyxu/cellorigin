@@ -22,6 +22,7 @@ func main() {
 	pipe := cellnet.NewEventPipe()
 
 	conn := socket.NewConnector(pipe)
+	conn.SetName("client->gate")
 	evq := conn.Start(table.GetPeerAddress("client->gate"))
 	benchmark.Start(pipe, evq)
 

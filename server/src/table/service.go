@@ -59,6 +59,10 @@ func makeServiceConfig(name string, svcindex int32) {
 			continue
 		}
 
+		if !def.Enable {
+			continue
+		}
+
 		// 记录主配置
 		if def.MainConfig {
 			ServiceConfig = def

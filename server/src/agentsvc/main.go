@@ -9,37 +9,30 @@ import (
 	"github.com/davyxu/golog"
 )
 
-var log *golog.Logger = golog.New("benchmark")
-
-var paramShowLog = flag.Bool("showlog", false, "showlog")
+var log *golog.Logger = golog.New("main")
 
 func main() {
 
+	golog.SetLevelByString("socket", "info")
+
 	flag.Parse()
 
-	if *paramShowLog == false {
-		golog.SetLevelByString("socket", "info")
-	}
-
 	table.LoadServiceTable()
+
+	gate.DebugMode = true
 
 	// 后台与前台在两个线程
 	backendPipe := cellnet.NewEventPipe()
 	frontendPipe := cellnet.NewEventPipe()
 
-	log.Infoln("StartBackendAcceptor")
 	gate.StartBackendAcceptor(backendPipe, table.GetPeerAddress("svc->gate"))
 
-	log.Infoln("StartClientAcceptor")
 	gate.StartClientAcceptor(frontendPipe, table.GetPeerAddress("client->gate"))
 
-	log.Infoln("backendPipe.Start")
 	backendPipe.Start()
 
-	log.Infoln("frontendPipe.Start")
 	frontendPipe.Start()
 
-	log.Infoln("done")
 	backendPipe.Wait()
 	frontendPipe.Wait()
 }

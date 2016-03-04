@@ -14,8 +14,6 @@ var log *golog.Logger = golog.New("benchmark")
 
 func Start(pipe cellnet.EventPipe, evq cellnet.EventQueue) {
 
-	golog.SetLevelByString("socket", "info")
-
 	timeEvq := pipe.AddQueue()
 
 	var qpsGuard sync.Mutex
@@ -42,7 +40,7 @@ func Start(pipe cellnet.EventPipe, evq cellnet.EventQueue) {
 
 		qpsGuard.Unlock()
 
-		ses.Send(&gamedef.EnterGameREQ{})
+		//ses.Send(&gamedef.EnterGameREQ{})
 	})
 
 	socket.RegisterSessionMessage(evq, "coredef.SessionConnected", func(content interface{}, ses cellnet.Session) {
