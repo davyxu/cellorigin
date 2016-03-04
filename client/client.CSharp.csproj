@@ -17,8 +17,7 @@
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.3.3f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -61,14 +60,20 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.Networking">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Script\GameNet\GamePeer.cs" />
     <Compile Include="Assets\Script\GameNet\SharedNet.cs" />
     <Compile Include="Assets\Script\Network\ClientSocket.cs" />
     <Compile Include="Assets\Script\Network\MessageMeta.cs" />
-    <Compile Include="Assets\Script\Network\NetworkPeer.cs" />
     <Compile Include="Assets\Script\Network\MessagePrinter.cs" />
+    <Compile Include="Assets\Script\Network\NetworkPeer.cs" />
     <Compile Include="Assets\Script\Proto\game.cs" />
     <Compile Include="Assets\Script\Utility\StringUtility.cs" />
     <Compile Include="Assets\protobuf-net\BclHelpers.cs" />
