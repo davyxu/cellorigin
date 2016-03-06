@@ -364,7 +364,7 @@ namespace Network
             }
 
             if (_emulateDelayMS > 0)
-            {                
+            {
                 _delayQueue.Enqueue(new DelayMsgData(msg));
             }
             else

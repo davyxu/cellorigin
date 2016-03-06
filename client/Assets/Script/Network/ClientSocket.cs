@@ -371,49 +371,8 @@ namespace Network
             ad.Callback = callback;
             ad.Size = size;
             ad.Tag = tag;
-            AsyncReadPacket2(ad);
+            AsyncReadPacket(ad);
         }
-
-        void AsyncReadPacket2( AsyncData ad )
-        {
-            SocketError err;
-            _socket.BeginReceive(ad.Data, 0, ad.Size, SocketFlags.None, out err, new AsyncCallback(HandleReadPacket2), ad);
-
-            if (err != SocketError.Success)
-            {
-                Close(NetworkReason.RecvError);
-            }
-        }
-
-        void HandleReadPacket2(IAsyncResult ar)
-        {
-            SocketError err;
-            Int32 recvlen = _socket.EndReceive(ar, out err);
-
-            if (err != SocketError.Success)
-            {
-                Close(NetworkReason.RecvError);
-            }
-
-
-            var ad = (AsyncData)ar.AsyncState;
-
-            ad.Size -= recvlen;
-
-            ad.Stream.Write(ad.Data, 0, recvlen);
-
-            if (ad.Size == 0)
-            {
-                ad.Stream.Seek(0, SeekOrigin.Begin);
-                ad.Callback(ad.Stream, ad.Tag);
-            }
-            else if (ad.Size > 0)
-            {
-                AsyncReadPacket(ad);
-            }
-
-        }
-
 
         
         void AsyncReadPacket( AsyncData ad )
