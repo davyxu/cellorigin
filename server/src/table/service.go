@@ -65,7 +65,14 @@ func makeServiceConfig(name string, svcindex int32) {
 
 		// 记录主配置
 		if def.MainConfig {
-			ServiceConfig = def
+
+			// 有多个MainConfig配置
+			if ServiceConfig != nil {
+				log.Errorln("duplicate MainConfig")
+			} else {
+				ServiceConfig = def
+			}
+
 		}
 
 		thisKey := makeMapKey(def.PeerName, def.PeerIndex)

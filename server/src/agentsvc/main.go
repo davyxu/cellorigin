@@ -25,9 +25,9 @@ func main() {
 	backendPipe := cellnet.NewEventPipe()
 	frontendPipe := cellnet.NewEventPipe()
 
-	gate.StartBackendAcceptor(backendPipe, table.GetPeerAddress("svc->gate"))
+	gate.StartBackendAcceptor(backendPipe, table.GetPeerAddress("svc->agent"))
 
-	gate.StartClientAcceptor(frontendPipe, table.GetPeerAddress("client->gate"))
+	gate.StartClientAcceptor(frontendPipe, table.GetPeerAddress("client->agent"))
 
 	backendPipe.Start()
 

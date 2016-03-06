@@ -5,5 +5,4 @@
 
 
 ..\tool\tabtoy.exe --mode=xls2pbt --pb=.\game.pb --outdir=..\server\cfg --para=true --haltonerr=true ^
-Channel.xlsx ^
 Service.xlsx

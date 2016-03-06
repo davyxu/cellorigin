@@ -13,14 +13,14 @@ class GamePeer : MonoBehaviour
 
         _peer.RegisterEvent(NetworkEvent.Connected, msg =>
         {
-            gamedef.EnterGameREQ req = new gamedef.EnterGameREQ();
+            gamedef.LoginREQ req = new gamedef.LoginREQ();
             _peer.SendMsg(req);
 
         });
 
-        _peer.RegisterMessage<gamedef.EnterGameACK>(msg =>
+        _peer.RegisterMessage<gamedef.LoginACK>(msg =>
         {
-            Debug.Log("EnterGameACK!");
+            //Debug.Log("EnterGameACK!");
 
 
         });

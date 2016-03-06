@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package gamedef;
+
+
+
+// client -> login
+message LoginREQ
+{	
+	string PlatformToken 	= 1; // 平台令牌,一次性
+	string PlatformUID 		= 2; // 平台账号名 (xy,91使用)
+	string PlatformName		= 3; // 平台类型(可实现混服登陆, 通过服务器配置), 空表示开发
+	string ClientVersion 	= 4; // 客户端版本号
+}
+
+// 服务器信息
+message ServerInfo
+{
+	string Name 		= 1;	// 选服用的名字
+	string DisplayName 	= 2;	// 看得到的名称
+	string Address		= 3;	// 连接游戏用地址(agent)
+}
+
+
+// login -> client
+message LoginACK
+{
+	string 		Result 					= 1;	// 空表示正常登陆
+	string 		Token 					= 2;	// 给后台验证用的令牌, 与PlatformToken不同
+	repeated 	ServerInfo 	ServerList 	= 3;	// 服务器列表
+}

@@ -1,11 +1,11 @@
 package main
 
 import (
-	"gamesvc/benchmark"
+	"loginsvc/platformverify"
 	"table"
 
 	"github.com/davyxu/cellnet"
-	"github.com/davyxu/cellnet/gate"
+	"github.com/davyxu/cellnet/socket"
 	"github.com/davyxu/golog"
 )
 
@@ -17,10 +17,11 @@ func main() {
 
 	pipe := cellnet.NewEventPipe()
 
-	gate.StartGateConnector(pipe, table.GetPeerAddressList("svc->agent"))
+	evq := socket.NewAcceptor(pipe)
+	evq.SetName("client->login")
+	evq.Start(table.GetPeerAddress("client->login"))
 
-	// 组消息初始化
-	benchmark.Start(pipe)
+	platformverify.Start(evq)
 
 	pipe.Start()
 

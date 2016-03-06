@@ -16,7 +16,7 @@ message ServiceDefine
 	bool Enable = 15;			// 是否启用
 	
 	// 基础服务
-	int32 Version = 201;		// 版本
+	string Version = 201;		// 版本
 	string Name = 205;			// 服务器辨识名
 	string DisplayName = 206;	// 服务器显示名	
 }
