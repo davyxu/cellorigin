@@ -24,3 +24,4 @@ tool/MyUpdate3rd.bat
 tool/bin/protoc-gen-table.exe
 tool/protoc-gen-sharpnet.exe
 /client/*.suo
+/server/cfg/Local.pbt
