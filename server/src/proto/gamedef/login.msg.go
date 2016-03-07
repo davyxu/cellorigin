@@ -8,7 +8,7 @@ import (
 )
 
 func init() {
-	cellnet.RegisterMessageMeta("gamedef.LoginREQ", (*LoginREQ)(nil))
-	cellnet.RegisterMessageMeta("gamedef.ServerInfo", (*ServerInfo)(nil))
-	cellnet.RegisterMessageMeta("gamedef.LoginACK", (*LoginACK)(nil))
+	cellnet.RegisterMessageMeta("gamedef.LoginREQ", (*LoginREQ)(nil), 1948892914)
+	cellnet.RegisterMessageMeta("gamedef.ServerInfo", (*ServerInfo)(nil), 3950476513)
+	cellnet.RegisterMessageMeta("gamedef.LoginACK", (*LoginACK)(nil), 527647376)
 }

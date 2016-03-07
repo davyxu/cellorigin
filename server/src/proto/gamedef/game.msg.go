@@ -8,6 +8,6 @@ import (
 )
 
 func init() {
-	cellnet.RegisterMessageMeta("gamedef.EnterGameREQ", (*EnterGameREQ)(nil))
-	cellnet.RegisterMessageMeta("gamedef.EnterGameACK", (*EnterGameACK)(nil))
+	cellnet.RegisterMessageMeta("gamedef.EnterGameREQ", (*EnterGameREQ)(nil), 1204407910)
+	cellnet.RegisterMessageMeta("gamedef.EnterGameACK", (*EnterGameACK)(nil), 747844100)
 }
