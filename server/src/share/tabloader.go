@@ -28,7 +28,7 @@ func LoadTable(name string, m proto.Message) error {
 
 	if err := LoadPBTFile(final, m); err != nil {
 
-		log.Errorf("%s %s", final, err)
+		log.Errorln(err)
 		return err
 	}
 

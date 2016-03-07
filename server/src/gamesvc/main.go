@@ -5,7 +5,7 @@ import (
 	"table"
 
 	"github.com/davyxu/cellnet"
-	"github.com/davyxu/cellnet/gate"
+	"github.com/davyxu/cellnet/router"
 	"github.com/davyxu/golog"
 )
 
@@ -17,7 +17,7 @@ func main() {
 
 	pipe := cellnet.NewEventPipe()
 
-	gate.StartGateConnector(pipe, table.GetPeerAddressList("svc->agent"))
+	router.StartBackendConnector(pipe, table.GetPeerAddressList("svc->agent"), "svc->agent")
 
 	// 组消息初始化
 	benchmark.Start(pipe)

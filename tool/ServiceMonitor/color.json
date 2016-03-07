@@ -1,20 +1,26 @@
-﻿{
+{
 "ColorTab":[
 {"KeyWords":"[ERROR]","C":"Red"},
 {"KeyWords":"[FATAL]","C":"Red"},
 {"KeyWords":"[WARN]","C":"Yellow"},
+{"KeyWords":"[INFO]","C":"LightGray"},
 
 {"KeyWords":"#recv","C":"MediumOrchid"},
 {"KeyWords":"#send","C":"RosyBrown"},
-
-{"KeyWords":"gate->backend","C":"MediumOrchid"},
-{"KeyWords":"backend->gate","C":"RosyBrown"},
-
-{"KeyWords":"client->backend","C":"MediumOrchid"},
-{"KeyWords":"backend->client","C":"RosyBrown"},
-
+{"KeyWords":"#connected","C":"CadetBlue"},
+{"KeyWords":"#listen","C":"Moccasin"},
+{"KeyWords":"#accepted","C":"CadetBlue"},
 {"KeyWords":"#postpacket","C":"Thistle"},
-{"KeyWords":"#closed","C":"DarkGoldenrod"}
+{"KeyWords":"#closed","C":"DarkGoldenrod"},
+
+
+{"KeyWords":"router->backend","C":"MediumOrchid"},
+{"KeyWords":"backend->router","C":"RosyBrown"},
+
+{"KeyWords":"client->frontend","C":"MediumOrchid"},
+{"KeyWords":"backend->client","C":"RosyBrown"}
+
+
 
 ]
 } 

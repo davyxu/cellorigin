@@ -5,7 +5,7 @@ import (
 	"table"
 
 	"github.com/davyxu/cellnet"
-	"github.com/davyxu/cellnet/gate"
+	"github.com/davyxu/cellnet/router"
 	"github.com/davyxu/golog"
 )
 
@@ -13,21 +13,19 @@ var log *golog.Logger = golog.New("main")
 
 func main() {
 
-	golog.SetLevelByString("socket", "info")
-
 	flag.Parse()
 
 	table.LoadServiceTable()
 
-	gate.DebugMode = true
+	router.DebugMode = true
 
 	// 后台与前台在两个线程
 	backendPipe := cellnet.NewEventPipe()
 	frontendPipe := cellnet.NewEventPipe()
 
-	gate.StartBackendAcceptor(backendPipe, table.GetPeerAddress("svc->agent"))
+	router.StartBackendAcceptor(backendPipe, table.GetPeerAddress("svc->agent"), "svc->agent")
 
-	gate.StartClientAcceptor(frontendPipe, table.GetPeerAddress("client->agent"))
+	router.StartFrontendAcceptor(frontendPipe, table.GetPeerAddress("client->agent"), "client->agent")
 
 	backendPipe.Start()
 

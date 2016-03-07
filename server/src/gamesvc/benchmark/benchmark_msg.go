@@ -7,15 +7,13 @@ import (
 	"time"
 
 	"github.com/davyxu/cellnet"
-	"github.com/davyxu/cellnet/gate"
+	"github.com/davyxu/cellnet/router"
 	"github.com/davyxu/golog"
 )
 
 var log *golog.Logger = golog.New("benchmark")
 
 func Start(pipe cellnet.EventPipe) {
-
-	golog.SetLevelByString("socket", "info")
 
 	timeEvq := pipe.AddQueue()
 
@@ -35,7 +33,7 @@ func Start(pipe cellnet.EventPipe) {
 		qps = 0
 	})
 
-	gate.RegisterSessionMessage("gamedef.EnterGameREQ", func(content interface{}, gateSes cellnet.Session, clientid int64) {
+	router.RegisterSessionMessage("gamedef.EnterGameREQ", func(content interface{}, routerSes cellnet.Session, clientid int64) {
 
 		//msg := content.(*gamedef.EnterGameREQ)
 
@@ -45,7 +43,7 @@ func Start(pipe cellnet.EventPipe) {
 
 		qpsGuard.Unlock()
 
-		gate.SendToClient(gateSes, clientid, &gamedef.EnterGameACK{})
+		router.SendToClient(routerSes, clientid, &gamedef.EnterGameACK{})
 
 	})
 
