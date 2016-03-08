@@ -17,7 +17,7 @@
 {"KeyWords":"router->backend","C":"MediumOrchid"},
 {"KeyWords":"backend->router","C":"RosyBrown"},
 
-{"KeyWords":"client->frontend","C":"MediumOrchid"},
+{"KeyWords":"client->backend","C":"MediumOrchid"},
 {"KeyWords":"backend->client","C":"RosyBrown"}
 
 

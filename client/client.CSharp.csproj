@@ -17,7 +17,8 @@
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.3.3f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -63,6 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Script\GameNet\LoginPeer.cs" />
     <Compile Include="Assets\Script\GameNet\GamePeer.cs" />
     <Compile Include="Assets\Script\GameNet\SharedNet.cs" />
     <Compile Include="Assets\Script\Network\ClientSocket.cs" />

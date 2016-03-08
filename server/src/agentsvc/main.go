@@ -23,6 +23,9 @@ func main() {
 	backendPipe := cellnet.NewEventPipe()
 	frontendPipe := cellnet.NewEventPipe()
 
+	router.SetRelayMethod(router.RelayMethod_WhiteList)
+	router.RelayMessage("game", "gamedef.EnterGameREQ")
+
 	router.StartBackendAcceptor(backendPipe, table.GetPeerAddress("svc->agent"), "svc->agent")
 
 	router.StartFrontendAcceptor(frontendPipe, table.GetPeerAddress("client->agent"), "client->agent")

@@ -17,7 +17,7 @@ func main() {
 
 	pipe := cellnet.NewEventPipe()
 
-	router.StartBackendConnector(pipe, table.GetPeerAddressList("svc->agent"), "svc->agent")
+	router.StartBackendConnector(pipe, table.GetPeerAddressList("svc->agent"), "svc->agent", "game")
 
 	// 组消息初始化
 	benchmark.Start(pipe)

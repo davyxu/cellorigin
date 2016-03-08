@@ -1,32 +1,36 @@
 ﻿using UnityEngine;
 using Network;
 
-class GamePeer : MonoBehaviour
+class LoginPeer : MonoBehaviour
 {
+    public string _Address;
+
     NetworkPeer _peer;    
     
     void Awake( )
     {
-        _peer = new NetworkPeer("game", SharedNet.Instance.MsgMeta );
+        _peer = new NetworkPeer("login", SharedNet.Instance.MsgMeta );
 
         _peer.RegisterEvent(NetworkEvent.Connected, msg =>
         {
-            var req = new gamedef.EnterGameREQ();
+            var req = new gamedef.LoginREQ();
             _peer.SendMsg(req);
 
         });
 
-        _peer.RegisterMessage<gamedef.EnterGameACK>(msg =>
+        _peer.RegisterMessage<gamedef.LoginACK>(msg =>
         {
-            Debug.Log("EnterGameACK!");
+            var ack = msg as gamedef.LoginACK;
+
+            GetComponent<GamePeer>().StartGame(ack.ServerList[0].Address);
 
 
         });
     }
 
-    public void StartGame( string address )
+    void Start( )
     {
-        _peer.Start(address);
+        _peer.Start(_Address);
     }
 
     void OnDisable( )
