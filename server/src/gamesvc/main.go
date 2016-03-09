@@ -2,6 +2,7 @@ package main
 
 import (
 	"gamesvc/benchmark"
+	"gamesvc/usermgr"
 	"table"
 
 	"github.com/davyxu/cellnet"
@@ -21,6 +22,7 @@ func main() {
 
 	// 组消息初始化
 	benchmark.Start(pipe)
+	usermgr.Start()
 
 	pipe.Start()
 

@@ -8,6 +8,15 @@ namespace gamedef
 	{
 		public EnterGameREQ() {}
 		
+		private string _Token = "";
+		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"Token", DataFormat = global::ProtoBuf.DataFormat.Default)]
+		[global::System.ComponentModel.DefaultValue("")]
+		public string Token
+		{
+			get { return _Token; }
+			set { _Token = value; }
+		}
+		
 		private global::ProtoBuf.IExtension extensionObject;
 		global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
 		{ return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
@@ -17,9 +26,31 @@ namespace gamedef
 	{
 		public EnterGameACK() {}
 		
+		private gamedef.EnterGameResult _Result = gamedef.EnterGameResult.OK;
+		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"Result", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+		[global::System.ComponentModel.DefaultValue(gamedef.EnterGameResult.OK)]
+		public gamedef.EnterGameResult Result
+		{
+			get { return _Result; }
+			set { _Result = value; }
+		}
+		
 		private global::ProtoBuf.IExtension extensionObject;
 		global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
 		{ return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
 	}
 	
+	[global::ProtoBuf.ProtoContract(Name=@"EnterGameResult")]
+	public enum EnterGameResult
+	{
+		[global::ProtoBuf.ProtoEnum(Name=@"OK", Value=0)]
+		OK = 0,
+		
+		[global::ProtoBuf.ProtoEnum(Name=@"Full", Value=1)]
+		Full = 1,
+		
+		[global::ProtoBuf.ProtoEnum(Name=@"Blocked", Value=2)]
+		Blocked = 2
+		
+	}
 }

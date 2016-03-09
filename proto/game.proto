@@ -6,11 +6,19 @@ package gamedef;
 // client->game
 message EnterGameREQ
 {
-	
+	string Token = 1;
+}
+
+
+enum EnterGameResult
+{
+	OK 		= 0; // 正常进入
+	Full 	= 1; // 人满
+	Blocked = 2; // 禁止进入
 }
 
 // game->client
 message EnterGameACK
 {
-	
+	EnterGameResult Result = 1;	// 进入游戏的结果
 }
