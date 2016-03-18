@@ -20,7 +20,7 @@ func Start(evq cellnet.EventQueue) {
 			for _, c := range acc.Char {
 
 				ack.CharInfo = append(ack.CharInfo, &gamedef.SimpleCharInfo{
-					Name:         c.CharName,
+					CharName:     c.CharName,
 					LastLoginUTC: c.LastLoginUTC,
 
 					// TODO ID
@@ -71,11 +71,25 @@ func Start(evq cellnet.EventQueue) {
 
 	// 进入验证
 	gameuser.RegisterMessage("gamedef.EnterGameREQ", func(content interface{}, u *gameuser.GameUser) {
-		//		msg := content.(*gamedef.EnterGameREQ)
+		msg := content.(*gamedef.EnterGameREQ)
 
 		// TODO 处理GM进入
 		// TODO 处理人满
-		// TODO 验证token
+
+		if acc, ok := gameuser.RawDataByID[u.ID()]; ok {
+
+			if c := acc.GetChar(msg.CharName); c != nil {
+
+				// 选中这个角色, 挂接到逻辑对象
+				u.CharData = c
+
+				u.Send(&gamedef.EnterGameACK{
+					Result: gamedef.EnterGameResult_EnterGameOK,
+				})
+
+			}
+
+		}
 
 	})
 

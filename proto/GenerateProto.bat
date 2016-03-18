@@ -10,4 +10,5 @@ tool.proto
 --sharpnet_out ..\client\Assets\Script\Proto ^
 --proto_path "." ^
 game.proto ^
+client.proto ^
 login.proto

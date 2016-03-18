@@ -44,22 +44,13 @@ namespace gamedef
 	{
 		public SimpleCharInfo() {}
 		
-		private string _ID = "";
-		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"ID", DataFormat = global::ProtoBuf.DataFormat.Default)]
+		private string _CharName = "";
+		[global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"CharName", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		[global::System.ComponentModel.DefaultValue("")]
-		public string ID
+		public string CharName
 		{
-			get { return _ID; }
-			set { _ID = value; }
-		}
-		
-		private string _Name = "";
-		[global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"Name", DataFormat = global::ProtoBuf.DataFormat.Default)]
-		[global::System.ComponentModel.DefaultValue("")]
-		public string Name
-		{
-			get { return _Name; }
-			set { _Name = value; }
+			get { return _CharName; }
+			set { _CharName = value; }
 		}
 		
 		private long _LastLoginUTC = default(long);
@@ -159,13 +150,13 @@ namespace gamedef
 	{
 		public EnterGameREQ() {}
 		
-		private string _ID = "";
-		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"ID", DataFormat = global::ProtoBuf.DataFormat.Default)]
+		private string _CharName = "";
+		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"CharName", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		[global::System.ComponentModel.DefaultValue("")]
-		public string ID
+		public string CharName
 		{
-			get { return _ID; }
-			set { _ID = value; }
+			get { return _CharName; }
+			set { _CharName = value; }
 		}
 		
 		private global::ProtoBuf.IExtension extensionObject;

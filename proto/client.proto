@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package gamedef;
+
+
+message LoginSetting
+{
+	string Account = 1;
+	string Address = 2;
+}

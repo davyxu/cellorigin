@@ -51,6 +51,10 @@ func LoadAccountData(evq cellnet.EventQueue, accountid string, callback func(*DB
 	})
 }
 
+func CreateAccount(evq cellnet.EventQueue, accountid string, callback func(error)) {
+
+}
+
 // 创建角色
 func CreateChar(evq cellnet.EventQueue, acc *DBAccount, char *CharData, callback func(error)) {
 
@@ -60,7 +64,7 @@ func CreateChar(evq cellnet.EventQueue, acc *DBAccount, char *CharData, callback
 
 		col := ses.DB("").C("account")
 
-		err := col.Update(bson.M{"accountid": acc.Account.AccountName}, &acc)
+		err := col.Update(bson.M{"accountid": acc.Account.AccountID}, &acc)
 		if err != nil {
 			log.Errorln(err)
 		}

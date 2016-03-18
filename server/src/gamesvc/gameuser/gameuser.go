@@ -14,9 +14,20 @@ type DBAccount struct {
 	Char []*CharData // 多角色
 }
 
+// 根据角色名找到角色
+func (self *DBAccount) GetChar(charname string) *CharData {
+	for _, c := range self.Char {
+		if c.CharName == charname {
+			return c
+		}
+	}
+
+	return nil
+}
+
 type AccountData struct {
-	AccountName string
-	Diamond     int32
+	AccountID string // 账号标示号
+	Diamond   int32
 }
 
 // 角色信息

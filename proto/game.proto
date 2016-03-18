@@ -26,9 +26,8 @@ message VerifyGameACK
 
 // 初始角色信息
 message SimpleCharInfo
-{
-	string ID = 1;			
-	string Name = 2;
+{	
+	string CharName = 2;
 	int64 LastLoginUTC = 3;		// 上次登录时间戳, 可以作为默认选中逻辑
 }
 
@@ -85,7 +84,7 @@ enum EnterGameResult
 // client -> game
 message EnterGameREQ
 {
-	string ID = 1;			// 选好的角色对应的ID
+	string CharName = 1;			// 选好的角色对应的ID
 }
 
 
