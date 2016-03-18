@@ -18,7 +18,10 @@ message ServiceDefine
 	// 基础服务
 	string Version = 201;		// 版本
 	string Name = 205;			// 服务器辨识名
-	string DisplayName = 206;	// 服务器显示名	
+	string DisplayName = 206;	// 服务器显示名
+	
+	string DSN = 210; 			// 主DB连接
+	int32 DBConnCount = 211;	// 主DB连接数量
 }
 
 

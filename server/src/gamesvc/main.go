@@ -1,8 +1,10 @@
 package main
 
 import (
-	"gamesvc/benchmark"
-	"gamesvc/usermgr"
+	"gamesvc/charinit"
+	"gamesvc/gameuser"
+	"gamesvc/verify"
+
 	"table"
 
 	"github.com/davyxu/cellnet"
@@ -18,11 +20,15 @@ func main() {
 
 	pipe := cellnet.NewEventPipe()
 
+	// DB消息投递
+	evq := pipe.AddQueue()
+
 	router.StartBackendConnector(pipe, table.GetPeerAddressList("svc->agent"), "svc->agent", "game")
 
 	// 组消息初始化
-	benchmark.Start(pipe)
-	usermgr.Start()
+	gameuser.Start()
+	verify.Start(evq)
+	charinit.Start(evq)
 
 	pipe.Start()
 

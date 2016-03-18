@@ -13,41 +13,175 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
+type VerifyGameResult int32
+
+const (
+	VerifyGameResult_VerifyOK       VerifyGameResult = 0
+	VerifyGameResult_InvalidToken   VerifyGameResult = 1
+	VerifyGameResult_AccountBlocked VerifyGameResult = 2
+)
+
+var VerifyGameResult_name = map[int32]string{
+	0: "VerifyOK",
+	1: "InvalidToken",
+	2: "AccountBlocked",
+}
+var VerifyGameResult_value = map[string]int32{
+	"VerifyOK":       0,
+	"InvalidToken":   1,
+	"AccountBlocked": 2,
+}
+
+func (x VerifyGameResult) String() string {
+	return proto.EnumName(VerifyGameResult_name, int32(x))
+}
+func (VerifyGameResult) EnumDescriptor() ([]byte, []int) { return fileDescriptor1, []int{0} }
+
+// 创建角色结果
+type CreateCharResult int32
+
+const (
+	CreateCharResult_CreateCharOK    CreateCharResult = 0
+	CreateCharResult_CharNotExist    CreateCharResult = 1
+	CreateCharResult_CreateCharError CreateCharResult = 2
+)
+
+var CreateCharResult_name = map[int32]string{
+	0: "CreateCharOK",
+	1: "CharNotExist",
+	2: "CreateCharError",
+}
+var CreateCharResult_value = map[string]int32{
+	"CreateCharOK":    0,
+	"CharNotExist":    1,
+	"CreateCharError": 2,
+}
+
+func (x CreateCharResult) String() string {
+	return proto.EnumName(CreateCharResult_name, int32(x))
+}
+func (CreateCharResult) EnumDescriptor() ([]byte, []int) { return fileDescriptor1, []int{1} }
+
 type EnterGameResult int32
 
 const (
-	EnterGameResult_OK      EnterGameResult = 0
-	EnterGameResult_Full    EnterGameResult = 1
-	EnterGameResult_Blocked EnterGameResult = 2
+	EnterGameResult_EnterGameOK  EnterGameResult = 0
+	EnterGameResult_GameUserFull EnterGameResult = 1
+	EnterGameResult_CharBlocked  EnterGameResult = 2
 )
 
 var EnterGameResult_name = map[int32]string{
-	0: "OK",
-	1: "Full",
-	2: "Blocked",
+	0: "EnterGameOK",
+	1: "GameUserFull",
+	2: "CharBlocked",
 }
 var EnterGameResult_value = map[string]int32{
-	"OK":      0,
-	"Full":    1,
-	"Blocked": 2,
+	"EnterGameOK":  0,
+	"GameUserFull": 1,
+	"CharBlocked":  2,
 }
 
 func (x EnterGameResult) String() string {
 	return proto.EnumName(EnterGameResult_name, int32(x))
 }
-func (EnterGameResult) EnumDescriptor() ([]byte, []int) { return fileDescriptor1, []int{0} }
+func (EnterGameResult) EnumDescriptor() ([]byte, []int) { return fileDescriptor1, []int{2} }
 
-// client->game
-type EnterGameREQ struct {
+// client -> game
+type VerifyGameREQ struct {
 	Token string `protobuf:"bytes,1,opt,name=Token,json=token" json:"Token,omitempty"`
+}
+
+func (m *VerifyGameREQ) Reset()                    { *m = VerifyGameREQ{} }
+func (m *VerifyGameREQ) String() string            { return proto.CompactTextString(m) }
+func (*VerifyGameREQ) ProtoMessage()               {}
+func (*VerifyGameREQ) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{0} }
+
+// game -> client
+type VerifyGameACK struct {
+	Result VerifyGameResult `protobuf:"varint,1,opt,name=Result,json=result,enum=gamedef.VerifyGameResult" json:"Result,omitempty"`
+}
+
+func (m *VerifyGameACK) Reset()                    { *m = VerifyGameACK{} }
+func (m *VerifyGameACK) String() string            { return proto.CompactTextString(m) }
+func (*VerifyGameACK) ProtoMessage()               {}
+func (*VerifyGameACK) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{1} }
+
+// 初始角色信息
+type SimpleCharInfo struct {
+	ID           string `protobuf:"bytes,1,opt,name=ID,json=iD" json:"ID,omitempty"`
+	Name         string `protobuf:"bytes,2,opt,name=Name,json=name" json:"Name,omitempty"`
+	LastLoginUTC int64  `protobuf:"varint,3,opt,name=LastLoginUTC,json=lastLoginUTC" json:"LastLoginUTC,omitempty"`
+}
+
+func (m *SimpleCharInfo) Reset()                    { *m = SimpleCharInfo{} }
+func (m *SimpleCharInfo) String() string            { return proto.CompactTextString(m) }
+func (*SimpleCharInfo) ProtoMessage()               {}
+func (*SimpleCharInfo) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{2} }
+
+// 请求角色列表
+// client -> game
+type CharListREQ struct {
+}
+
+func (m *CharListREQ) Reset()                    { *m = CharListREQ{} }
+func (m *CharListREQ) String() string            { return proto.CompactTextString(m) }
+func (*CharListREQ) ProtoMessage()               {}
+func (*CharListREQ) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{3} }
+
+// game -> client
+type CharListACK struct {
+	CharInfo []*SimpleCharInfo `protobuf:"bytes,1,rep,name=CharInfo,json=charInfo" json:"CharInfo,omitempty"`
+}
+
+func (m *CharListACK) Reset()                    { *m = CharListACK{} }
+func (m *CharListACK) String() string            { return proto.CompactTextString(m) }
+func (*CharListACK) ProtoMessage()               {}
+func (*CharListACK) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{4} }
+
+func (m *CharListACK) GetCharInfo() []*SimpleCharInfo {
+	if m != nil {
+		return m.CharInfo
+	}
+	return nil
+}
+
+// 创建角色
+// client -> game
+type CreateCharREQ struct {
+	CandidateID uint32 `protobuf:"varint,1,opt,name=CandidateID,json=candidateID" json:"CandidateID,omitempty"`
+	CharName    string `protobuf:"bytes,2,opt,name=CharName,json=charName" json:"CharName,omitempty"`
+}
+
+func (m *CreateCharREQ) Reset()                    { *m = CreateCharREQ{} }
+func (m *CreateCharREQ) String() string            { return proto.CompactTextString(m) }
+func (*CreateCharREQ) ProtoMessage()               {}
+func (*CreateCharREQ) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{5} }
+
+// 创建角色结果
+// game -> client
+type CreateCharACK struct {
+	CandidateID uint32           `protobuf:"varint,1,opt,name=CandidateID,json=candidateID" json:"CandidateID,omitempty"`
+	Result      CreateCharResult `protobuf:"varint,2,opt,name=Result,json=result,enum=gamedef.CreateCharResult" json:"Result,omitempty"`
+}
+
+func (m *CreateCharACK) Reset()                    { *m = CreateCharACK{} }
+func (m *CreateCharACK) String() string            { return proto.CompactTextString(m) }
+func (*CreateCharACK) ProtoMessage()               {}
+func (*CreateCharACK) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{6} }
+
+// 进入游戏
+// client -> game
+type EnterGameREQ struct {
+	ID string `protobuf:"bytes,1,opt,name=ID,json=iD" json:"ID,omitempty"`
 }
 
 func (m *EnterGameREQ) Reset()                    { *m = EnterGameREQ{} }
 func (m *EnterGameREQ) String() string            { return proto.CompactTextString(m) }
 func (*EnterGameREQ) ProtoMessage()               {}
-func (*EnterGameREQ) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{0} }
+func (*EnterGameREQ) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{7} }
 
-// game->client
+// 进入游戏信息
+// game -> client
 type EnterGameACK struct {
 	Result EnterGameResult `protobuf:"varint,1,opt,name=Result,json=result,enum=gamedef.EnterGameResult" json:"Result,omitempty"`
 }
@@ -55,24 +189,49 @@ type EnterGameACK struct {
 func (m *EnterGameACK) Reset()                    { *m = EnterGameACK{} }
 func (m *EnterGameACK) String() string            { return proto.CompactTextString(m) }
 func (*EnterGameACK) ProtoMessage()               {}
-func (*EnterGameACK) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{1} }
+func (*EnterGameACK) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{8} }
 
 func init() {
+	proto.RegisterType((*VerifyGameREQ)(nil), "gamedef.VerifyGameREQ")
+	proto.RegisterType((*VerifyGameACK)(nil), "gamedef.VerifyGameACK")
+	proto.RegisterType((*SimpleCharInfo)(nil), "gamedef.SimpleCharInfo")
+	proto.RegisterType((*CharListREQ)(nil), "gamedef.CharListREQ")
+	proto.RegisterType((*CharListACK)(nil), "gamedef.CharListACK")
+	proto.RegisterType((*CreateCharREQ)(nil), "gamedef.CreateCharREQ")
+	proto.RegisterType((*CreateCharACK)(nil), "gamedef.CreateCharACK")
 	proto.RegisterType((*EnterGameREQ)(nil), "gamedef.EnterGameREQ")
 	proto.RegisterType((*EnterGameACK)(nil), "gamedef.EnterGameACK")
+	proto.RegisterEnum("gamedef.VerifyGameResult", VerifyGameResult_name, VerifyGameResult_value)
+	proto.RegisterEnum("gamedef.CreateCharResult", CreateCharResult_name, CreateCharResult_value)
 	proto.RegisterEnum("gamedef.EnterGameResult", EnterGameResult_name, EnterGameResult_value)
 }
 
 var fileDescriptor1 = []byte{
-	// 154 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xe2, 0xe2, 0x4a, 0x4f, 0xcc, 0x4d,
-	0xd5, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x07, 0xb1, 0x53, 0x52, 0xd3, 0x94, 0x54, 0xb8,
-	0x78, 0x5c, 0xf3, 0x4a, 0x52, 0x8b, 0xdc, 0x81, 0xfc, 0x20, 0xd7, 0x40, 0x21, 0x11, 0x2e, 0xd6,
-	0x90, 0xfc, 0xec, 0xd4, 0x3c, 0x09, 0x46, 0x05, 0x46, 0x0d, 0xce, 0x20, 0xd6, 0x12, 0x10, 0x47,
-	0xc9, 0x01, 0x49, 0x95, 0xa3, 0xb3, 0xb7, 0x90, 0x01, 0x17, 0x5b, 0x50, 0x6a, 0x71, 0x69, 0x4e,
-	0x09, 0x58, 0x19, 0x9f, 0x91, 0x84, 0x1e, 0xd4, 0x3c, 0x3d, 0x84, 0x61, 0x60, 0xf9, 0x20, 0xb6,
-	0x22, 0x30, 0xad, 0x65, 0xc0, 0xc5, 0x8f, 0x26, 0x25, 0xc4, 0xc6, 0xc5, 0xe4, 0xef, 0x2d, 0xc0,
-	0x20, 0xc4, 0xc1, 0xc5, 0xe2, 0x56, 0x9a, 0x93, 0x23, 0xc0, 0x28, 0xc4, 0xcd, 0xc5, 0xee, 0x94,
-	0x93, 0x9f, 0x9c, 0x9d, 0x9a, 0x22, 0xc0, 0x94, 0xc4, 0x06, 0x76, 0xa9, 0x31, 0x20, 0x00, 0x00,
-	0xff, 0xff, 0x39, 0x42, 0xe9, 0xbe, 0xb7, 0x00, 0x00, 0x00,
+	// 413 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0x84, 0x93, 0xdf, 0xaf, 0xd2, 0x30,
+	0x14, 0xc7, 0x65, 0xdc, 0x8b, 0x78, 0xf6, 0x33, 0xd5, 0xc4, 0xe9, 0x83, 0xb9, 0x69, 0x62, 0x72,
+	0xc3, 0x03, 0x51, 0xf8, 0x07, 0x84, 0x31, 0x0c, 0x01, 0x35, 0x4e, 0x30, 0xbe, 0xce, 0xad, 0xe0,
+	0xc2, 0x68, 0x49, 0x57, 0x8c, 0xfe, 0xf7, 0xb6, 0x65, 0xbf, 0xd8, 0x8b, 0x4f, 0x3b, 0xfd, 0xf6,
+	0xf4, 0x73, 0xbe, 0x3d, 0xa7, 0x03, 0x38, 0xc4, 0x27, 0x32, 0x3e, 0x73, 0x26, 0x18, 0x7a, 0xaa,
+	0xe2, 0x94, 0xec, 0xf1, 0x5b, 0xb0, 0xbf, 0x13, 0x9e, 0xed, 0xff, 0x7e, 0x94, 0x42, 0x14, 0x7e,
+	0x45, 0x2f, 0xe0, 0x7e, 0xcb, 0x8e, 0x84, 0xfa, 0xbd, 0x87, 0xde, 0xe3, 0xb3, 0xe8, 0x5e, 0xa8,
+	0x05, 0x9e, 0xb7, 0xd3, 0x66, 0xc1, 0x1a, 0xbd, 0x87, 0x41, 0x44, 0x8a, 0x4b, 0x2e, 0x74, 0x9e,
+	0x33, 0x79, 0x35, 0x2e, 0x89, 0xe3, 0x16, 0x4e, 0x27, 0x44, 0x03, 0xae, 0xbf, 0xf8, 0x07, 0x38,
+	0xdf, 0xb2, 0xd3, 0x39, 0x27, 0xc1, 0xaf, 0x98, 0xaf, 0xe8, 0x9e, 0x21, 0x07, 0x8c, 0xd5, 0xa2,
+	0x2c, 0x64, 0x64, 0x0b, 0x84, 0xe0, 0xee, 0xb3, 0x3c, 0xe7, 0x1b, 0x5a, 0xb9, 0xa3, 0x32, 0x46,
+	0x18, 0xac, 0x4d, 0x5c, 0x88, 0x0d, 0x3b, 0x64, 0x74, 0xb7, 0x0d, 0xfc, 0xbe, 0xdc, 0xeb, 0x47,
+	0x56, 0xde, 0xd2, 0xb0, 0x0d, 0xa6, 0x62, 0x6e, 0xb2, 0x42, 0xc8, 0x2b, 0x48, 0xb3, 0xf5, 0x52,
+	0x59, 0x9d, 0xc2, 0xb0, 0xaa, 0x28, 0x6b, 0xf5, 0x1f, 0xcd, 0xc9, 0xcb, 0xda, 0xec, 0xad, 0xa1,
+	0x68, 0x98, 0x94, 0x11, 0xfe, 0x04, 0x76, 0xc0, 0x49, 0x2c, 0xf4, 0x9e, 0xea, 0xcb, 0x83, 0x84,
+	0xc6, 0x34, 0xcd, 0x52, 0xa9, 0x95, 0xa6, 0xed, 0xc8, 0x4c, 0x1a, 0x09, 0xbd, 0xbe, 0xd6, 0x69,
+	0xdd, 0x40, 0xe3, 0xd4, 0x1a, 0xa7, 0x6d, 0x9c, 0x32, 0xf5, 0x7f, 0x5c, 0xd3, 0x61, 0xa3, 0xd3,
+	0xe1, 0x96, 0xb1, 0xdb, 0x0e, 0xbf, 0x01, 0x2b, 0xa4, 0x82, 0xf0, 0x6a, 0x96, 0x9d, 0xfe, 0xe2,
+	0x0f, 0xad, 0x7d, 0x65, 0xe2, 0x5d, 0x67, 0x88, 0x7e, 0x5d, 0xa2, 0xc1, 0xdc, 0x54, 0x18, 0x2d,
+	0xc1, 0xeb, 0xce, 0x17, 0x59, 0x30, 0xbc, 0x6a, 0x5f, 0xd6, 0xde, 0x13, 0xe4, 0x81, 0xb5, 0xa2,
+	0xbf, 0xe3, 0x3c, 0x4b, 0xf5, 0x33, 0xf2, 0x7a, 0x72, 0xaa, 0xce, 0x2c, 0x49, 0xd8, 0x85, 0x8a,
+	0x79, 0xce, 0x92, 0x23, 0x49, 0x3d, 0x63, 0xb4, 0x06, 0xaf, 0x7b, 0x0b, 0x75, 0xb2, 0xd1, 0x2a,
+	0x96, 0xee, 0x28, 0x13, 0xe1, 0x1f, 0x39, 0x4c, 0xc9, 0x7a, 0x0e, 0x6e, 0x93, 0x13, 0x72, 0xce,
+	0xb8, 0x84, 0x85, 0xe0, 0x76, 0xfc, 0x22, 0x17, 0xcc, 0x5a, 0xaa, 0x50, 0x2a, 0xde, 0x15, 0x84,
+	0x2f, 0x2f, 0x79, 0x2e, 0x51, 0xee, 0xf5, 0x95, 0xd4, 0x9e, 0x7e, 0x0e, 0xf4, 0xaf, 0x31, 0xfd,
+	0x17, 0x00, 0x00, 0xff, 0xff, 0x1c, 0xc8, 0x0d, 0x42, 0x28, 0x03, 0x00, 0x00,
 }

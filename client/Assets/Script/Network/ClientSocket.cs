@@ -371,11 +371,11 @@ namespace Network
             ad.Callback = callback;
             ad.Size = size;
             ad.Tag = tag;
-            AsyncReadPacket(ad);
+            ReadPacket(ad);
         }
 
         
-        void AsyncReadPacket( AsyncData ad )
+        void ReadPacket( AsyncData ad )
         {
             while( true )
             {

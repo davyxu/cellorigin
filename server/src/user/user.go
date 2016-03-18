@@ -7,29 +7,35 @@ import (
 	"github.com/davyxu/cellnet/router"
 )
 
-type User struct {
+// 网关通信用的用户
+type RouterUser struct {
+
+	// 网关信息
 	routerSes cellnet.Session
 	clientid  int64
-	Event     *EventDispatcher
 }
 
-func (self *User) ID() int64 {
+func (self *RouterUser) ID() int64 {
 	return self.clientid
 }
 
-func (self *User) String() string {
+func (self *RouterUser) String() string {
 	return fmt.Sprintf("user id: %d router: %d", self.clientid, self.routerSes.ID())
 }
 
-func (self *User) Send(data interface{}) {
+func (self *RouterUser) Send(data interface{}) {
 
 	router.SendToClient(self.routerSes, self.clientid, data)
 }
 
-func NewUser(routerSes cellnet.Session, clientid int64) *User {
-	return &User{
+func (self *RouterUser) Close() {
+
+	router.CloseClient(self.routerSes, self.clientid)
+}
+
+func NewRouterUser(routerSes cellnet.Session, clientid int64) *RouterUser {
+	return &RouterUser{
 		routerSes: routerSes,
 		clientid:  clientid,
-		Event:     NewEventDispatcher(),
 	}
 }
