@@ -1,49 +1,85 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public partial class LoginUI : MonoBehaviour {
 
-    gamedef.LoginSetting _setting;
-
-    NetworkPeer _loginPeer;
+    LoginModel _model;
 
     void Awake( )
     {
         InitUI();
 
-        _loginPeer = GetComponent<NetworkPeer>();
+        _model = new LoginModel(gameObject);
 
-        _setting = LocalSetting.Load<gamedef.LoginSetting>("login");
+        _Account.text = _model.Account;
+        _Address.text = _model.Address;
 
-        _Account.text = _setting.Account;
-        _Address.text = _setting.Address;
+        _model.OnLoginOK += OnLoginOK;
+        _EnterGame.interactable = false;
+
     }
 
-    void OnSetDevAddress( )
+    void OnDisable()
     {
-        _Account.text = Constant.DevAddress;
+        SaveSetting();
+    }
+
+    void Start( )
+    {
+        // 启动自动登陆
+        _model.Login();
+    }
+
+    void OnLoginOK()
+    {
+        _EnterGame.interactable = true;
+
+        // 刷新服务器列表
+        RefreshServerList();
+    }
+
+    void OnEnterGame( )
+    {
+        // TODO 转圈的系统
+        // TODO 连接有问题的提示, 区分连接不上和断开
+
+
+        // 进入游戏
+    }
+
+
+
+
+    void OnSetDevAddress()
+    {
+        _Address.text = Constant.DevAddress;
     }
 
     void OnSetPublicAddress()
     {
-        _Account.text = Constant.PublicAddress;
+        _Address.text = Constant.PublicAddress;
     }
 
-    void OnLogin( )
+    void RefreshServerList( )
     {
-        // 登陆时, 保存设置
-        SaveSetting();
+        _ServerList.ClearOptions();
 
-        _loginPeer.Connect(_Address.text);
+        var nameList = new List<string>();
+        for( int i = 0;i< _model.ServerList.Count;i++)
+        {
+            nameList.Add(_model.ServerList[i].DisplayName);
+            
+        }
+
+        _ServerList.AddOptions(nameList);
+
     }
 
 
     void SaveSetting()
     {
-        _setting.Account = _Account.text;
-        _setting.Address = _Address.text;
-        LocalSetting.Save<gamedef.LoginSetting>("login", _setting);
+        _model.Account = _Account.text;
+        _model.Address = _Address.text;
     }
 
 }

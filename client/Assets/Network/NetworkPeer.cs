@@ -3,14 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public enum NetworkEvent
-{
-    Connected = 1,
-    Closed,
-    MarshalError,
-    UnmarshalError,
-}
-
 public class NetworkPeer : MonoBehaviour
 {
     public string Name;
@@ -74,10 +66,14 @@ public class NetworkPeer : MonoBehaviour
         set { _emulateDelayMS = value; }
     }
 
-
+    uint _peerConnectedMsgID;
+    uint _peerClosedMsgID;
     public NetworkPeer( )
     {
         _meta = SharedNet.Instance.MsgMeta;
+
+        _peerConnectedMsgID = _meta.GetMessageID<gamedef.PeerConnected>();
+        _peerClosedMsgID = _meta.GetMessageID<gamedef.PeerClosed>();
     }
 
     /// <summary>
@@ -114,6 +110,8 @@ public class NetworkPeer : MonoBehaviour
     /// <param name="address">网络地址</param>
     public void Connect(string address)
     {
+        // 防止重入
+
         if (_socket != null)
         {
             return;
@@ -124,25 +122,17 @@ public class NetworkPeer : MonoBehaviour
         _socket.EventRecvPacket += OnReceiveSocketMessage;
 
         _socket.EventConnected += delegate()
-        {                
-            PostMessage((uint)NetworkEvent.Connected, null);
+        {
+            PostMessage(_peerConnectedMsgID, null);
         };
 
         _socket.EventClosed += delegate(NetworkReason reason)
         {
-            PostMessage((uint)NetworkEvent.Closed, reason);
+            PostMessage(_peerClosedMsgID, null);
         };
-
-
-        // 将开始连接视为发送
-        if (OnSend != null)
-        {
-            OnSend(this, (uint)NetworkEvent.Connected, null);
-        }
 
         Address = address;
         _socket.Connect(address);
-
 
     }
 
@@ -153,7 +143,7 @@ public class NetworkPeer : MonoBehaviour
     /// </summary>
     /// <typeparam name="T">消息类型</typeparam>
     /// <param name="msg">消息内容</param>
-    public void SendMsg<T>(T msg)
+    public void SendMessage<T>(T msg)
     {
         if (_socket == null)
             return;
@@ -188,7 +178,7 @@ public class NetworkPeer : MonoBehaviour
         }
         catch (Exception e)
         {
-            PostMessage((uint)NetworkEvent.MarshalError, e.ToString());
+            Debug.LogError(e.ToString());
             return;
         }
 
@@ -243,22 +233,6 @@ public class NetworkPeer : MonoBehaviour
         RegisterMessage(_meta.GetMessageID<T>(), callback);
     }
 
-    /// <summary>
-    /// 注册一个网络事件
-    /// </summary>
-    /// <param name="ev">事件类型</param>
-    /// <param name="callback">回调处理</param>
-    public void RegisterEvent(NetworkEvent ev, Action<object> callback)
-    {
-        RegisterMessage((uint)ev, callback);
-    }
-
-
-    public void UnRegisterEvent(NetworkEvent ev, Action<object> callback)
-    {
-        UnRegisterMessage((uint)ev, callback);
-    }
-
     public void UnRegisterMessage(uint msgid, Action<object> callback)
     {
         Action<object> callbacks;
@@ -301,7 +275,7 @@ public class NetworkPeer : MonoBehaviour
         }
         catch (Exception e)
         {
-            PostMessage((uint)NetworkEvent.UnmarshalError, e.ToString());
+            Debug.LogError(e.ToString());
             return;
         }
 
@@ -377,17 +351,17 @@ public class NetworkPeer : MonoBehaviour
 
     void LogMessage( uint msgid, object msg)
     {
-        switch (msgid)
+        if (msgid == _peerConnectedMsgID )
         {
-            case (UInt32)NetworkEvent.Connected:
-                Debug.Log(string.Format("[{0}] Connected", Name));
-                break;
-            case (UInt32)NetworkEvent.Closed:
-                Debug.Log(string.Format("[{0}] Closed", Name));
-                break;
-            default:                    
-                Debug.Log(string.Format("[{0}] {1}|{2}", Name, msg.GetType().FullName, _printer.Print(msg )));
-                break;
+            Debug.Log(string.Format("[{0}] Connected", Name));
+        }
+        else if ( msgid == _peerClosedMsgID )
+        {
+            Debug.Log(string.Format("[{0}] Closed", Name));
+        }
+        else
+        {
+            Debug.Log(string.Format("[{0}] {1}|{2}", Name, msg.GetType().FullName, _printer.Print(msg)));
         }
 
     }

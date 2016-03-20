@@ -63,15 +63,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Network\ClientSocket.cs" />
+    <Compile Include="Assets\Network\MessageMeta.cs" />
+    <Compile Include="Assets\Network\MessagePrinter.cs" />
+    <Compile Include="Assets\Network\NetworkPeer.cs" />
     <Compile Include="Assets\Script\Constant\Constant.cs" />
     <Compile Include="Assets\Script\GameNet\SharedNet.cs" />
-    <Compile Include="Assets\Script\Network\ClientSocket.cs" />
-    <Compile Include="Assets\Script\Network\MessageMeta.cs" />
-    <Compile Include="Assets\Script\Network\MessagePrinter.cs" />
-    <Compile Include="Assets\Script\Network\NetworkPeer.cs" />
     <Compile Include="Assets\Script\Proto\client.cs" />
     <Compile Include="Assets\Script\Proto\game.cs" />
     <Compile Include="Assets\Script\Proto\login.cs" />
+    <Compile Include="Assets\Script\Proto\network.cs" />
+    <Compile Include="Assets\Script\UI\Login\LoginModel.cs" />
     <Compile Include="Assets\Script\UI\Login\LoginUI.cs" />
     <Compile Include="Assets\Script\UI\Login\LoginUI_AutoBind.cs" />
     <Compile Include="Assets\Script\Utility\LocalSetting.cs" />

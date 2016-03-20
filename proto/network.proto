@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package gamedef;
+
+// NetworkPeer中使用
+
+message PeerConnected
+{
+	
+}
+
+message PeerClosed
+{
+	
+}

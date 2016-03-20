@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-
+﻿
 class UIGenControl
 {
     UIBinder _binder;
@@ -60,6 +58,8 @@ class UIGenControl
                 return "InputField";
             case CodeGenObjectType.GenAsImage:
                 return "Image";
+            case CodeGenObjectType.GenAsDropdown:
+                return "Dropdown";
         }
 
         return "Unknown";
