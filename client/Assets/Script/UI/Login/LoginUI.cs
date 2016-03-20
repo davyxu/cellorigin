@@ -2,56 +2,48 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class LoginUI : MonoBehaviour {
-
-    public InputField Account;
-    public InputField Address;
-    public Button SetDevAddress;
-    public Button SetPublicAddress;
-    public Button GoLogin;
+public partial class LoginUI : MonoBehaviour {
 
     gamedef.LoginSetting _setting;
-
-
 
     NetworkPeer _loginPeer;
 
     void Awake( )
     {
+        InitUI();
+
         _loginPeer = GetComponent<NetworkPeer>();
 
         _setting = LocalSetting.Load<gamedef.LoginSetting>("login");
 
-        Account.text = _setting.Account;
-        Address.text = _setting.Address;
-
-        SetDevAddress.onClick.AddListener(() =>
-        {
-            Account.text = Constant.DevAddress;
-        });
-
-        SetPublicAddress.onClick.AddListener(() =>
-        {
-            Account.text = Constant.PublicAddress;
-        });
-
-        GoLogin.onClick.AddListener(() =>
-        {
-            // 登陆时, 保存设置
-            SaveSetting();
-
-            _loginPeer.Start(Address.text);
-        });
-
+        _Account.text = _setting.Account;
+        _Address.text = _setting.Address;
     }
-    
 
-    void SaveSetting( )
+    void OnSetDevAddress( )
     {
-        _setting.Account = Account.text;
-        _setting.Address = Address.text;
-        LocalSetting.Save<gamedef.LoginSetting>("login", _setting );
+        _Account.text = Constant.DevAddress;
     }
 
+    void OnSetPublicAddress()
+    {
+        _Account.text = Constant.PublicAddress;
+    }
+
+    void OnLogin( )
+    {
+        // 登陆时, 保存设置
+        SaveSetting();
+
+        _loginPeer.Connect(_Address.text);
+    }
+
+
+    void SaveSetting()
+    {
+        _setting.Account = _Account.text;
+        _setting.Address = _Address.text;
+        LocalSetting.Save<gamedef.LoginSetting>("login", _setting);
+    }
 
 }

@@ -112,7 +112,7 @@ public class NetworkPeer : MonoBehaviour
     /// 连接网络
     /// </summary>
     /// <param name="address">网络地址</param>
-    public void Start(string address)
+    public void Connect(string address)
     {
         if (_socket != null)
         {

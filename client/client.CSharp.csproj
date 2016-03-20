@@ -17,8 +17,8 @@
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.3.3f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
+    <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -47,24 +47,23 @@
     <Reference Include="System.Core" />
     <Reference Include="Boo.Lang" />
     <Reference Include="UnityScript.Lang" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine">
       <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor">
-      <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Script\Constant\Constant.cs" />
-    <Compile Include="Assets\Script\GameNet\GamePeer.cs" />
     <Compile Include="Assets\Script\GameNet\SharedNet.cs" />
     <Compile Include="Assets\Script\Network\ClientSocket.cs" />
     <Compile Include="Assets\Script\Network\MessageMeta.cs" />
@@ -74,9 +73,12 @@
     <Compile Include="Assets\Script\Proto\game.cs" />
     <Compile Include="Assets\Script\Proto\login.cs" />
     <Compile Include="Assets\Script\UI\Login\LoginUI.cs" />
+    <Compile Include="Assets\Script\UI\Login\LoginUI_AutoBind.cs" />
     <Compile Include="Assets\Script\Utility\LocalSetting.cs" />
     <Compile Include="Assets\Script\Utility\LoginFromLocal.cs" />
+    <Compile Include="Assets\Script\Utility\ObjectUtility.cs" />
     <Compile Include="Assets\Script\Utility\StringUtility.cs" />
+    <Compile Include="Assets\UICodeGen\UIBinder.cs" />
     <Compile Include="Assets\protobuf-net\BclHelpers.cs" />
     <Compile Include="Assets\protobuf-net\BufferExtension.cs" />
     <Compile Include="Assets\protobuf-net\BufferPool.cs" />
