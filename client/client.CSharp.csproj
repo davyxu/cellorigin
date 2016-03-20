@@ -79,6 +79,7 @@
     <Compile Include="Assets\Script\Utility\ObjectUtility.cs" />
     <Compile Include="Assets\Script\Utility\StringUtility.cs" />
     <Compile Include="Assets\UICodeGen\UIBinder.cs" />
+    <Compile Include="Assets\UICodeGen\UIBinderEditor.cs" />
     <Compile Include="Assets\protobuf-net\BclHelpers.cs" />
     <Compile Include="Assets\protobuf-net\BufferExtension.cs" />
     <Compile Include="Assets\protobuf-net\BufferPool.cs" />

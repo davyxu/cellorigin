@@ -30,16 +30,12 @@ class UIGenWindow
 
     }
 
-    public List<UIGenControl> Controls
-    {
-        get { return _controls; }
-    }
-
     public string Name
     {
         get { return _binder.gameObject.name; }
     }
 
+    // 自动绑定代码
     public string PrintAutoBindCode( )
     {
         var gen = new CodeGenerator();
@@ -91,6 +87,7 @@ class UIGenWindow
         return gen.ToString();
     }
 
+    // 主逻辑代码
     public string PrintMainLogicCode( )
     {
         var gen = new CodeGenerator();
@@ -107,7 +104,7 @@ class UIGenWindow
         // 按钮回调
         foreach (UIGenControl ctrl in _controls)
         {
-            ctrl.PrintButtonClickRegisterCode(gen);
+            ctrl.PrintButtonClickImplementCode(gen);
         }
 
         gen.Out();
@@ -116,7 +113,7 @@ class UIGenWindow
         return gen.ToString();
     }
 
-    void PrepareFolder( )
+    public void PrepareFolder( )
     {
         try
         {
@@ -148,22 +145,25 @@ class UIGenWindow
         }
     }
 
-    public void WriteAutoBindFile( string text )
+    public bool MainLogicFileExists
     {
-        var fileName = CodeFolder + "/" + string.Format("{0}_AutoBind.cs", Name);
+        get
+        {
+            return File.Exists(CodeFolder + "/" + string.Format("{0}.cs", Name));
+        }
+    }
+
+    public void WriteFile( string filename, string text )
+    {
+        var finalname = CodeFolder + "/" + filename;
 
         try
         {
-            System.IO.File.WriteAllText(fileName, text, System.Text.Encoding.UTF8);
+            System.IO.File.WriteAllText(finalname, text, System.Text.Encoding.UTF8);
         }
         catch (Exception e)
         {
             Debug.LogError(e.ToString());
         }
-    }
-
-    public void WriteLogicFile( string text )
-    {
-
     }
 }

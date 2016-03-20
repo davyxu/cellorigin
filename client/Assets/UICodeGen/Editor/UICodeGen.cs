@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System.IO;
 
 
 public class UICodeGen : MonoBehaviour
@@ -57,8 +58,22 @@ public class UICodeGen : MonoBehaviour
             }
 
             var win = new UIGenWindow(binder);
-            var text = win.PrintAutoBindCode();
-            win.WriteAutoBindFile(text);
+            
+            // 代码目录预创建
+            win.PrepareFolder();
+
+            // 绑定代码
+            {
+                var text = win.PrintAutoBindCode();
+                win.WriteFile(string.Format("{0}_AutoBind.cs", win.Name), text);
+            }
+            
+            // 当主逻辑文件存在时, 不覆盖
+            if ( !win.MainLogicFileExists )
+            {
+                var text = win.PrintMainLogicCode();
+                win.WriteFile(string.Format("{0}.cs", win.Name), text);
+            }
         }
     }
 

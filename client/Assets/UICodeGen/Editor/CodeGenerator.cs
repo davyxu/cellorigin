@@ -35,6 +35,7 @@ public class CodeGenerator
         EndLine();
     }
 
+    // 进入一个层次, 例如括号
     public void In( )
     {
         _indend += "\t";

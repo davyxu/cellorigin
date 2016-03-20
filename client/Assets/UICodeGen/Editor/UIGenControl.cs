@@ -34,6 +34,9 @@ class UIGenControl
         if (_binder.Type != CodeGenObjectType.GenAsButton)
             return;
 
+        var path = ObjectUtility.GetGameObjectPath(_binder.gameObject);
+
+        gen.PrintLine("// Button @ ", path);
         gen.PrintLine("void On", Name, "( )");
         gen.PrintLine("{");
         gen.PrintLine();
