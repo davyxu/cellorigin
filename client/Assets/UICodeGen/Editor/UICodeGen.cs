@@ -10,7 +10,7 @@ public class UICodeGen : MonoBehaviour
     public const string OutputPath = "Assets/Script/UI";
 
 
-    [MenuItem("UICodeGen/生成代码")]
+    [MenuItem("UITools/生成当前场景UI绑定代码")]
     public static void GenCode( )
     {
         var rootObject = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();

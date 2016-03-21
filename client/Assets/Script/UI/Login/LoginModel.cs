@@ -37,10 +37,13 @@ class LoginModel
         _setting = LocalSetting.Load<gamedef.LoginSetting>("login");
     }
 
-    public void Login( )
+    public void Save( )
     {
         LocalSetting.Save<gamedef.LoginSetting>("login", _setting);
+    }
 
+    public void Login( )
+    {
         _loginPeer.Connect( Address );
 
         _loginPeer.RegisterMessage<gamedef.PeerConnected>(obj =>

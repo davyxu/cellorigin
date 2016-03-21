@@ -14,12 +14,13 @@ public partial class LoginUI : MonoBehaviour
 	
 	void InitUI()
 	{
-		_Account = GameObject.Find("/Canvas/LoginUI/Account").GetComponent<InputField>();
-		_Address = GameObject.Find("/Canvas/LoginUI/Address").GetComponent<InputField>();
-		_SetDevAddress = GameObject.Find("/Canvas/LoginUI/SetDevAddress").GetComponent<Button>();
-		_SetPublicAddress = GameObject.Find("/Canvas/LoginUI/SetPublicAddress").GetComponent<Button>();
-		_ServerList = GameObject.Find("/Canvas/LoginUI/ServerList").GetComponent<Dropdown>();
-		_EnterGame = GameObject.Find("/Canvas/LoginUI/EnterGame").GetComponent<Button>();
+		var trans = this.transform;
+		_Account = trans.Find("Account").GetComponent<InputField>();
+		_Address = trans.Find("Address").GetComponent<InputField>();
+		_SetDevAddress = trans.Find("SetDevAddress").GetComponent<Button>();
+		_SetPublicAddress = trans.Find("SetPublicAddress").GetComponent<Button>();
+		_ServerList = trans.Find("ServerList").GetComponent<Dropdown>();
+		_EnterGame = trans.Find("EnterGame").GetComponent<Button>();
 		
 		_SetDevAddress.onClick.AddListener( SetDevAddress_Click );
 		_SetPublicAddress.onClick.AddListener( SetPublicAddress_Click );

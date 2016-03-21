@@ -22,6 +22,8 @@ public partial class LoginUI : MonoBehaviour {
     void OnDisable()
     {
         SaveSetting();
+
+        _model.Save();
     }
 
     void Start( )
@@ -45,6 +47,7 @@ public partial class LoginUI : MonoBehaviour {
 
 
         // 进入游戏
+        gameObject.SetActive(false);
     }
 
 

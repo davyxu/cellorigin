@@ -40,6 +40,11 @@ class UIGenWindow
         get { return _binder.gameObject.name; }
     }
 
+    public GameObject Obj
+    {
+        get { return _binder.gameObject; }
+    }
+
     // 自动绑定代码
     public string PrintAutoBindCode( )
     {
@@ -67,6 +72,7 @@ class UIGenWindow
         gen.PrintLine("void InitUI()");
         gen.PrintLine("{");
         gen.In();
+        gen.PrintLine("var trans = this.transform;");
 
         // 变量挂接代码
         foreach (UIGenControl ctrl in _controls)
@@ -85,23 +91,29 @@ class UIGenWindow
         gen.Out();
         gen.PrintLine("}");
 
-        // 生成回调
-        foreach (UIGenControl ctrl in _controls)
+        // 主逻辑代码存在时, 自动生成这些实现代码, 以保证代码编译的过
+
+        if ( MainLogicFileExists )
         {
-            if (ctrl.ObjectType != CodeGenObjectType.GenAsButton)
+            foreach (UIGenControl ctrl in _controls)
             {
-                continue;
-            }
+                if (ctrl.ObjectType != CodeGenObjectType.GenAsButton)
+                {
+                    continue;
+                }
 
-            // 当主类存在方法, 就不用生成替代的
-            if ( ctrl.ButtonCallbackExists )
-            {
-                continue;
-            }
+                // 当主类存在方法, 就不用生成替代的
+                if (ctrl.ButtonCallbackExists)
+                {
+                    continue;
+                }
 
-            // 将实现放在自动生成代码, 让代码可以编译通过
-            ctrl.PrintButtonClickImplementCode(gen);
+                // 将实现放在自动生成代码, 让代码可以编译通过
+                ctrl.PrintButtonClickImplementCode(gen);
+            }
         }
+
+        
 
 
         gen.Out();
@@ -123,6 +135,15 @@ class UIGenWindow
         gen.PrintLine("public partial class ", Name, " : MonoBehaviour");
         gen.PrintLine("{");
         gen.In();
+
+
+        gen.PrintLine("void Awake( )");
+        gen.PrintLine("{");
+        gen.In();
+        gen.PrintLine("InitUI( );");
+        gen.Out();
+        gen.PrintLine("}");
+        gen.PrintLine();
 
         // 按钮回调
         foreach (UIGenControl ctrl in _controls)

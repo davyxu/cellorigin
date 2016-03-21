@@ -25,9 +25,10 @@ class UIGenControl
 
     public void PrintAttachCode(CodeGenerator gen)
     {
-        var path = ObjectUtility.GetGameObjectPath(_binder.gameObject);
-        gen.PrintLine("_", Name, " = GameObject.Find(\"", path, "\").GetComponent<", GetVarType(), ">();");
+        var path = ObjectUtility.GetGameObjectPath(_binder.gameObject, _window.Obj);
+        gen.PrintLine("_", Name, " = trans.Find(\"", path, "\").GetComponent<", GetVarType(), ">();");
     }
+
 
     public void PrintButtonClickRegisterCode( CodeGenerator gen )
     {
@@ -53,7 +54,10 @@ class UIGenControl
             var ass = Assembly.LoadFile(@"Library\ScriptAssemblies\Assembly-CSharp.dll");
 
             // 取到类信息
-            var classInfo = ass.GetType(_window.Name);            
+            var classInfo = ass.GetType(_window.Name);
+
+            if (classInfo == null)
+                return false;
            
             // 取方法, 查方法是否存在
             var methodInfo = classInfo.GetMethod(ButtonCallbackName, BindingFlags.NonPublic | BindingFlags.Instance);
@@ -67,13 +71,14 @@ class UIGenControl
         if (_binder.Type != CodeGenObjectType.GenAsButton)
             return;
 
-        var path = ObjectUtility.GetGameObjectPath(_binder.gameObject);
+        var path = ObjectUtility.GetGameObjectPath(_binder.gameObject, _window.Obj);
 
         gen.PrintLine("// Button @ ", path);
         gen.PrintLine("void ", ButtonCallbackName, "( )");
         gen.PrintLine("{");
         gen.PrintLine();
         gen.PrintLine("}");
+        gen.PrintLine();
     }
 
     // TODO 处理名字不符合函数命名规定的问题
