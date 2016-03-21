@@ -24,7 +24,12 @@ class UIGenWindow
                 continue;
             }
 
-            _controls.Add(new UIGenControl(ctrlBinder));
+            if ( !UIBinder.CheckName(trans.gameObject.name) )
+            {
+                continue;
+            }
+
+            _controls.Add(new UIGenControl(this, ctrlBinder));
 
         }
 
@@ -79,6 +84,24 @@ class UIGenWindow
 
         gen.Out();
         gen.PrintLine("}");
+
+        // 生成回调
+        foreach (UIGenControl ctrl in _controls)
+        {
+            if (ctrl.ObjectType != CodeGenObjectType.GenAsButton)
+            {
+                continue;
+            }
+
+            // 当主类存在方法, 就不用生成替代的
+            if ( ctrl.ButtonCallbackExists )
+            {
+                continue;
+            }
+
+            // 将实现放在自动生成代码, 让代码可以编译通过
+            ctrl.PrintButtonClickImplementCode(gen);
+        }
 
 
         gen.Out();

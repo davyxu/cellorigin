@@ -21,8 +21,8 @@ public partial class LoginUI : MonoBehaviour
 		_ServerList = GameObject.Find("/Canvas/LoginUI/ServerList").GetComponent<Dropdown>();
 		_EnterGame = GameObject.Find("/Canvas/LoginUI/EnterGame").GetComponent<Button>();
 		
-		_SetDevAddress.onClick.AddListener( OnSetDevAddress );
-		_SetPublicAddress.onClick.AddListener( OnSetPublicAddress );
-		_EnterGame.onClick.AddListener( OnEnterGame );
+		_SetDevAddress.onClick.AddListener( SetDevAddress_Click );
+		_SetPublicAddress.onClick.AddListener( SetPublicAddress_Click );
+		_EnterGame.onClick.AddListener( EnterGame_Click );
 	}
 }

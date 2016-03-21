@@ -1,6 +1,16 @@
-﻿using UnityEngine;using UnityEngine.UI;
+﻿using System;
+using UnityEngine;
+using UnityEngine.UI;
 
-public enum CodeGenObjectType{    Unknown,    GenAsCanvas,    GenAsButton,    GenAsInputField,    GenAsText,    GenAsImage,    GenAsWindow,    GenAsDropdown,}[ExecuteInEditMode]public class UIBinder : MonoBehaviour {    public CodeGenObjectType Type;    // 组件添加到对象时, 自动决定类型    void OnEnable( )    {        // 启动探测类型        Type = DetectType(gameObject);    }    public void AddBinderToAllTopChild( )    {        foreach( Transform trans in transform )        {            // 子控件是可探测类型, 自动添加            if ( DetectType( trans.gameObject ) != CodeGenObjectType.Unknown )            {
+public enum CodeGenObjectType{    Unknown,    GenAsCanvas,    GenAsButton,    GenAsInputField,    GenAsText,    GenAsImage,    GenAsWindow,    GenAsDropdown,}[ExecuteInEditMode]public class UIBinder : MonoBehaviour {    public CodeGenObjectType Type;    // 组件添加到对象时, 自动决定类型    void OnEnable( )    {        // 启动探测类型        Type = DetectType(gameObject);        if ( !CheckName( gameObject.name ) )
+        {
+            Type = CodeGenObjectType.Unknown;
+            Debug.LogError(string.Format("UIBinder: Invalid object name to generated code, {0} ", gameObject.name));
+        }    }    // 放置命名不规范, 导致代码生成错误    public static bool CheckName( string name )
+    {
+        var c = name[0];
+        return Char.IsLetter( c) || c == '_' ;        
+    }    public void AddBinderToAllTopChild( )    {        foreach( Transform trans in transform )        {            // 子控件是可探测类型, 自动添加            if ( DetectType( trans.gameObject ) != CodeGenObjectType.Unknown )            {
                 if (trans.gameObject.GetComponent<UIBinder>() == null)
                 {
                     trans.gameObject.AddComponent<UIBinder>();

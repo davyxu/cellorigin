@@ -38,7 +38,7 @@ public partial class LoginUI : MonoBehaviour {
         RefreshServerList();
     }
 
-    void OnEnterGame( )
+    void EnterGame_Click()
     {
         // TODO 转圈的系统
         // TODO 连接有问题的提示, 区分连接不上和断开
@@ -50,12 +50,12 @@ public partial class LoginUI : MonoBehaviour {
 
 
 
-    void OnSetDevAddress()
+    void SetDevAddress_Click()
     {
         _Address.text = Constant.DevAddress;
     }
 
-    void OnSetPublicAddress()
+    void SetPublicAddress_Click()
     {
         _Address.text = Constant.PublicAddress;
     }
