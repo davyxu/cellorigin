@@ -16,6 +16,10 @@
 # 文档请参考
 https://github.com/davyxu/cellorigin/tree/master/doc
 
+# 开发环境
+Unity3D 5.x+
+Golang 1.5+
+
 # TODO
 
 * 基于代码生成的自动Model数据更新系统

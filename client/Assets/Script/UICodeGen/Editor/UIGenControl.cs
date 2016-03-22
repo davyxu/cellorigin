@@ -1,6 +1,8 @@
-﻿
-using System;
-using System.Reflection;
+﻿using System.Reflection;
+
+/// <summary>
+/// 一个窗口上的一系列控件
+/// </summary>
 class UIGenControl
 {
     UIGenWindow _window;

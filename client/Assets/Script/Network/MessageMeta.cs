@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-
+/// <summary>
+/// 消息类型与id的映射表
+/// </summary>
 public class MessageMeta
 {
     Dictionary<uint, Type> _id2type = new Dictionary<uint, Type>();
@@ -26,6 +28,11 @@ public class MessageMeta
         return this;
     }
 
+    /// <summary>
+    /// 将消息注册
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="t"></param>
     void RegisterMessage( uint id, Type t )
     {
         if (GetMessageType(id) == t)

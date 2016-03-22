@@ -40,6 +40,10 @@ public class UICodeGen : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// 找到给定的绑定器上的所有顶级子窗口对象
+    /// </summary>
+    /// <param name="canvas"></param>
     static void ScanWindowObject(UIBinder canvas)
     {
         if (canvas == null)

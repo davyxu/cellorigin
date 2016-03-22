@@ -9,7 +9,7 @@ public partial class LoginUI : MonoBehaviour {
     {
         InitUI();
 
-        _model = new LoginModel(gameObject);
+        _model = new LoginModel();
 
         _Account.text = _model.Account;
         _Address.text = _model.Address;
@@ -48,6 +48,9 @@ public partial class LoginUI : MonoBehaviour {
 
         // 进入游戏
         gameObject.SetActive(false);
+
+        EventEnterGame ev;
+        EventDispatcher.Instance.Invoke( ev );
     }
 
 

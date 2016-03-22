@@ -30,9 +30,9 @@ class LoginModel
     public Action OnLoginOK;
 
 
-    public LoginModel( GameObject loginui)
+    public LoginModel( )
     {
-        _loginPeer = loginui.GetComponent<NetworkPeer>();
+        _loginPeer = PeerManager.Instance.Get("login");
 
         _setting = LocalSetting.Load<gamedef.LoginSetting>("login");
     }

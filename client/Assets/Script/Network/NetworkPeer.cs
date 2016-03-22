@@ -33,7 +33,8 @@ public class NetworkPeer : MonoBehaviour
 
     Queue<MsgData> _msgQueue = new Queue<MsgData>();
     object _msgQueueGuard = new object();
-       
+
+    #region 延迟模拟
 
     // 延迟模拟系统
     struct DelayMsgData
@@ -66,16 +67,18 @@ public class NetworkPeer : MonoBehaviour
         set { _emulateDelayMS = value; }
     }
 
+    #endregion
+
     uint _peerConnectedMsgID;
-    uint _peerClosedMsgID;
+    uint _peerClosedMsgID;    
     public NetworkPeer( )
     {
-        _meta = SharedNet.Instance.MsgMeta;
+        _meta = PeerManager.Instance.MsgMeta;
 
         _peerConnectedMsgID = _meta.GetMessageID<gamedef.PeerConnected>();
         _peerClosedMsgID = _meta.GetMessageID<gamedef.PeerClosed>();
     }
-
+   
     /// <summary>
     /// 连接是否可用
     /// </summary>
@@ -367,6 +370,16 @@ public class NetworkPeer : MonoBehaviour
     }
 
     #region Unity stuff
+
+    void Start( )
+    {
+        // 有名字才能上户口啊,不然就是黑户-_-
+        if ( !string.IsNullOrEmpty(name))
+        {
+            PeerManager.Instance.RegisterPeer(name, this);
+        }
+        
+    }
     void Update( )
     {
         Polling();

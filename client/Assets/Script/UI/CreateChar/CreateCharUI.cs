@@ -7,6 +7,10 @@ public partial class CreateCharUI : MonoBehaviour
 	void Awake( )
 	{
 		InitUI( );
+
+        EventDispatcher.Instance.Add<EventEnterGame>( ev =>{
+            gameObject.SetActive(true);
+        });
 	}
 	
 	// Button @ SelectCharA

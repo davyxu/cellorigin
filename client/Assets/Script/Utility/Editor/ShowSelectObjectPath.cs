@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEditor;
 
+/// <summary>
+/// 在日志中显示选中对象的绝对路径
+/// </summary>
 public class ShowSelectObjectPath : MonoBehaviour {
 
     [MenuItem("UITools/查看路径")]

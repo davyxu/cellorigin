@@ -1,5 +1,8 @@
 ﻿using System.Text;
 
+/// <summary>
+/// 代码生成类
+/// </summary>
 public class CodeGenerator
 {
     StringBuilder _builder = new StringBuilder();
@@ -28,6 +31,10 @@ public class CodeGenerator
         _builder.Append("\n");
     }
 
+    /// <summary>
+    /// 把多个参数打到一行里
+    /// </summary>
+    /// <param name="values"></param>
     public void PrintLine(params object[] values)
     {
         BeginLine();
@@ -35,12 +42,17 @@ public class CodeGenerator
         EndLine();
     }
 
-    // 进入一个层次, 例如括号
+    /// <summary>
+    /// 进入一个层次, 例如括号
+    /// </summary>
     public void In( )
     {
         _indend += "\t";
     }
 
+    /// <summary>
+    /// 退出一个层次
+    /// </summary>
     public void Out( )
     {
         if ( _indend.Length > 0 )
