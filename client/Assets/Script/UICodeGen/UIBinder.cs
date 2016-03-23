@@ -9,7 +9,7 @@ public enum CodeGenObjectType{    Unknown,    GenAsCanvas,    GenAsButton, 
     /// </summary>    void OnEnable( )    {        // 启动探测类型        Type = DetectType(gameObject);        if ( !CheckName( gameObject.name ) )
         {
             Type = CodeGenObjectType.Unknown;
-            Debug.LogError(string.Format("UIBinder: Invalid object name to generated code, {0} ", gameObject.name));
+            Debug.LogError(string.Format("UIBinder: 对象名包含非法字符(不能以数字开头), 生成代码会导致错误, {0} ", gameObject.name));
         }    }    /// <summary>
     /// // 防止命名不规范, 导致代码生成错误
     /// </summary>

@@ -21,12 +21,7 @@ class LoginModel
     }
     #endregion
 
-    List<gamedef.ServerInfo> _serverList;
-    public List<gamedef.ServerInfo> ServerList
-    {
-        get { return _serverList; }
-    }
-
+    public List<gamedef.ServerInfo> ServerList;
     public Action OnLoginOK;
 
 
@@ -58,9 +53,12 @@ class LoginModel
         {
             var msg = obj as gamedef.LoginACK;
 
-            _serverList = msg.ServerList;
+            ServerList = msg.ServerList;
 
             OnLoginOK();
+
+            // 停止线程及工作
+            _loginPeer.Stop();
         });
 
     }

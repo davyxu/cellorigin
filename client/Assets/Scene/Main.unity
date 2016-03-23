@@ -336,9 +336,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 126032, guid: 6171b0068b54f9f41a8ae7f6fd4af639, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11444002, guid: 6171b0068b54f9f41a8ae7f6fd4af639, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 6171b0068b54f9f41a8ae7f6fd4af639, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &881399904
@@ -354,9 +355,10 @@ GameObject:
   - 92: {fileID: 881399906}
   - 81: {fileID: 881399905}
   - 114: {fileID: 881399910}
+  - 114: {fileID: 881399911}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -440,6 +442,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: game
+  Address: 
+--- !u!114 &881399911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 881399904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 421e8f28ca2e61c41aa37ccc753fd7fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: login
   Address: 
 --- !u!1001 &1328298404
 Prefab:
@@ -547,6 +562,10 @@ Prefab:
     - target: {fileID: 11427362, guid: a84dca7371553374e8cca0f4ab028707, type: 2}
       propertyPath: m_Color.b
       value: 0.7352941
+      objectReference: {fileID: 0}
+    - target: {fileID: 106574, guid: a84dca7371553374e8cca0f4ab028707, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a84dca7371553374e8cca0f4ab028707, type: 2}

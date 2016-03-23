@@ -44,7 +44,11 @@ public partial class LoginUI : MonoBehaviour {
     {
         // TODO 转圈的系统
         // TODO 连接有问题的提示, 区分连接不上和断开
-
+        var svinfo = CurrServerInfo;
+        if ( svinfo != null )
+        {
+            GameVerifyModel.Instance.Request(svinfo.Address, _model.Account);
+        }
 
         // 进入游戏
         gameObject.SetActive(false);
@@ -66,6 +70,23 @@ public partial class LoginUI : MonoBehaviour {
         _Address.text = Constant.PublicAddress;
     }
 
+    /// <summary>
+    /// 当前选中的服务器信息
+    /// </summary>
+    gamedef.ServerInfo CurrServerInfo
+    {
+        get
+        {
+            if ( _ServerList.value < 0 || _ServerList.value >= _model.ServerList.Count )
+            {
+                return null;
+            }
+
+            return _model.ServerList[_ServerList.value];
+        }
+    }
+
+    
     void RefreshServerList( )
     {
         _ServerList.ClearOptions();
@@ -76,7 +97,7 @@ public partial class LoginUI : MonoBehaviour {
             nameList.Add(_model.ServerList[i].DisplayName);
             
         }
-
+        
         _ServerList.AddOptions(nameList);
 
     }

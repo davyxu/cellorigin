@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 
 public class PeerManager : Singleton<PeerManager>
@@ -16,20 +17,25 @@ public class PeerManager : Singleton<PeerManager>
         _meta.Scan("gamedef");
     }
 
-
-    Dictionary<string, NetworkPeer> _peerMap = new Dictionary<string, NetworkPeer>();
-
-    public void RegisterPeer(string name, NetworkPeer peer)
-    {
-        _peerMap.Add(name, peer);
-    }
-
+    /// <summary>
+    /// 在主摄像机上放置NetworkPeer
+    /// </summary>
+    /// <param name="name">提前命名</param>
+    /// <returns></returns>
     public NetworkPeer Get( string name )
     {
-        NetworkPeer peer;
-        if ( _peerMap.TryGetValue( name, out peer ))
+        var cam = Camera.main;
+        if (cam == null)
         {
-            return peer;
+            Debug.LogError("NetworkPeer 必须在主摄像机上");
+            return null;
+        }
+
+        var peers = cam.GetComponents<NetworkPeer>();
+        for( int i = 0;i< peers.Length;i++)
+        {
+            if (peers[i].Name == name)
+                return peers[i];
         }
 
         return null;

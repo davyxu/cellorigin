@@ -371,15 +371,6 @@ public class NetworkPeer : MonoBehaviour
 
     #region Unity stuff
 
-    void Start( )
-    {
-        // 有名字才能上户口啊,不然就是黑户-_-
-        if ( !string.IsNullOrEmpty(name))
-        {
-            PeerManager.Instance.RegisterPeer(name, this);
-        }
-        
-    }
     void Update( )
     {
         Polling();
