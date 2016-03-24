@@ -17,15 +17,17 @@
 https://github.com/davyxu/cellorigin/tree/master/doc
 
 # 开发环境
-Unity3D 5.x+
-Golang 1.5+
+
+* Unity3D 5.x+
+
+* Golang 1.5+
 
 # TODO
 
 * 基于代码生成的自动Model数据更新系统
 
 
-**项目施工中, 完善后将开放游览, 敬请期待**
-
 # 信条
 编程不仅为了写正确的代码, 更是为了找到聪明解决问题的方案
+
+**项目施工中, 敬请期待**

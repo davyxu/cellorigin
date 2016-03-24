@@ -27,6 +27,15 @@ func Start(evq cellnet.EventQueue) {
 
 		// 加载玩家数据
 		gameuser.LoadAccountData(evq, msg.Token, func(acc *gameuser.DBAccount) {
+
+			// 没数据
+			if acc.Account == nil {
+				u.Send(&gamedef.VerifyGameACK{
+					Result: gamedef.VerifyGameResult_InvalidToken,
+				})
+				return
+			}
+
 			u.AccountData = acc.Account
 
 			// 保存原始数据, 方便后面处理

@@ -30,6 +30,7 @@ var (
 // 加载账号信息
 func LoadAccountData(evq cellnet.EventQueue, accountid string, callback func(*DBAccount)) {
 
+	log.Debugln("LoadAccountData:", accountid)
 	mdb.Execute(func(ses *mgo.Session) {
 
 		var dbdata DBAccount
