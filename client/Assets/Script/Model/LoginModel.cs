@@ -5,21 +5,9 @@ class LoginModel : BaseModel
 {
     NetworkPeer _loginPeer;
 
-    #region 登陆初始信息
-    gamedef.LoginSetting _setting;
-  
-    public string Account
-    {
-        get { return _setting.Account; }
-        set{ _setting.Account = value;}
-    }
+    public string Account { get; set; }
 
-    public string Address
-    {
-        get { return _setting.Address; }
-        set{ _setting.Address = value;}
-    }
-    #endregion
+    public string Address { get; set; }
 
     public List<gamedef.ServerInfo> ServerList;
     public Action OnLoginOK;
@@ -29,12 +17,25 @@ class LoginModel : BaseModel
     {
         _loginPeer = PeerManager.Instance.Get("login");
 
-        _setting = LocalSetting.Load<gamedef.LoginSetting>("login");
+        Load();
+    }
+
+    public void Load( )
+    {
+        var setting = LocalSetting.Load<gamedef.LoginSetting>("login");
+        if ( setting != null )
+        {
+            Account = setting.Account;
+            Address = setting.Address;
+        }
     }
 
     public void Save( )
     {
-        LocalSetting.Save<gamedef.LoginSetting>("login", _setting);
+        var setting = new gamedef.LoginSetting();
+        setting.Account = Account;
+        setting.Address = Address;
+        LocalSetting.Save<gamedef.LoginSetting>("login", setting);
     }
 
     public void Login( )

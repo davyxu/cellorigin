@@ -96,10 +96,10 @@ namespace gamedef
 	{
 		public CreateCharREQ() {}
 		
-		private uint _CandidateID = default(uint);
+		private int _CandidateID = default(int);
 		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"CandidateID", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
-		[global::System.ComponentModel.DefaultValue(default(uint))]
-		public uint CandidateID
+		[global::System.ComponentModel.DefaultValue(default(int))]
+		public int CandidateID
 		{
 			get { return _CandidateID; }
 			set { _CandidateID = value; }
@@ -123,10 +123,10 @@ namespace gamedef
 	{
 		public CreateCharACK() {}
 		
-		private uint _CandidateID = default(uint);
+		private int _CandidateID = default(int);
 		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"CandidateID", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
-		[global::System.ComponentModel.DefaultValue(default(uint))]
-		public uint CandidateID
+		[global::System.ComponentModel.DefaultValue(default(int))]
+		public int CandidateID
 		{
 			get { return _CandidateID; }
 			set { _CandidateID = value; }

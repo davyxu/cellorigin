@@ -34,16 +34,23 @@ class CharListModel : BaseModel
 
             if ( msg.CharInfo.Count == 0 )
             {
-                Event.CreateChar ev;
-                EventEmiiter.Instance.Invoke(ev);
+                
+                EventEmiiter.Instance.Invoke<Event.CreateChar>();
+                UIManager.Instance.Show("CreateCharUI");
             }
             else
             {
-                Event.ShowCharList ev;
-                EventEmiiter.Instance.Invoke(ev);
+                EventEmiiter.Instance.Invoke<Event.ShowCharList>();
             }
 
         });
+    }
 
+    public void Create( int index, string name )
+    {
+        var req = new gamedef.CreateCharREQ();
+        req.CandidateID = index;
+        req.CharName = name;
+        _gamePeer.SendMessage(req);
     }
 }

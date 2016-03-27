@@ -4,33 +4,27 @@ using UnityEngine.UI;
 
 public partial class CreateCharUI : MonoBehaviour
 {
+    CharListModel _model;
+
 	void Awake( )
 	{
-		InitUI( );
-        gameObject.SetActive(false);
+        _model = ModelManager.Instance.Get<CharListModel>();
 
-        EventEmiiter.Instance.Add<Event.CreateChar>(ev =>
-        {
-            gameObject.SetActive(true);
-        });
+		InitUI( );
+        _CharName.text = "hello";
 	}
 	
 	// Button @ SelectCharA
 	void SelectCharA_Click( )
 	{
-	
+        _model.Create(0, _CharName.text);
 	}
 	
 	// Button @ SelectCharB
 	void SelectCharB_Click( )
 	{
-	
+        _model.Create(1, _CharName.text);
 	}
-	
-	// Button @ CreateChar
-	void CreateChar_Click( )
-	{
-	
-	}
+
 	
 }

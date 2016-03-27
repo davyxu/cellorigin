@@ -58,7 +58,7 @@ enum CreateCharResult
 // client -> game
 message CreateCharREQ
 {
-	uint32 CandidateID = 1;			// 要创建的角色ID
+	int32 CandidateID = 1;			// 要创建的角色ID
 	
 	string CharName = 2;
 }
@@ -67,7 +67,7 @@ message CreateCharREQ
 // game -> client
 message CreateCharACK
 {
-	uint32 CandidateID = 1;			// 要创建的角色ID, 透传
+	int32 CandidateID = 1;			// 要创建的角色ID, 透传
 	
 	CreateCharResult Result = 2;	
 }

@@ -8,7 +8,6 @@ public partial class CreateCharUI : MonoBehaviour
 	InputField _CharName;
 	Button _SelectCharA;
 	Button _SelectCharB;
-	Button _CreateChar;
 	
 	void InitUI()
 	{
@@ -16,10 +15,8 @@ public partial class CreateCharUI : MonoBehaviour
 		_CharName = trans.Find("CharName").GetComponent<InputField>();
 		_SelectCharA = trans.Find("SelectCharA").GetComponent<Button>();
 		_SelectCharB = trans.Find("SelectCharB").GetComponent<Button>();
-		_CreateChar = trans.Find("CreateChar").GetComponent<Button>();
 		
 		_SelectCharA.onClick.AddListener( SelectCharA_Click );
 		_SelectCharB.onClick.AddListener( SelectCharB_Click );
-		_CreateChar.onClick.AddListener( CreateChar_Click );
 	}
 }

@@ -5,9 +5,6 @@ class GameVerifyModel : BaseModel
 {
     NetworkPeer _gamePeer;
 
-    public Action<gamedef.VerifyGameResult> OnVerifyResult;
-
-
     public GameVerifyModel()
     {
         _gamePeer = PeerManager.Instance.Get("game");

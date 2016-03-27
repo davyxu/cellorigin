@@ -8,7 +8,6 @@ public partial class CharListUI : MonoBehaviour
 	
 	void InitUI()
 	{
-		var trans = this.transform;
 		
 	}
 }

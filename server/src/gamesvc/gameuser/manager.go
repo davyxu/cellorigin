@@ -36,7 +36,7 @@ func GetAccountData(evq cellnet.EventQueue, accountid string, callback func(erro
 
 		col := ses.DB("").C("account")
 
-		err := col.Find(bson.M{"accountid": accountid}).One(&dbdata)
+		err := col.Find(bson.M{"account.accountid": accountid}).One(&dbdata)
 
 		// 没有时创建
 		if err == mgo.ErrNotFound {
@@ -71,7 +71,7 @@ func CreateChar(evq cellnet.EventQueue, acc *DBAccount, char *CharData, callback
 
 		col := ses.DB("").C("account")
 
-		err := col.Update(bson.M{"accountid": acc.Account.AccountID}, &acc)
+		err := col.Update(bson.M{"account.accountid": acc.Account.AccountID}, &acc)
 		if err != nil {
 			log.Errorln(err)
 		}

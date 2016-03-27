@@ -26,6 +26,4 @@ public partial class LoginUI : MonoBehaviour
 		_SetPublicAddress.onClick.AddListener( SetPublicAddress_Click );
 		_EnterServer.onClick.AddListener( EnterServer_Click );
 	}
-
-	
 }

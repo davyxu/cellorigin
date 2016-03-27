@@ -72,7 +72,12 @@ class UIGenWindow
         gen.PrintLine("void InitUI()");
         gen.PrintLine("{");
         gen.In();
-        gen.PrintLine("var trans = this.transform;");
+
+        if ( _controls.Count > 0 )
+        {
+            gen.PrintLine("var trans = this.transform;");
+        }
+        
 
         // 变量挂接代码
         foreach (UIGenControl ctrl in _controls)

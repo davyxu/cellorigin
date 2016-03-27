@@ -37,7 +37,7 @@ public class EventEmiiter : Singleton<EventEmiiter>
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="data"></param>
-    public void Invoke<T>( T data )
+    public void Invoke<T>( T data = default(T))
     {
         var info = TypeToString(data);
         Debug.Log("EventInvoke: " + info);
@@ -50,6 +50,7 @@ public class EventEmiiter : Singleton<EventEmiiter>
         }
     }
 
+
     string TypeToString<T>( T instance )
     {
         var sb = new StringBuilder();
@@ -57,7 +58,7 @@ public class EventEmiiter : Singleton<EventEmiiter>
         var info = typeof(T);
 
         sb.Append(info.Name);
-        sb.Append("{");
+        sb.Append("{ ");
 
         var fields = info.GetFields(BindingFlags.Public | BindingFlags.Instance);
         foreach( FieldInfo f in fields )

@@ -147,8 +147,8 @@ GameObject:
   - 224: {fileID: 22430048}
   - 222: {fileID: 22291232}
   - 114: {fileID: 11401352}
-  - 114: {fileID: 11402054}
   - 114: {fileID: 11444036}
+  - 114: {fileID: 11402054}
   m_Layer: 5
   m_Name: LoginUI
   m_TagString: Untagged
@@ -500,7 +500,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.509}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1916,7 +1916,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0.01172881, y: -0.000022888184}
+  m_AnchoredPosition: {x: 0.000010060146, y: 0.0000076293945}
   m_SizeDelta: {x: 1280.4, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22430076
