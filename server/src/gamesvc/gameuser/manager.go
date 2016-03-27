@@ -1,7 +1,6 @@
 package gameuser
 
 import (
-	//	"proto/gamedef"
 	"table"
 
 	"github.com/davyxu/cellnet"
@@ -27,10 +26,10 @@ var (
 	// 1个连接同时只有1个账户, 1个角色在线
 )
 
-// 加载账号信息
-func LoadAccountData(evq cellnet.EventQueue, accountid string, callback func(*DBAccount)) {
+func GetAccountData(evq cellnet.EventQueue, accountid string, callback func(error, *DBAccount)) {
 
-	log.Debugln("LoadAccountData:", accountid)
+	log.Debugln("GetAccountData:", accountid)
+
 	mdb.Execute(func(ses *mgo.Session) {
 
 		var dbdata DBAccount
@@ -39,21 +38,28 @@ func LoadAccountData(evq cellnet.EventQueue, accountid string, callback func(*DB
 
 		err := col.Find(bson.M{"accountid": accountid}).One(&dbdata)
 
-		if err != nil && err != mgo.ErrNotFound {
+		// 没有时创建
+		if err == mgo.ErrNotFound {
 
+			log.Debugf("Create account: %s", accountid)
+
+			// 初始账号信息
+			dbdata.Account = &AccountData{
+				AccountID: accountid,
+			}
+
+			err = col.Insert(&dbdata)
+		}
+
+		if err != nil {
 			log.Errorln(err)
-			return
 		}
 
 		evq.PostData(func() {
-			callback(&dbdata)
+			callback(err, &dbdata)
 		})
 
 	})
-}
-
-func CreateAccount(evq cellnet.EventQueue, accountid string, callback func(error)) {
-
 }
 
 // 创建角色
@@ -103,7 +109,7 @@ func Start() {
 	})
 
 	if err != nil {
-		log.Errorln(err)
+		log.Errorln(table.ServiceConfig.DSN)
 	}
 
 }

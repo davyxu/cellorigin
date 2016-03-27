@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-class GameVerifyModel : Singleton<GameVerifyModel>
+class GameVerifyModel : BaseModel
 {
     NetworkPeer _gamePeer;
 
@@ -11,6 +11,11 @@ class GameVerifyModel : Singleton<GameVerifyModel>
     public GameVerifyModel()
     {
         _gamePeer = PeerManager.Instance.Get("game");
+
+        EventEmiiter.Instance.Add<Event.EnterServer>(ev =>
+        {
+            Request(ev.Address, ev.Token);
+        });
     }
 
     public void Request( string address, string token )
@@ -24,11 +29,12 @@ class GameVerifyModel : Singleton<GameVerifyModel>
             _gamePeer.SendMessage(req);
         });
 
+        // TODO 通用对话框提示状态信息
         _gamePeer.RegisterMessage<gamedef.VerifyGameACK>(obj =>
         {
             var msg = obj as gamedef.VerifyGameACK;
 
-            EventDispatcher.Instance.Invoke(msg.Result);
+            EventEmiiter.Instance.Invoke(msg.Result);
         });
 
     }

@@ -188,8 +188,8 @@ namespace gamedef
 		[global::ProtoBuf.ProtoEnum(Name=@"VerifyOK", Value=0)]
 		VerifyOK = 0,
 		
-		[global::ProtoBuf.ProtoEnum(Name=@"InvalidToken", Value=1)]
-		InvalidToken = 1,
+		[global::ProtoBuf.ProtoEnum(Name=@"DataException", Value=1)]
+		DataException = 1,
 		
 		[global::ProtoBuf.ProtoEnum(Name=@"AccountBlocked", Value=2)]
 		AccountBlocked = 2

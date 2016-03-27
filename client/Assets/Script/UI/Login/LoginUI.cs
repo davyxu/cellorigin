@@ -9,13 +9,13 @@ public partial class LoginUI : MonoBehaviour {
     {
         InitUI();
 
-        _model = new LoginModel();
+        _model = ModelManager.Instance.Get<LoginModel>();
 
         _Account.text = _model.Account;
         _Address.text = _model.Address;
 
         _model.OnLoginOK += OnLoginOK;
-        _EnterGame.interactable = false;
+        _EnterServer.interactable = false;
 
     }
 
@@ -34,31 +34,32 @@ public partial class LoginUI : MonoBehaviour {
 
     void OnLoginOK()
     {
-        _EnterGame.interactable = true;
+        _EnterServer.interactable = true;
 
         // 刷新服务器列表
         RefreshServerList();
     }
 
-    void EnterGame_Click()
+    // Button @ EnterServer
+    void EnterServer_Click()
     {
+
         // TODO 转圈的系统
         // TODO 连接有问题的提示, 区分连接不上和断开
         var svinfo = CurrServerInfo;
+
         if ( svinfo != null )
         {
-            GameVerifyModel.Instance.Request(svinfo.Address, _model.Account);
+            // 进入游戏
+            gameObject.SetActive(false);
+
+            Event.EnterServer ev;
+            ev.Address = svinfo.Address;
+            ev.Token = _model.Account;
+            EventEmiiter.Instance.Invoke(ev);
         }
 
-        // 进入游戏
-        gameObject.SetActive(false);
-
-        EventEnterGame ev;
-        EventDispatcher.Instance.Invoke( ev );
     }
-
-
-
 
     void SetDevAddress_Click()
     {

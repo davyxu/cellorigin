@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-class LoginModel
+class LoginModel : BaseModel
 {
     NetworkPeer _loginPeer;
 

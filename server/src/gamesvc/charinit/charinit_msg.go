@@ -87,6 +87,8 @@ func Start(evq cellnet.EventQueue) {
 					Result: gamedef.EnterGameResult_EnterGameOK,
 				})
 
+			} else {
+				log.Debugf("select char not exist, account: %s char: %s", u.ID(), msg.CharName)
 			}
 
 		}

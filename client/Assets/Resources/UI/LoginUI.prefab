@@ -80,7 +80,7 @@ GameObject:
   - 114: {fileID: 11437792}
   - 114: {fileID: 11439418}
   m_Layer: 5
-  m_Name: EnterGame
+  m_Name: EnterServer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,7 +148,6 @@ GameObject:
   - 222: {fileID: 22291232}
   - 114: {fileID: 11401352}
   - 114: {fileID: 11402054}
-  - 114: {fileID: 11444002}
   - 114: {fileID: 11444036}
   m_Layer: 5
   m_Name: LoginUI
@@ -1019,19 +1018,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 7
---- !u!114 &11444002
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 126032}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 421e8f28ca2e61c41aa37ccc753fd7fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: login
-  Address: 
 --- !u!114 &11444036
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1423,7 +1409,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u8FDB\u5165\u6E38\u620F"
+  m_Text: "\u8FDB\u5165\u670D\u52A1\u5668"
 --- !u!114 &11482124
 MonoBehaviour:
   m_ObjectHideFlags: 1

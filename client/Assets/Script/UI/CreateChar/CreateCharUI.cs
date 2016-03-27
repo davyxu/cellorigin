@@ -7,8 +7,10 @@ public partial class CreateCharUI : MonoBehaviour
 	void Awake( )
 	{
 		InitUI( );
+        gameObject.SetActive(false);
 
-        EventDispatcher.Instance.Add<EventEnterGame>( ev =>{
+        EventEmiiter.Instance.Add<Event.CreateChar>(ev =>
+        {
             gameObject.SetActive(true);
         });
 	}

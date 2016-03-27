@@ -10,7 +10,7 @@ public partial class LoginUI : MonoBehaviour
 	Button _SetDevAddress;
 	Button _SetPublicAddress;
 	Dropdown _ServerList;
-	Button _EnterGame;
+	Button _EnterServer;
 	
 	void InitUI()
 	{
@@ -20,10 +20,12 @@ public partial class LoginUI : MonoBehaviour
 		_SetDevAddress = trans.Find("SetDevAddress").GetComponent<Button>();
 		_SetPublicAddress = trans.Find("SetPublicAddress").GetComponent<Button>();
 		_ServerList = trans.Find("ServerList").GetComponent<Dropdown>();
-		_EnterGame = trans.Find("EnterGame").GetComponent<Button>();
+		_EnterServer = trans.Find("EnterServer").GetComponent<Button>();
 		
 		_SetDevAddress.onClick.AddListener( SetDevAddress_Click );
 		_SetPublicAddress.onClick.AddListener( SetPublicAddress_Click );
-		_EnterGame.onClick.AddListener( EnterGame_Click );
+		_EnterServer.onClick.AddListener( EnterServer_Click );
 	}
+
+	
 }

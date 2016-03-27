@@ -13,7 +13,7 @@ message VerifyGameREQ
 enum VerifyGameResult
 {
 	VerifyOK 	   = 0; // 正常进入
-	InvalidToken   = 1; // 非法令牌
+	DataException  = 1; // 数据异常( 结构未同步, db查询发生错误 )
 	AccountBlocked = 2; // 账号被禁止进入
 }
 

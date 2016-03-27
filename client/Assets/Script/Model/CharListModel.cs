@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-class CharListModel
+class CharListModel : BaseModel
 {
     NetworkPeer _gamePeer;
-
-    public Action OnCharListOK;
 
     public List<gamedef.SimpleCharInfo> CharInfo;
 
@@ -13,6 +11,14 @@ class CharListModel
     public CharListModel( )
     {
         _gamePeer = PeerManager.Instance.Get("game");
+
+        EventEmiiter.Instance.Add<gamedef.VerifyGameResult>(ev =>
+        {
+            if ( ev == gamedef.VerifyGameResult.VerifyOK )
+            {
+                Request();
+            }
+        });
     }
 
     public void Request( )
@@ -26,7 +32,17 @@ class CharListModel
 
             CharInfo = msg.CharInfo;
 
-            OnCharListOK();
+            if ( msg.CharInfo.Count == 0 )
+            {
+                Event.CreateChar ev;
+                EventEmiiter.Instance.Invoke(ev);
+            }
+            else
+            {
+                Event.ShowCharList ev;
+                EventEmiiter.Instance.Invoke(ev);
+            }
+
         });
 
     }
