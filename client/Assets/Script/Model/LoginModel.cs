@@ -3,22 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 class LoginModel : BaseModel
 {
-    NetworkPeer _loginPeer;
+    
 
     public string Account { get; set; }
 
     public string Address { get; set; }
 
     public List<gamedef.ServerInfo> ServerList;
-    public Action OnLoginOK;
-
-
-    public LoginModel( )
-    {
-        _loginPeer = PeerManager.Instance.Get("login");
-
-        Load();
-    }
 
     public void Load( )
     {
@@ -27,6 +18,16 @@ class LoginModel : BaseModel
         {
             Account = setting.Account;
             Address = setting.Address;
+        }
+
+        if ( string.IsNullOrEmpty(Account) )
+        {
+            Account = "t";
+        }
+
+        if (string.IsNullOrEmpty(Address))
+        {
+            Address = "127.0.0.1:8101";
         }
     }
 
@@ -38,29 +39,5 @@ class LoginModel : BaseModel
         LocalSetting.Save<gamedef.LoginSetting>("login", setting);
     }
 
-    public void Login( )
-    {
-        _loginPeer.Connect( Address );
 
-        _loginPeer.RegisterMessage<gamedef.PeerConnected>(obj =>
-        {
-            var req = new gamedef.LoginREQ();
-            req.ClientVersion = Constant.ClientVersion;
-            req.PlatformToken = Account;
-            _loginPeer.SendMessage(req);
-        });
-
-        _loginPeer.RegisterMessage<gamedef.LoginACK>(obj =>
-        {
-            var msg = obj as gamedef.LoginACK;
-
-            ServerList = msg.ServerList;
-
-            OnLoginOK();
-
-            // 停止线程及工作
-            _loginPeer.Stop();
-        });
-
-    }
 }

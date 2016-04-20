@@ -148,7 +148,7 @@ GameObject:
   - 222: {fileID: 22291232}
   - 114: {fileID: 11401352}
   - 114: {fileID: 11444036}
-  - 114: {fileID: 11402054}
+  - 114: {fileID: 11415390}
   m_Layer: 5
   m_Name: LoginUI
   m_TagString: Untagged
@@ -514,17 +514,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &11402054
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 126032}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be27a0e5112ee8941af45e047d24be04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11402812
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -564,6 +553,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 2
+--- !u!114 &11415390
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 126032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 687d1e40e2e367249be68c6441754987, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11416202
 MonoBehaviour:
   m_ObjectHideFlags: 1
