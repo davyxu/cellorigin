@@ -27,3 +27,4 @@ tool/protoc-gen-sharpnet.exe
 /client/*.csproj
 /client/*.sln
 /server/cfg/Local.pbt
+/client/*.userprefs

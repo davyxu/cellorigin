@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
+
+
 class LoginModel : BaseModel
 {
-    
-
     public string Account { get; set; }
 
     public string Address { get; set; }
