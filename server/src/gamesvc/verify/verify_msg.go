@@ -28,6 +28,8 @@ func Start(evq cellnet.EventQueue) {
 		// 加载玩家数据
 		gameuser.GetAccountData(evq, msg.Token, func(err error, acc *gameuser.DBAccount) {
 
+			var ack gamedef.VerifyGameACK
+
 			if err == nil {
 				u.AccountData = acc.Account
 
@@ -35,18 +37,14 @@ func Start(evq cellnet.EventQueue) {
 				gameuser.RawDataByID[clientid] = acc
 
 				// 角色数据在选择角色后挂接
-
-				u.Send(&gamedef.VerifyGameACK{
-					Result: gamedef.VerifyGameResult_VerifyOK,
-				})
+				ack.Result = gamedef.VerifyGameResult_VerifyOK
 
 			} else {
 
-				u.Send(&gamedef.VerifyGameACK{
-					Result: gamedef.VerifyGameResult_DataException,
-				})
-
+				ack.Result = gamedef.VerifyGameResult_DataException
 			}
+
+			u.Send(&ack)
 
 		})
 	})

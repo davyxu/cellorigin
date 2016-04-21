@@ -16,7 +16,7 @@ class EventDataBaseTemplate<T> : EventDataBase
 
 
 
-public class EventEmiiter : Singleton<EventEmiiter>
+public class EventEmitter : Singleton<EventEmitter>
 {
     Dictionary<Type, EventDataBase> _eventMap = new Dictionary<Type, EventDataBase>();
 

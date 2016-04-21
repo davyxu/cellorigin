@@ -43,7 +43,6 @@ public class ModelManager : MonoBehaviour
         _instance = this;
 
         Register<LoginModel>();
-        Register<GameVerifyModel>();
         Register<CharListModel>();
 
     }

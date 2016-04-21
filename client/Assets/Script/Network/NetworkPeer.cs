@@ -82,7 +82,7 @@ public class NetworkPeer : MonoBehaviour
     /// <summary>
     /// 连接是否可用
     /// </summary>
-    public bool Ready
+    public bool Valid
     {
         get
         {

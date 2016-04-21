@@ -90,16 +90,16 @@ class LoginViewModel
     {
         if ( CurrServerInfo != null )
         {
-            Event.EnterServer ev;
-            ev.Address = CurrServerInfo.Address;
-            ev.Token = Account;
-            EventEmiiter.Instance.Invoke(ev);
+            VerifyGame(CurrServerInfo.Address, Account);
         }
         
     }
 
     public void Command_Login()
     {
+        if (_loginPeer == null)
+            return;
+
         _loginPeer.Connect(Address);
 
         _loginPeer.RegisterMessage<gamedef.PeerConnected>(obj =>
@@ -116,10 +116,9 @@ class LoginViewModel
 
            ServerList = msg.ServerList;
 
-            //OnLoginOK();
-
             // 停止线程及工作
             _loginPeer.Stop();
+            _loginPeer = null;
         });
 
     }
@@ -133,10 +132,12 @@ class LoginViewModel
 
 
     NetworkPeer _loginPeer;
+    NetworkPeer _gamePeer;
 
     public LoginViewModel( )
     {
         _loginPeer = PeerManager.Instance.Get("login");
+        _gamePeer = PeerManager.Instance.Get("game");
         _Model = ModelManager.Instance.Get<LoginModel>();
     }
 
@@ -147,6 +148,31 @@ class LoginViewModel
         OnAddressChanged();
 
         Command_Login();
+    }
+
+    public void VerifyGame(string address, string token)
+    {
+        // 处理重入
+        if (_gamePeer.Valid)
+            return;
+
+        _gamePeer.Connect(address);
+
+        _gamePeer.RegisterMessage<gamedef.PeerConnected>(obj =>
+        {
+            var req = new gamedef.VerifyGameREQ();
+            req.Token = token;
+            _gamePeer.SendMessage(req);
+        });
+
+        // TODO 通用对话框提示状态信息
+        _gamePeer.RegisterMessage<gamedef.VerifyGameACK>(obj =>
+        {
+            var msg = obj as gamedef.VerifyGameACK;
+
+            EventEmitter.Instance.Invoke(msg.Result);
+        });
+
     }
 
 

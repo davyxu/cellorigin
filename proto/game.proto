@@ -20,7 +20,7 @@ enum VerifyGameResult
 // game -> client
 message VerifyGameACK
 {
-	VerifyGameResult Result = 1;	
+	VerifyGameResult Result = 1;
 }
 
 
