@@ -5,7 +5,12 @@ using UnityEngine;
 
 public class NetworkPeer : MonoBehaviour
 {
-    public string Name;
+    public string _name;
+    public string Name
+    {
+        get { return _name; }
+    }
+
     public string Address;
 
     ClientSocket _socket;
@@ -13,7 +18,7 @@ public class NetworkPeer : MonoBehaviour
     MessageMeta _meta;
     MessagePrinter _printer = new MessagePrinter();
 
-    Dictionary<uint, Action<object>> _msgCallbacks = new Dictionary<uint, Action<object>>();
+    MessageDispatcher _dispatcher = new MessageDispatcher();
         
     public Action<NetworkPeer, uint, object> OnSend;
     public Action<NetworkPeer, uint, object> OnRecv;
@@ -226,47 +231,6 @@ public class NetworkPeer : MonoBehaviour
         PostMessage(msgID, data );
     }
 
-    /// <summary>
-    /// 注册一个消息
-    /// </summary>
-    /// <typeparam name="T">消息类型</typeparam>
-    /// <param name="callback">回调处理</param>
-    public void RegisterMessage<T>(Action<object> callback)
-    {
-        RegisterMessage(_meta.GetMessageID<T>(), callback);
-    }
-
-    public void UnRegisterMessage(uint msgid, Action<object> callback)
-    {
-        Action<object> callbacks;
-        if (_msgCallbacks.TryGetValue(msgid, out callbacks))
-        {
-            callbacks -= callback;
-            _msgCallbacks[msgid] = callbacks; 
-        }
-    }
-    public void UnRegisterMessage<T>(Action<object> callback)
-    {
-        UnRegisterMessage(_meta.GetMessageID<T>(), callback);
-    }
-
-    void RegisterMessage(uint msgid, Action<object> callback)
-    {
-        Action<object> callbacks;
-        if (_msgCallbacks.TryGetValue(msgid, out callbacks))
-        {
-            callbacks += callback;
-            _msgCallbacks[msgid] = callbacks; 
-        }
-        else
-        {
-            callbacks += callback;
-
-            _msgCallbacks.Add(msgid, callbacks);
-        }
-    }
-
-
     void OnReceiveSocketMessage(uint msgid, MemoryStream stream)
     {
         object msg;
@@ -290,22 +254,18 @@ public class NetworkPeer : MonoBehaviour
         PostMessage(msgid, msg);
     }
 
-    void DispatchMessage(uint msgid, object msg)
+    /// <summary>
+    /// 注册一个消息
+    /// </summary>
+    /// <typeparam name="T">消息类型</typeparam>
+    /// <param name="callback">回调处理</param>
+    public void RegisterMessage<T>(Action<object> callback)
     {
-        Action<object> callbacks;
-        if (!_msgCallbacks.TryGetValue(msgid, out callbacks))
-        {
-            return;
-        }
-
-        if (callbacks != null)
-        {
-            callbacks.Invoke(msg);
-        }
-        else
-        {
-            _msgCallbacks.Remove(msgid);
-        }
+        _dispatcher.Add(_meta.GetMessageID<T>(), callback);
+    }
+    public void UnRegisterMessage<T>(Action<object> callback)
+    {
+        _dispatcher.Remove(_meta.GetMessageID<T>(), callback);
     }
 
 
@@ -349,7 +309,7 @@ public class NetworkPeer : MonoBehaviour
     {
         LogMessage(msgid, msg);
 
-        DispatchMessage(msgid, msg);
+        _dispatcher.Invoke(msgid, msg);
     }
 
     void LogMessage( uint msgid, object msg)

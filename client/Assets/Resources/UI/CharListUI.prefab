@@ -48,6 +48,7 @@ GameObject:
   - 222: {fileID: 22207270}
   - 114: {fileID: 11436870}
   - 114: {fileID: 11448412}
+  - 114: {fileID: 11402756}
   m_Layer: 5
   m_Name: CharListUI
   m_TagString: Untagged
@@ -179,6 +180,17 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &11402756
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 109716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49b5ce2644a975b4299f6596a348814e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11405078
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -244,7 +256,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100950}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a8bbe60797488744e8fd6cd0eafb5c16, type: 3}
   m_Name: 
@@ -430,7 +442,7 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: 
+  m_Text: Cat
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0

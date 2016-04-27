@@ -170,7 +170,20 @@ class LoginViewModel
         {
             var msg = obj as gamedef.VerifyGameACK;
 
-            EventEmitter.Instance.Invoke(msg.Result);
+            switch( msg.Result)
+            {
+                case gamedef.VerifyGameResult.VerifyOK:
+                    {
+                        UIManager.Instance.Show("CharListUI");
+                    }
+                    break;
+                default:
+                    {
+                        // TODO 通用对话框处理
+                    }
+                    break;
+            }
+            
         });
 
     }

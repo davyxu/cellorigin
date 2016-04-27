@@ -20,25 +20,28 @@ class CharListView : MonoBehaviour
         _SelectChar = trans.Find("SelectChar").GetComponent<Button>();
         _CreateChar = trans.Find("CreateChar").GetComponent<Button>();
 
-        //_SelectChar.onClick.AddListener(SelectCharA_Click);
-        //_CreateChar.onClick.AddListener(SelectCharB_Click);
+        _CreateChar.onClick.AddListener(_ViewModel.Command_CreateChar);
+        _SelectChar.onClick.AddListener(_ViewModel.Command_SelectChar);
+
+        // CharName
+        _CharName.onValueChanged.AddListener(x =>
+        {
+            _ViewModel.CharNameForCreate = x;
+        });
+        // 初始化同步
+        _ViewModel.CharNameForCreate = _CharName.text;
+
+
     }
 
     void Awake()
     {
         InitUI();
-
-        gameObject.SetActive(false);
-
-        EventEmitter.Instance.Add<Event.ShowCharList>(ev =>
-        {
-            gameObject.SetActive(true);
-        });
     }
 
     void Start()
     {
-        //_ViewModel.Start();
+        _ViewModel.Start();
     }
 
     void OnDisable()

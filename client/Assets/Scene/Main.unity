@@ -200,8 +200,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 421e8f28ca2e61c41aa37ccc753fd7fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: game
-  Address: 
+  _name: login
+  Address: 127.0.0.1:8101
 --- !u!114 &881399911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,7 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 421e8f28ca2e61c41aa37ccc753fd7fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: login
+  _name: game
   Address: 
 --- !u!114 &881399912
 MonoBehaviour:
@@ -430,6 +430,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7fcc0e5cd0b267438740b652b7238fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _DebugMode: 0
+  _UnitTestUIName: 
 --- !u!1 &1709971546
 GameObject:
   m_ObjectHideFlags: 0

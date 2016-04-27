@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-class UIManager : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
     static UIManager _instance;
+
+    public bool _DebugMode;
+    public string _UnitTestUIName;
 
     public static UIManager Instance
     {
@@ -13,6 +16,11 @@ class UIManager : MonoBehaviour
     void Awake( )
     {
         _instance = this;
+    }
+
+    void Start( )
+    {
+
     }
 
     public void Show( string name )
