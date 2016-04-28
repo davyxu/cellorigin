@@ -5,9 +5,6 @@ public class UIManager : MonoBehaviour
 {
     static UIManager _instance;
 
-    public bool _DebugMode;
-    public string _UnitTestUIName;
-
     public static UIManager Instance
     {
         get { return _instance; }
