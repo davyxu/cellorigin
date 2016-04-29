@@ -12,6 +12,10 @@ class CharListView : MonoBehaviour
 
     ListControl _CharList;
 
+    Button _Add;
+    Button _Remove;
+    Button _Modify;
+
 
     void InitUI()
     {
@@ -25,6 +29,14 @@ class CharListView : MonoBehaviour
         _CharList = trans.Find("CharList").GetComponent<ListControl>();
 
 
+        _Add = trans.Find("Add").GetComponent<Button>();
+        _Add.onClick.AddListener(_ViewModel.Command_Add);
+        _Remove = trans.Find("Remove").GetComponent<Button>();
+        _Remove.onClick.AddListener(_ViewModel.Command_Remove);
+        _Modify = trans.Find("Modify").GetComponent<Button>();
+        _Modify.onClick.AddListener(_ViewModel.Command_Modify);
+
+
         _CreateChar.onClick.AddListener(_ViewModel.Command_CreateChar);
         _SelectChar.onClick.AddListener(_ViewModel.Command_SelectChar);
 
@@ -35,19 +47,23 @@ class CharListView : MonoBehaviour
 
             _ViewModel.CharInfoList.Visit((key, value) =>
             {
-                var item = _CharList.Add();
-                item.GetComponent<SimpleCharInfoView>().ViewModel.CharName = value.CharName;
+                _CharList.Add<SimpleCharInfoView, SimpleCharInfoViewModel>(key, value);
+                
+
+                return true;
             });
-
         };
 
-        _ViewModel.CharInfoList.OnItemUpdated += ( index, elem ) =>
+        _ViewModel.CharInfoList.OnItemAdded += (key, value) =>
         {
-
-            ListItem item = _CharList.Get(index);
-            item.GetComponent<SimpleCharInfoView>().ViewModel.CharName = elem as string;
-
+            _CharList.Add<SimpleCharInfoView, SimpleCharInfoViewModel>(key, value);
         };
+
+        _ViewModel.CharInfoList.OnItemRemoved += ( key ) =>
+        {
+            _CharList.Remove(key);
+        };
+
 
         // CharName
         _CharName.onValueChanged.AddListener(x =>

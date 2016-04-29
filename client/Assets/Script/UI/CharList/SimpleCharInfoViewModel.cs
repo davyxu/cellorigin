@@ -8,7 +8,7 @@ public class SimpleCharInfoModel
 }
 
 
-class SimpleCharInfoViewModel
+class SimpleCharInfoViewModel : BaseViewModel
 {
     SimpleCharInfoModel _Model;
 
@@ -39,11 +39,6 @@ class SimpleCharInfoViewModel
     public SimpleCharInfoViewModel()
     {
         _Model = new SimpleCharInfoModel();
-    }
-
-    public void Start( )
-    {
-        //Request();
     }
 
 

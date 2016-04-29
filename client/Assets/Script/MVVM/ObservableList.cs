@@ -1,86 +1,74 @@
 ﻿
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
-public class ObservableList<T>
+public delegate bool VisitHandle<KeyType, ValueType>(KeyType key, ValueType value);
+
+public class ObservableCollection<KeyType, ValueType>
 {
-    Dictionary<object, T> _itemMap = new Dictionary<object,T>();
+    Dictionary<KeyType, ValueType> _itemMap = new Dictionary<KeyType, ValueType>();
 
-    public Action<int, object> OnItemAdded;
-    public Action OnItemRemoved;
-    public Action<int, object> OnItemUpdated;
-    public Action OnItemTotalChanged;   
+    public Action<KeyType, ValueType> OnItemAdded;
+    public Action<KeyType> OnItemRemoved;
+    public Action OnItemTotalChanged;
 
-    //public void Add( T elem )
-    //{
-    //    _item.Add(elem);
-
-    //    if (OnItemAdded != null)
-    //    {
-    //        OnItemAdded(elem);
-    //    }
-    //}
-
-    //public void Remove( T elem )
-    //{
-    //    _item.Remove(elem);
-
-    //    if (OnItemRemoved != null)
-    //    {
-    //        OnItemRemoved();
-    //    }
-    //}
-
-    //public void Update(int index, T elem )
-    //{
-    //    _item[index] = elem;
-
-    //    if ( OnItemUpdated != null )
-    //    {
-    //        OnItemUpdated(index, elem);
-    //    }
-    //}
-
-    public T Get( int index )
+    public void Add(KeyType key, ValueType elem)
     {
-        return _itemMap[index];
+        _itemMap.Add(key, elem);
+
+        if (OnItemAdded != null)
+        {
+            OnItemAdded(key, elem);
+        }
+    }
+
+    public void Remove(KeyType key)
+    {
+        _itemMap.Remove(key);
+
+        if (OnItemRemoved != null)
+        {
+            OnItemRemoved(key);
+        }
+    }
+
+
+    public ValueType Get(KeyType key)
+    {
+        ValueType v;
+        if ( _itemMap.TryGetValue(key, out v ) )
+        {
+            return v;
+        }
+
+        return default(ValueType);
     }    
+
+    public int Count
+    {
+        get { return _itemMap.Count; }
+    }
 
     public void Clear()
     {
         _itemMap.Clear();
 
-        NotifyTotalChanged();
-    }
-
-    public void Visit( Action<object, T> callback )
-    {
-        foreach( var kv in _itemMap)
-        {
-            callback(kv.Key, kv.Value);
-        }
-    }
-
-    public void FromList( List<T> list )
-    {
-        _itemMap.Clear();
-
-        for(int i = 0;i< list.Count;i++)
-        {
-            _itemMap.Add(i, list[i]);
-        }
-
-        NotifyTotalChanged();
-    }
-
-    public void NotifyTotalChanged()
-    {
         if (OnItemTotalChanged != null)
         {
             OnItemTotalChanged();
         }
     }
 
-    
+
+    public void Visit(VisitHandle<KeyType,ValueType> callback)
+    {
+        foreach( var kv in _itemMap)
+        {
+            if ( !callback(kv.Key, kv.Value) )
+            {
+                return;
+            }
+        }
+    }
+
 }

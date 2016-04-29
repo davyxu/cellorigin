@@ -33,7 +33,7 @@ class CharListViewModel
         }
     }
 
-    public ObservableList<SimpleCharInfoViewModel> CharInfoList { get; set; }
+    public ObservableCollection<int, SimpleCharInfoViewModel> CharInfoList = new ObservableCollection<int, SimpleCharInfoViewModel>();
 
     #endregion
 
@@ -49,7 +49,7 @@ class CharListViewModel
 
     public void Start( )
     {
-        //Request();
+        Request();
     }
 
     public void Command_CreateChar( )
@@ -67,9 +67,38 @@ class CharListViewModel
         _gamePeer.SendMessage(req);
     }
 
-    void Test( )
+    public void Command_Add( )
     {
-        
+        {
+            var vm = new SimpleCharInfoViewModel();
+            vm.CharName = "a";
+
+            CharInfoList.Add(1, vm);
+        }
+
+        {
+            var vm = new SimpleCharInfoViewModel();
+            vm.CharName = "b";
+
+            CharInfoList.Add(2, vm);
+        }
+
+    }
+
+    public void Command_Remove()
+    {
+        CharInfoList.Visit( (key, value ) =>{
+
+            CharInfoList.Remove((int)key);
+
+
+            return false;
+        });
+    }
+
+    public void Command_Modify( )
+    {
+        CharInfoList.Get(1).CharName = "m";
     }
 
 
@@ -82,7 +111,14 @@ class CharListViewModel
         {
             var msg = obj as gamedef.CharListACK;
 
-            _Model.CharInfo.FromList(msg.CharInfo);
+            CharInfoList.Clear();
+
+            for( int i = 0;i< msg.CharInfo.Count;i++)
+            {
+                var sm = new SimpleCharInfoViewModel();
+                sm.CharName = msg.CharInfo[i].CharName;
+                CharInfoList.Add(i, sm);
+            }
         });
     }
 

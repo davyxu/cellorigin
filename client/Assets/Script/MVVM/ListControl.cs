@@ -1,32 +1,49 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.UI;
 
-public class ListControl : MonoBehaviour {
+public class ListControl : MonoBehaviour 
+{
 
     public GameObject Content;
     public ListItem ItemPrefab;
 
-    public ListItem Add( )
+    public ListItem Add<ViewType, ViewModelType>( object key, ViewModelType value) where ViewType: BaseView 
+                                                                                   where ViewModelType: BaseViewModel
     {
         var newItem = GameObject.Instantiate<ListItem>(ItemPrefab);
         newItem.transform.SetParent(Content.transform, false );
+        newItem.Key = key;
+
+        var valueCom = newItem.gameObject.AddComponent<ViewType>();
+        valueCom.Bind(value);
 
         return newItem;
     }
 
-    public ListItem Get( int index )
+    public ListItem Get( object key )
     {
         var list = Content.GetComponentsInChildren<ListItem>();
         foreach( ListItem item in list )
         {
-            if ( item.Key == index )
+            if ( item.Key.Equals(key ) )
             {
                 return item;
             }
         }
 
         return null;
+    }
+
+    public void Remove( object key )
+    {
+        var list = Content.GetComponentsInChildren<ListItem>();
+        foreach (ListItem item in list)
+        {
+            if (item.Key.Equals(key) )
+            {
+                GameObject.Destroy(item.gameObject);
+                break;
+            }
+        }
     }
 
     public void Clear( )
@@ -37,11 +54,4 @@ public class ListControl : MonoBehaviour {
             GameObject.Destroy(item);
         }
     }
-
-
-    //void Start( )
-    //{
-    //    Add().GetComponentInChildren<Text>().text = "hello";
-    //    Add().GetComponentInChildren<Text>().text = "world";
-    //}
 }

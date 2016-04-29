@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 
 
-class SimpleCharInfoView : MonoBehaviour
+class SimpleCharInfoView : BaseView
 {
     SimpleCharInfoViewModel _ViewModel;
 
@@ -16,10 +16,9 @@ class SimpleCharInfoView : MonoBehaviour
         get { return _ViewModel; }
     }
 
-
-    void InitUI()
+    public override void Bind(BaseViewModel vm)
     {
-        _ViewModel = new SimpleCharInfoViewModel();
+        _ViewModel = vm as SimpleCharInfoViewModel;
 
         var trans = this.transform;
         _CharName = trans.Find("CharName").GetComponent<Text>();        
@@ -30,22 +29,8 @@ class SimpleCharInfoView : MonoBehaviour
         {
             _CharName.text = _ViewModel.CharName;
         };
+        _CharName.text = _ViewModel.CharName;
 
-
-    }
-
-    void Awake()
-    {
-        InitUI();
-    }
-
-    void Start()
-    {
-        _ViewModel.Start();
-    }
-
-    void OnDisable()
-    {
 
     }
 }
