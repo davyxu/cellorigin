@@ -10,6 +10,8 @@ class CharListView : MonoBehaviour
     Button _SelectChar;
     Button _CreateChar;
 
+    ListControl _CharList;
+
 
     void InitUI()
     {
@@ -20,8 +22,32 @@ class CharListView : MonoBehaviour
         _SelectChar = trans.Find("SelectChar").GetComponent<Button>();
         _CreateChar = trans.Find("CreateChar").GetComponent<Button>();
 
+        _CharList = trans.Find("CharList").GetComponent<ListControl>();
+
+
         _CreateChar.onClick.AddListener(_ViewModel.Command_CreateChar);
         _SelectChar.onClick.AddListener(_ViewModel.Command_SelectChar);
+
+
+        // CharList
+        _ViewModel.CharInfoList.OnItemTotalChanged += delegate {
+            _CharList.Clear();
+
+            _ViewModel.CharInfoList.Visit((key, value) =>
+            {
+                var item = _CharList.Add();
+                item.GetComponent<SimpleCharInfoView>().ViewModel.CharName = value.CharName;
+            });
+
+        };
+
+        _ViewModel.CharInfoList.OnItemUpdated += ( index, elem ) =>
+        {
+
+            ListItem item = _CharList.Get(index);
+            item.GetComponent<SimpleCharInfoView>().ViewModel.CharName = elem as string;
+
+        };
 
         // CharName
         _CharName.onValueChanged.AddListener(x =>

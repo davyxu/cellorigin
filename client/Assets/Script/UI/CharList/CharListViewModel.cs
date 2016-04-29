@@ -33,6 +33,8 @@ class CharListViewModel
         }
     }
 
+    public ObservableList<SimpleCharInfoViewModel> CharInfoList { get; set; }
+
     #endregion
 
 
@@ -80,7 +82,7 @@ class CharListViewModel
         {
             var msg = obj as gamedef.CharListACK;
 
-            _Model.CharInfo = msg.CharInfo;
+            _Model.CharInfo.FromList(msg.CharInfo);
         });
     }
 

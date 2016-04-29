@@ -188,8 +188,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7fcc0e5cd0b267438740b652b7238fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _DebugMode: 1
-  _UnitTestUIName: CharListUI
 --- !u!224 &666589765 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 22488494, guid: a84dca7371553374e8cca0f4ab028707,
@@ -347,6 +345,15 @@ Prefab:
       propertyPath: Type
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 11432552, guid: a84dca7371553374e8cca0f4ab028707, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11432552, guid: a84dca7371553374e8cca0f4ab028707, type: 2}
+      propertyPath: ItemPrefab
+      value: 
+      objectReference: {fileID: 11455672, guid: b08c7ec84b117f4428775798bb9f2038,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a84dca7371553374e8cca0f4ab028707, type: 2}
   m_IsPrefabParent: 0
