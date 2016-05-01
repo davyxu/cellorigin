@@ -4,25 +4,25 @@ public class ListControl : MonoBehaviour
 {
 
     public GameObject Content;
-    public ListItem ItemPrefab;
+    public GameObject ItemPrefab;
 
-    public ListItem Add<ViewType, PresenterType>( object key, PresenterType value) where ViewType: BaseView 
-                                                                                   where PresenterType: BasePresenter
+    public void Add<ViewType, PresenterType>(object key, PresenterType value)
+        where ViewType : BaseItemView 
+        where PresenterType: BasePresenter
     {
-        var newItem = GameObject.Instantiate<ListItem>(ItemPrefab);
+        var newItem = GameObject.Instantiate<GameObject>(ItemPrefab);
         newItem.transform.SetParent(Content.transform, false );
-        newItem.Key = key;
-
-        var valueCom = newItem.gameObject.AddComponent<ViewType>();
-        valueCom.Bind(value);
-
-        return newItem;
+        
+        var view = newItem.gameObject.AddComponent<ViewType>();
+        view.Key = key;
+        view.Bind(value);
     }
 
-    public ListItem Get( object key )
+    public ViewType Get<ViewType>(object key)
+        where ViewType: BaseItemView
     {
-        var list = Content.GetComponentsInChildren<ListItem>();
-        foreach( ListItem item in list )
+        var list = Content.GetComponentsInChildren<ViewType>();
+        foreach (ViewType item in list)
         {
             if ( item.Key.Equals(key ) )
             {
@@ -33,10 +33,11 @@ public class ListControl : MonoBehaviour
         return null;
     }
 
-    public void Remove( object key )
+    public void Remove<ViewType>(object key)
+        where ViewType : BaseItemView
     {
-        var list = Content.GetComponentsInChildren<ListItem>();
-        foreach (ListItem item in list)
+        var list = Content.GetComponentsInChildren<ViewType>();
+        foreach (ViewType item in list)
         {
             if (item.Key.Equals(key) )
             {
@@ -46,10 +47,11 @@ public class ListControl : MonoBehaviour
         }
     }
 
-    public void Clear( )
+    public void Clear<ViewType>()
+        where ViewType : BaseItemView
     {
-        var list = Content.GetComponentsInChildren<ListItem>();
-        foreach (ListItem item in list)
+        var list = Content.GetComponentsInChildren<ViewType>();
+        foreach (ViewType item in list)
         {
             GameObject.Destroy(item);
         }

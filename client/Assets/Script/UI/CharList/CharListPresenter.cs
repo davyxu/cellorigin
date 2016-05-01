@@ -2,90 +2,38 @@
 using System.Collections.Generic;
 
 
-class CharListPresenter : BasePresenter
+
+partial class CharListPresenter : BasePresenter, ICharListPresenter
 {
-    CharListModel _Model;
-
-    #region Property
-    public string CharNameForCreate
-    {
-        get
-        {
-            return _Model.CharNameForCreate;
-        }
-
-        set
-        {
-            _Model.CharNameForCreate = value;
-        }
-    }
-
-    public string CharNameForEnter
-    {
-        get
-        {
-            return _Model.CharNameForEnter;
-        }
-
-        set
-        {
-            _Model.CharNameForEnter = value;
-        }
-    }
-
-    public ObservableCollection<int, SimpleCharInfoPresenter> CharInfoList = new ObservableCollection<int, SimpleCharInfoPresenter>();
-
-    #endregion
-
-
-
-    NetworkPeer _gamePeer;
-
-    public CharListPresenter( )
-    {
-        _gamePeer = PeerManager.Instance.Get("game");
-        _Model = ModelManager.Instance.Get<CharListModel>();
-    }
-
-    public void Start( )
-    {
-        Request();
-    }
-
-    public void Command_CreateChar( )
+    public void Exec_CreateChar( )
     {
         var req = new gamedef.CreateCharREQ();
         req.CharName = CharNameForCreate;
         req.CandidateID = 0;
-        _gamePeer.SendMessage( req );
+        _GamePeer.SendMessage( req );
     }
 
-    public void Command_SelectChar()
+    public void Exec_SelectChar()
     {
         var req = new gamedef.EnterGameREQ();
         req.CharName = CharNameForEnter;
-        _gamePeer.SendMessage(req);
+        _GamePeer.SendMessage(req);
     }
 
-    public void Command_Add( )
+    static int _base = 1;
+    public void Exec_DebugAdd( )
     {
         {
             var vm = new SimpleCharInfoPresenter();
-            vm.CharName = "a";
+            vm.CharName = _base.ToString();
 
-            CharInfoList.Add(1, vm);
-        }
-
-        {
-            var vm = new SimpleCharInfoPresenter();
-            vm.CharName = "b";
-
-            CharInfoList.Add(2, vm);
+            CharInfoList.Add(_base, vm);
+            _base++;
         }
 
     }
 
-    public void Command_Remove()
+    public void Exec_DebugRemove()
     {
         CharInfoList.Visit( (key, value ) =>{
 
@@ -96,32 +44,33 @@ class CharListPresenter : BasePresenter
         });
     }
 
-    public void Command_Modify( )
+    public void Exec_DebugModify( )
     {
         CharInfoList.Get(1).CharName = "m";
     }
 
+    public CharListPresenter( )
+    {
+        Init();
+    }
+
+    private void Msg_CharListACK(NetworkPeer _GamePeer, gamedef.CharListACK msg)
+    {
+        CharInfoList.Clear();
+
+        for (int i = 0; i < msg.CharInfo.Count; i++)
+        {
+            var sm = new SimpleCharInfoPresenter();
+            sm.CharName = msg.CharInfo[i].CharName;
+            CharInfoList.Add(i, sm);
+        }
+    }
 
 
-
-    public void Request()
+    public void Cmd_Request()
     {
         var req = new gamedef.CharListREQ();
-        _gamePeer.SendMessage(req);
-
-        _gamePeer.RegisterMessage<gamedef.CharListACK>(obj =>
-        {
-            var msg = obj as gamedef.CharListACK;
-
-            CharInfoList.Clear();
-
-            for( int i = 0;i< msg.CharInfo.Count;i++)
-            {
-                var sm = new SimpleCharInfoPresenter();
-                sm.CharName = msg.CharInfo[i].CharName;
-                CharInfoList.Add(i, sm);
-            }
-        });
+        _GamePeer.SendMessage(req);
     }
 
 }

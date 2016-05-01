@@ -8,39 +8,18 @@ public class SimpleCharInfoModel
 }
 
 
-class SimpleCharInfoPresenter : BasePresenter
+partial class SimpleCharInfoPresenter : BasePresenter, ISimpleCharInfoPresenter
 {
-    SimpleCharInfoModel _Model;
-
-    #region Property
-    public Action OnCharNameChanged;
-
-    public string CharName
-    {
-        get
-        {
-            return _Model.CharName;
-        }
-
-        set
-        {
-            _Model.CharName = value;
-
-            if (OnCharNameChanged != null)
-            {
-                OnCharNameChanged();
-            }
-        }
-    }
-
-    #endregion
-
-
     public SimpleCharInfoPresenter()
     {
-        _Model = new SimpleCharInfoModel();
+        Init();
     }
 
+
+    public void Exec_SelectChar( object param )
+    {
+
+    }
 
 }
 

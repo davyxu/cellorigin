@@ -38,17 +38,17 @@ partial class LoginPresenter : BasePresenter, ILoginPresenter
     #endregion
 
     #region Command
-    public void SetDevAddress()
+    public void Exec_SetDevAddress()
     {
         Address = Constant.DevAddress;
     }
 
-    public void SetPublicAddress()
+    public void Exec_SetPublicAddress()
     {
         Address = Constant.PublicAddress;
     }
 
-    public void EnterServer( )
+    public void Exec_EnterServer( )
     {
         UIManager.Instance.Hide("LoginUI");
 
@@ -78,12 +78,18 @@ partial class LoginPresenter : BasePresenter, ILoginPresenter
         Init();
     }
 
-    public void Start( )
+    public void Exec_Start( )
     {
         LoadSetting();
 
         StartLogin();
     }
+
+    public void Exec_SaveSetting()
+    {
+        SaveSetting();
+    }
+
 
     #region Setting
     void LoadSetting( )
@@ -106,7 +112,7 @@ partial class LoginPresenter : BasePresenter, ILoginPresenter
         }
     }
 
-    public void SaveSetting( )
+    void SaveSetting( )
     {
         var setting = new gamedef.LoginSetting();
         setting.Account = Account;
@@ -117,7 +123,7 @@ partial class LoginPresenter : BasePresenter, ILoginPresenter
 
     #region Login Message
 
-    void OnLoginPeerConnected(NetworkPeer peer, gamedef.PeerConnected msg)
+    void Msg_LoginPeerConnected(NetworkPeer peer, gamedef.PeerConnected msg)
     {
         var req = new gamedef.LoginREQ();
         req.ClientVersion = Constant.ClientVersion;
@@ -125,7 +131,7 @@ partial class LoginPresenter : BasePresenter, ILoginPresenter
         _LoginPeer.SendMessage(req);
     }
 
-    void OnPeerMessage(NetworkPeer peer, gamedef.LoginACK msg)
+    void Msg_LoginACK(NetworkPeer peer, gamedef.LoginACK msg)
     {
         ServerList = msg.ServerList;
 
@@ -139,7 +145,7 @@ partial class LoginPresenter : BasePresenter, ILoginPresenter
     #region Game Message
 
     string _verifyToken;
-    void OnGamePeerConnected(NetworkPeer peer, gamedef.PeerConnected msg)
+    void Msg_GamePeerConnected(NetworkPeer peer, gamedef.PeerConnected msg)
     {
         var req = new gamedef.VerifyGameREQ();
         req.Token = _verifyToken;
@@ -157,7 +163,7 @@ partial class LoginPresenter : BasePresenter, ILoginPresenter
     }
 
 
-    void OnPeerMessage( NetworkPeer peer, gamedef.VerifyGameACK msg )
+    void Msg_VerifyGameACK(NetworkPeer peer, gamedef.VerifyGameACK msg)
     {
         // TODO 通用对话框提示状态信息
 

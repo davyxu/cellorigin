@@ -1,6 +1,9 @@
 ﻿
+using UnityEngine;
+
 partial class CharListView : BaseView
 {
+
     void Awake()
     {
         Bind(new CharListPresenter());
@@ -8,6 +11,6 @@ partial class CharListView : BaseView
 
     void Start()
     {
-        _Presenter.Start();
+        _Presenter.Cmd_Request();
     }
 }

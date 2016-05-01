@@ -23,9 +23,9 @@ partial class LoginView : BaseView
         _ServerList = trans.Find("ServerList").GetComponent<Dropdown>();
         _EnterServer = trans.Find("EnterServer").GetComponent<Button>();
 
-        _SetDevAddress.onClick.AddListener(_Presenter.SetDevAddress);
-        _SetPublicAddress.onClick.AddListener(_Presenter.SetPublicAddress);
-        _EnterServer.onClick.AddListener(_Presenter.EnterServer);
+        _SetDevAddress.onClick.AddListener(_Presenter.Exec_SetDevAddress);
+        _SetPublicAddress.onClick.AddListener(_Presenter.Exec_SetPublicAddress);
+        _EnterServer.onClick.AddListener(_Presenter.Exec_EnterServer);
 
 
         // Account

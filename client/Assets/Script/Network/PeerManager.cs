@@ -38,7 +38,10 @@ public class PeerManager : Singleton<PeerManager>
                 return peers[i];
         }
 
-        return null;
+        // Make unity happy
+        var com = cam.gameObject.AddComponent<NetworkPeer>();
+        com.Name = name;
+        return com;
     }
 }
 

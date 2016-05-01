@@ -1,6 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 
+
+partial interface ILoginPresenter
+{
+    #region Property
+    string Account { get; set; }
+    string Address { get; set; }
+
+    #endregion
+
+    #region Event
+    event Action OnAccountChanged;
+
+    event Action OnAddressChanged;
+    #endregion
+
+    #region Command
+    void Exec_SetDevAddress();
+
+    void Exec_SetPublicAddress();
+
+    void Exec_EnterServer();
+
+    void Exec_SaveSetting();
+
+    void Exec_Start();
+
+    #endregion
+}
+
+
+
 partial class LoginPresenter : BasePresenter, ILoginPresenter
 {
     LoginModel _Model;
@@ -59,12 +90,12 @@ partial class LoginPresenter : BasePresenter, ILoginPresenter
 
         _LoginPeer.RegisterMessage<gamedef.PeerConnected>(obj =>
         {
-            OnLoginPeerConnected(_LoginPeer, obj as gamedef.PeerConnected);
+            Msg_LoginPeerConnected(_LoginPeer, obj as gamedef.PeerConnected);
         });
 
         _LoginPeer.RegisterMessage<gamedef.LoginACK>(obj =>
         {
-            OnPeerMessage(_LoginPeer, obj as gamedef.LoginACK);
+            Msg_LoginACK(_LoginPeer, obj as gamedef.LoginACK);
         });
 
 
@@ -74,13 +105,13 @@ partial class LoginPresenter : BasePresenter, ILoginPresenter
         _GamePeer.RegisterMessage<gamedef.PeerConnected>(obj =>
         {
             // 可以自定义回调名称避免冲突
-            OnGamePeerConnected(_GamePeer, obj as gamedef.PeerConnected);
+            Msg_GamePeerConnected(_GamePeer, obj as gamedef.PeerConnected);
         });
 
        
         _GamePeer.RegisterMessage<gamedef.VerifyGameACK>(obj =>
         {
-            OnPeerMessage(_GamePeer, obj as gamedef.VerifyGameACK);
+            Msg_VerifyGameACK(_GamePeer, obj as gamedef.VerifyGameACK);
         });
     }
 

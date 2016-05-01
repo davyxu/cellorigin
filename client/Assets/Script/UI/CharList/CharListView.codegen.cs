@@ -2,46 +2,43 @@
 
 partial class CharListView : BaseView
 {
-    CharListPresenter _Presenter;
+    ICharListPresenter _Presenter;
 
     InputField _CharName;
-    Button _SelectChar;
     Button _CreateChar;
 
     ListControl _CharList;
 
-    Button _Add;
-    Button _Remove;
-    Button _Modify;
+    Button _DebugAdd;
+    Button _DebugRemove;
+    Button _DebugModify;
 
 
     public override void Bind( BasePresenter presenter)
     {
-        _Presenter = presenter as CharListPresenter;
+        _Presenter = presenter as ICharListPresenter;
 
         var trans = this.transform;
         _CharName = trans.Find("CharName").GetComponent<InputField>();
-        _SelectChar = trans.Find("SelectChar").GetComponent<Button>();
         _CreateChar = trans.Find("CreateChar").GetComponent<Button>();
 
         _CharList = trans.Find("CharList").GetComponent<ListControl>();
 
 
-        _Add = trans.Find("Add").GetComponent<Button>();
-        _Add.onClick.AddListener(_Presenter.Command_Add);
-        _Remove = trans.Find("Remove").GetComponent<Button>();
-        _Remove.onClick.AddListener(_Presenter.Command_Remove);
-        _Modify = trans.Find("Modify").GetComponent<Button>();
-        _Modify.onClick.AddListener(_Presenter.Command_Modify);
+        _DebugAdd = trans.Find("DebugAdd").GetComponent<Button>();
+        _DebugAdd.onClick.AddListener(_Presenter.Exec_DebugAdd);
+        _DebugRemove = trans.Find("DebugRemove").GetComponent<Button>();
+        _DebugRemove.onClick.AddListener(_Presenter.Exec_DebugRemove);
+        _DebugModify = trans.Find("DebugModify").GetComponent<Button>();
+        _DebugModify.onClick.AddListener(_Presenter.Exec_DebugModify);
 
 
-        _CreateChar.onClick.AddListener(_Presenter.Command_CreateChar);
-        _SelectChar.onClick.AddListener(_Presenter.Command_SelectChar);
+        _CreateChar.onClick.AddListener(_Presenter.Exec_CreateChar);
 
 
         // CharList
         _Presenter.CharInfoList.OnItemTotalChanged += delegate {
-            _CharList.Clear();
+            _CharList.Clear<SimpleCharInfoView>();
 
             _Presenter.CharInfoList.Visit((key, value) =>
             {
@@ -59,7 +56,7 @@ partial class CharListView : BaseView
 
         _Presenter.CharInfoList.OnItemRemoved += ( key ) =>
         {
-            _CharList.Remove(key);
+            _CharList.Remove<SimpleCharInfoView>(key);
         };
 
 
