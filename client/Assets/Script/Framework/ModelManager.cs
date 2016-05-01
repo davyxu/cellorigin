@@ -2,20 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseModel
+
+public class ModelManager : Singleton<ModelManager>
 {
-
-}
-
-public class ModelManager : MonoBehaviour
-{
-    static ModelManager _instance;
-
-    public static ModelManager Instance
-    {
-        get{return _instance;}
-    }
-
     Dictionary<Type, BaseModel> _modelMap = new Dictionary<Type,BaseModel>();
 
     void Register<T>() where T : BaseModel, new()
@@ -26,6 +15,8 @@ public class ModelManager : MonoBehaviour
 
     public T Get<T>( ) where T:BaseModel
     {
+        Init();
+
         BaseModel m;
         if ( _modelMap.TryGetValue(typeof(T), out m) )
         {
@@ -35,16 +26,19 @@ public class ModelManager : MonoBehaviour
         return default(T);
     }
 
-    /// <summary>
-    /// 需要将ModelManager初始化设为使用前的所有MonoBehavior
-    /// </summary>
-    void Awake( )
+    static bool _initDone;
+
+    void Init()
     {
-        _instance = this;
+        if (_initDone)
+            return;
+
+        // TODO 从配置表导入初始化
 
         Register<LoginModel>();
         Register<CharListModel>();
 
+        _initDone = true;
     }
 }
 

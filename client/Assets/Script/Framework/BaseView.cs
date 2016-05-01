@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class BaseView : MonoBehaviour
 {
     
-    public virtual void Bind( BaseViewModel model)
+    public virtual void Bind( BasePresenter presenter)
     {
 
     }

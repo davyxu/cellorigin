@@ -8,7 +8,7 @@ public class SimpleCharInfoModel
 }
 
 
-class SimpleCharInfoViewModel : BaseViewModel
+class SimpleCharInfoPresenter : BasePresenter
 {
     SimpleCharInfoModel _Model;
 
@@ -36,7 +36,7 @@ class SimpleCharInfoViewModel : BaseViewModel
     #endregion
 
 
-    public SimpleCharInfoViewModel()
+    public SimpleCharInfoPresenter()
     {
         _Model = new SimpleCharInfoModel();
     }

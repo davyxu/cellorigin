@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-class CharListViewModel
+class CharListPresenter : BasePresenter
 {
     CharListModel _Model;
 
@@ -33,7 +33,7 @@ class CharListViewModel
         }
     }
 
-    public ObservableCollection<int, SimpleCharInfoViewModel> CharInfoList = new ObservableCollection<int, SimpleCharInfoViewModel>();
+    public ObservableCollection<int, SimpleCharInfoPresenter> CharInfoList = new ObservableCollection<int, SimpleCharInfoPresenter>();
 
     #endregion
 
@@ -41,7 +41,7 @@ class CharListViewModel
 
     NetworkPeer _gamePeer;
 
-    public CharListViewModel( )
+    public CharListPresenter( )
     {
         _gamePeer = PeerManager.Instance.Get("game");
         _Model = ModelManager.Instance.Get<CharListModel>();
@@ -70,14 +70,14 @@ class CharListViewModel
     public void Command_Add( )
     {
         {
-            var vm = new SimpleCharInfoViewModel();
+            var vm = new SimpleCharInfoPresenter();
             vm.CharName = "a";
 
             CharInfoList.Add(1, vm);
         }
 
         {
-            var vm = new SimpleCharInfoViewModel();
+            var vm = new SimpleCharInfoPresenter();
             vm.CharName = "b";
 
             CharInfoList.Add(2, vm);
@@ -102,6 +102,8 @@ class CharListViewModel
     }
 
 
+
+
     public void Request()
     {
         var req = new gamedef.CharListREQ();
@@ -115,7 +117,7 @@ class CharListViewModel
 
             for( int i = 0;i< msg.CharInfo.Count;i++)
             {
-                var sm = new SimpleCharInfoViewModel();
+                var sm = new SimpleCharInfoPresenter();
                 sm.CharName = msg.CharInfo[i].CharName;
                 CharInfoList.Add(i, sm);
             }

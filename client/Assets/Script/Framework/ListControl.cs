@@ -6,8 +6,8 @@ public class ListControl : MonoBehaviour
     public GameObject Content;
     public ListItem ItemPrefab;
 
-    public ListItem Add<ViewType, ViewModelType>( object key, ViewModelType value) where ViewType: BaseView 
-                                                                                   where ViewModelType: BaseViewModel
+    public ListItem Add<ViewType, PresenterType>( object key, PresenterType value) where ViewType: BaseView 
+                                                                                   where PresenterType: BasePresenter
     {
         var newItem = GameObject.Instantiate<ListItem>(ItemPrefab);
         newItem.transform.SetParent(Content.transform, false );

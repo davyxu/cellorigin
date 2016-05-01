@@ -15,17 +15,12 @@ public class UIManager : MonoBehaviour
         _instance = this;
     }
 
-    void Start( )
-    {
-
-    }
-
     public void Show( string name )
     {
         var prefab = Resources.Load<GameObject>("UI/" + name);
         if ( prefab == null )
         {
-            Debug.LogError("UI没找到: " + name);
+            Debug.LogError("UIManager.Show UI没找到: " + name);
             return;
         }
 
@@ -33,5 +28,17 @@ public class UIManager : MonoBehaviour
 
         ins.transform.SetParent(gameObject.transform, false );
         ins.SetActive(true);
+    }
+
+    public void Hide(string name)
+    {
+        var targetTrans = transform.FindChild(name);
+        if ( targetTrans == null )
+        {
+            Debug.LogError("UIManager.Hide UI没找到: " + name);
+            return;
+        }
+
+        targetTrans.gameObject.SetActive(false);
     }
 }
