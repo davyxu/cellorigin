@@ -9,11 +9,11 @@ partial class LoginView : BaseView
     Dropdown _ServerList;
     Button _EnterServer;
 
-    ILoginPresenter _Presenter;
+    LoginPresenter _Presenter;
 
     public override void Bind(BasePresenter presenter)
     {
-        _Presenter = presenter as ILoginPresenter;
+        _Presenter = presenter as LoginPresenter;
 
         var trans = this.transform;
         _Account = trans.Find("Account").GetComponent<InputField>();
@@ -23,9 +23,9 @@ partial class LoginView : BaseView
         _ServerList = trans.Find("ServerList").GetComponent<Dropdown>();
         _EnterServer = trans.Find("EnterServer").GetComponent<Button>();
 
-        _SetDevAddress.onClick.AddListener(_Presenter.Exec_SetDevAddress);
-        _SetPublicAddress.onClick.AddListener(_Presenter.Exec_SetPublicAddress);
-        _EnterServer.onClick.AddListener(_Presenter.Exec_EnterServer);
+        _SetDevAddress.onClick.AddListener(_Presenter.Cmd_SetDevAddress);
+        _SetPublicAddress.onClick.AddListener(_Presenter.Cmd_SetPublicAddress);
+        _EnterServer.onClick.AddListener(_Presenter.Cmd_EnterServer);
 
 
         // Account

@@ -31,11 +31,11 @@ partial class LoginView : BaseView
 
     void Start( )
     {
-        _Presenter.Exec_Start();
+        _Presenter.Cmd_Start();
     }
 
     void OnDisable()
     {
-        _Presenter.Exec_SaveSetting();
+        _Presenter.Cmd_SaveSetting();
     }
 }

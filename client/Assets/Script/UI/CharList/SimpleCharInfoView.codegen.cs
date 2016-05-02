@@ -4,24 +4,22 @@
 
 partial class SimpleCharInfoView : BaseItemView
 {
-    ISimpleCharInfoPresenter _Presenter;
+    SimpleCharInfoPresenter _Presenter;
 
     Text _CharName;
     Button _SelectChar;
 
-    public override void Bind(BasePresenter vm)
+    public override void Bind(BasePresenter presenter)
     {
-        _Presenter = vm as ISimpleCharInfoPresenter;
+        _Presenter = presenter as SimpleCharInfoPresenter;
 
         var trans = this.transform;
         _CharName = trans.Find("SelectChar/CharName").GetComponent<Text>();
         _SelectChar = trans.Find("SelectChar").GetComponent<Button>();
 
-        _SelectChar.onClick.AddListener(delegate()
-        {
-            _Presenter.Exec_SelectChar(1);
+        // Item按钮传递
+        _SelectChar.onClick.AddListener(_Presenter.Cmd_SelectChar);
 
-        });
 
         // CharName
         _Presenter.OnCharNameChanged += delegate()

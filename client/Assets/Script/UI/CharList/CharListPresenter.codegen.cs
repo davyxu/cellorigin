@@ -2,34 +2,7 @@
 using System.Collections.Generic;
 
 
-interface ICharListPresenter
-{
-    #region Property
-    string CharNameForCreate { get; set; }
-    string CharNameForEnter { get; set; }
-
-    ObservableCollection<int, SimpleCharInfoPresenter> CharInfoList { get; set; }
-
-    #endregion
-
-    #region Command
-    void Exec_CreateChar();
-    void Exec_SelectChar();
-
-    void Exec_DebugAdd();
-
-    void Exec_DebugRemove();
-
-    void Exec_DebugModify();
-
-    void Cmd_Request();
-
-    #endregion
-}
-
-
-
-partial class CharListPresenter : BasePresenter, ICharListPresenter
+partial class CharListPresenter : BasePresenter
 {
     CharListModel _Model;
 

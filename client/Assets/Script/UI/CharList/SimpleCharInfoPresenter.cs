@@ -7,8 +7,8 @@ public class SimpleCharInfoModel
     public string CharName;
 }
 
-
-partial class SimpleCharInfoPresenter : BasePresenter, ISimpleCharInfoPresenter
+// 每个Item都有一个
+partial class SimpleCharInfoPresenter : BasePresenter
 {
     public SimpleCharInfoPresenter()
     {
@@ -16,10 +16,16 @@ partial class SimpleCharInfoPresenter : BasePresenter, ISimpleCharInfoPresenter
     }
 
 
-    public void Exec_SelectChar( object param )
+    public void Cmd_SelectChar( )
     {
+        var peer = PeerManager.Instance.Get("game");
 
+        var req = new gamedef.EnterGameREQ();
+        req.CharName = CharName;
+        peer.SendMessage(req);
     }
+
+
 
 }
 

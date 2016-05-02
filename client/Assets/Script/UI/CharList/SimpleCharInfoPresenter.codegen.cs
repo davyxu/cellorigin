@@ -1,22 +1,12 @@
 ﻿using System;
 
 
-interface ISimpleCharInfoPresenter
-{
-    string CharName { get; set; }
-
-    event Action OnCharNameChanged;
-
-    void Exec_SelectChar(object param);
-}
-
-
-partial class SimpleCharInfoPresenter : BasePresenter, ISimpleCharInfoPresenter
+partial class SimpleCharInfoPresenter : BasePresenter
 {
     SimpleCharInfoModel _Model;
 
     #region Property
-    public event Action OnCharNameChanged;
+    public Action OnCharNameChanged;
 
     public string CharName
     {

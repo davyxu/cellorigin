@@ -1,21 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
-partial interface ILoginPresenter
-{
-
-    event Action OnServerListChanged;
-    List<gamedef.ServerInfo> ServerList { get; set; }
-    gamedef.ServerInfo CurrServerInfo { get; set; }
-}
-
-
-partial class LoginPresenter : BasePresenter, ILoginPresenter
+partial class LoginPresenter : BasePresenter
 {
 
     #region Property
 
-    public event Action OnServerListChanged;
+    public Action OnServerListChanged;
 
     // 带有pb类型的非标准结构, 且一般一次性刷新的, 可以处理为手工列表
     public List<gamedef.ServerInfo> ServerList
@@ -38,17 +29,17 @@ partial class LoginPresenter : BasePresenter, ILoginPresenter
     #endregion
 
     #region Command
-    public void Exec_SetDevAddress()
+    public void Cmd_SetDevAddress()
     {
         Address = Constant.DevAddress;
     }
 
-    public void Exec_SetPublicAddress()
+    public void Cmd_SetPublicAddress()
     {
         Address = Constant.PublicAddress;
     }
 
-    public void Exec_EnterServer( )
+    public void Cmd_EnterServer( )
     {
         UIManager.Instance.Hide("LoginUI");
 
@@ -78,14 +69,14 @@ partial class LoginPresenter : BasePresenter, ILoginPresenter
         Init();
     }
 
-    public void Exec_Start( )
+    public void Cmd_Start( )
     {
         LoadSetting();
 
         StartLogin();
     }
 
-    public void Exec_SaveSetting()
+    public void Cmd_SaveSetting()
     {
         SaveSetting();
     }

@@ -2,37 +2,8 @@
 using System.Collections.Generic;
 
 
-partial interface ILoginPresenter
-{
-    #region Property
-    string Account { get; set; }
-    string Address { get; set; }
 
-    #endregion
-
-    #region Event
-    event Action OnAccountChanged;
-
-    event Action OnAddressChanged;
-    #endregion
-
-    #region Command
-    void Exec_SetDevAddress();
-
-    void Exec_SetPublicAddress();
-
-    void Exec_EnterServer();
-
-    void Exec_SaveSetting();
-
-    void Exec_Start();
-
-    #endregion
-}
-
-
-
-partial class LoginPresenter : BasePresenter, ILoginPresenter
+partial class LoginPresenter : BasePresenter
 {
     LoginModel _Model;
 
@@ -40,7 +11,7 @@ partial class LoginPresenter : BasePresenter, ILoginPresenter
     NetworkPeer _GamePeer;
 
 
-    public event Action OnAccountChanged;
+    public Action OnAccountChanged;
     public string Account
     {
         get
@@ -60,7 +31,7 @@ partial class LoginPresenter : BasePresenter, ILoginPresenter
     }
 
 
-    public event Action OnAddressChanged;
+    public Action OnAddressChanged;
     public string Address
     {
         get

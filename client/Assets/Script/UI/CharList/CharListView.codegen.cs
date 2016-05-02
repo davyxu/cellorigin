@@ -2,7 +2,7 @@
 
 partial class CharListView : BaseView
 {
-    ICharListPresenter _Presenter;
+    CharListPresenter _Presenter;
 
     InputField _CharName;
     Button _CreateChar;
@@ -16,7 +16,7 @@ partial class CharListView : BaseView
 
     public override void Bind( BasePresenter presenter)
     {
-        _Presenter = presenter as ICharListPresenter;
+        _Presenter = presenter as CharListPresenter;
 
         var trans = this.transform;
         _CharName = trans.Find("CharName").GetComponent<InputField>();
@@ -26,14 +26,14 @@ partial class CharListView : BaseView
 
 
         _DebugAdd = trans.Find("DebugAdd").GetComponent<Button>();
-        _DebugAdd.onClick.AddListener(_Presenter.Exec_DebugAdd);
+        _DebugAdd.onClick.AddListener(_Presenter.Cmd_DebugAdd);
         _DebugRemove = trans.Find("DebugRemove").GetComponent<Button>();
-        _DebugRemove.onClick.AddListener(_Presenter.Exec_DebugRemove);
+        _DebugRemove.onClick.AddListener(_Presenter.Cmd_DebugRemove);
         _DebugModify = trans.Find("DebugModify").GetComponent<Button>();
-        _DebugModify.onClick.AddListener(_Presenter.Exec_DebugModify);
+        _DebugModify.onClick.AddListener(_Presenter.Cmd_DebugModify);
 
 
-        _CreateChar.onClick.AddListener(_Presenter.Exec_CreateChar);
+        _CreateChar.onClick.AddListener(_Presenter.Cmd_CreateChar);
 
 
         // CharList

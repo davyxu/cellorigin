@@ -14,7 +14,7 @@ public class ListControl : MonoBehaviour
         newItem.transform.SetParent(Content.transform, false );
         
         var view = newItem.gameObject.AddComponent<ViewType>();
-        view.Key = key;
+        view.ItemKey = key;
         view.Bind(value);
     }
 
@@ -22,11 +22,11 @@ public class ListControl : MonoBehaviour
         where ViewType: BaseItemView
     {
         var list = Content.GetComponentsInChildren<ViewType>();
-        foreach (ViewType item in list)
+        foreach (ViewType view in list)
         {
-            if ( item.Key.Equals(key ) )
+            if ( view.ItemKey.Equals(key ) )
             {
-                return item;
+                return view;
             }
         }
 
@@ -37,11 +37,11 @@ public class ListControl : MonoBehaviour
         where ViewType : BaseItemView
     {
         var list = Content.GetComponentsInChildren<ViewType>();
-        foreach (ViewType item in list)
+        foreach (ViewType view in list)
         {
-            if (item.Key.Equals(key) )
+            if (view.ItemKey.Equals(key))
             {
-                GameObject.Destroy(item.gameObject);
+                GameObject.Destroy(view.gameObject);
                 break;
             }
         }

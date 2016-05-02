@@ -14,5 +14,5 @@ public class BaseView : MonoBehaviour
 
 public class BaseItemView : BaseView
 {
-    public object Key;
+    public object ItemKey;
 }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 
 
-partial class CharListPresenter : BasePresenter, ICharListPresenter
+partial class CharListPresenter : BasePresenter
 {
-    public void Exec_CreateChar( )
+    public void Cmd_CreateChar( )
     {
         var req = new gamedef.CreateCharREQ();
         req.CharName = CharNameForCreate;
@@ -13,15 +13,9 @@ partial class CharListPresenter : BasePresenter, ICharListPresenter
         _GamePeer.SendMessage( req );
     }
 
-    public void Exec_SelectChar()
-    {
-        var req = new gamedef.EnterGameREQ();
-        req.CharName = CharNameForEnter;
-        _GamePeer.SendMessage(req);
-    }
 
     static int _base = 1;
-    public void Exec_DebugAdd( )
+    public void Cmd_DebugAdd( )
     {
         {
             var vm = new SimpleCharInfoPresenter();
@@ -33,7 +27,7 @@ partial class CharListPresenter : BasePresenter, ICharListPresenter
 
     }
 
-    public void Exec_DebugRemove()
+    public void Cmd_DebugRemove()
     {
         CharInfoList.Visit( (key, value ) =>{
 
@@ -44,7 +38,7 @@ partial class CharListPresenter : BasePresenter, ICharListPresenter
         });
     }
 
-    public void Exec_DebugModify( )
+    public void Cmd_DebugModify( )
     {
         CharInfoList.Get(1).CharName = "m";
     }
