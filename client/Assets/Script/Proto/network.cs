@@ -12,10 +12,37 @@ namespace gamedef
 		global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
 		{ return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
 	}
-	[global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"PeerClosed")]
-	public partial class PeerClosed : global::ProtoBuf.IExtensible
+	[global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"PeerDisconnected")]
+	public partial class PeerDisconnected : global::ProtoBuf.IExtensible
 	{
-		public PeerClosed() {}
+		public PeerDisconnected() {}
+		
+		private global::ProtoBuf.IExtension extensionObject;
+		global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+		{ return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
+	}
+	[global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"PeerConnectError")]
+	public partial class PeerConnectError : global::ProtoBuf.IExtensible
+	{
+		public PeerConnectError() {}
+		
+		private global::ProtoBuf.IExtension extensionObject;
+		global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+		{ return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
+	}
+	[global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"PeerRecvError")]
+	public partial class PeerRecvError : global::ProtoBuf.IExtensible
+	{
+		public PeerRecvError() {}
+		
+		private global::ProtoBuf.IExtension extensionObject;
+		global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+		{ return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
+	}
+	[global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"PeerSendError")]
+	public partial class PeerSendError : global::ProtoBuf.IExtensible
+	{
+		public PeerSendError() {}
 		
 		private global::ProtoBuf.IExtension extensionObject;
 		global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)

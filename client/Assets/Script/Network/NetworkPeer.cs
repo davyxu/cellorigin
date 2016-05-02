@@ -14,6 +14,8 @@ public class NetworkPeer : MonoBehaviour
 
     public string Address;
 
+    public bool DebugMessage;
+
     ClientSocket _socket;
         
     MessageMeta _meta;
@@ -23,7 +25,6 @@ public class NetworkPeer : MonoBehaviour
         
     public Action<NetworkPeer, uint, object> OnSend;
     public Action<NetworkPeer, uint, object> OnRecv;
-    public Action<NetworkPeer> OnConnectionNotReady;
 
     struct MsgData
     {
@@ -75,15 +76,25 @@ public class NetworkPeer : MonoBehaviour
 
     #endregion
 
-    uint _peerConnectedMsgID;
-    uint _peerClosedMsgID;    
+    uint MsgID_Connected;
+    uint MsgID_Disconnected;
+    uint MsgID_ConnectError;
+    uint MsgID_SendError;
+    uint MsgID_RecvError;
+
     public NetworkPeer( )
     {
+        DebugMessage = true;
+
         _meta = PeerManager.Instance.MsgMeta;
 
-        _peerConnectedMsgID = _meta.GetMessageID<gamedef.PeerConnected>();
-        _peerClosedMsgID = _meta.GetMessageID<gamedef.PeerClosed>();
+        MsgID_Connected = _meta.GetMessageID<gamedef.PeerConnected>();
+        MsgID_Disconnected = _meta.GetMessageID<gamedef.PeerDisconnected>();
+        MsgID_ConnectError = _meta.GetMessageID<gamedef.PeerConnectError>();
+        MsgID_SendError = _meta.GetMessageID<gamedef.PeerSendError>();
+        MsgID_RecvError = _meta.GetMessageID<gamedef.PeerRecvError>();
     }
+
    
     /// <summary>
     /// 连接是否可用
@@ -128,16 +139,39 @@ public class NetworkPeer : MonoBehaviour
 
         _socket = new ClientSocket();
 
-        _socket.EventRecvPacket += OnReceiveSocketMessage;
+        _socket.OnRecv += OnReceiveSocketMessage;
 
-        _socket.EventConnected += delegate()
+        _socket.OnConnected += delegate()
         {
-            PostMessage(_peerConnectedMsgID, null);
+            PostMessage(MsgID_Connected, null);
         };
 
-        _socket.EventClosed += delegate(NetworkReason reason)
+        _socket.OnDisconnected += delegate()
         {
-            PostMessage(_peerClosedMsgID, null);
+            PostMessage(MsgID_Disconnected, null);
+        };
+
+        _socket.OnError += delegate(NetworkReason reason )
+        {
+            switch( reason )
+            {
+                case NetworkReason.ConnectError:
+                    {
+                        PostMessage(MsgID_ConnectError, null);
+                    }
+                    break;
+                case NetworkReason.SendError:
+                    {
+                        PostMessage(MsgID_SendError, null);
+                    }
+                    break;
+                case NetworkReason.RecvError:
+                    {
+                        PostMessage(MsgID_RecvError, null);
+                    }
+                    break;
+            }
+            
         };
 
         Address = address;
@@ -157,14 +191,6 @@ public class NetworkPeer : MonoBehaviour
         if (_socket == null)
             return;
 
-        if (!_socket.IsConnected)
-        {
-            if (OnConnectionNotReady != null)
-            {
-                OnConnectionNotReady.Invoke(this);
-            }
-        }
-
         uint msgID = _meta.GetMessageID<T>();
 
         if (msgID == 0)
@@ -172,7 +198,11 @@ public class NetworkPeer : MonoBehaviour
             throw new InvalidCastException("Error when getting msgID:" + typeof(T).FullName);
         }
 
-        LogMessage(msgID, msg);
+        if (DebugMessage)
+        {
+            LogMessage(msgID, msg);
+        }
+        
 
         if (OnSend != null)
         {
@@ -308,20 +338,36 @@ public class NetworkPeer : MonoBehaviour
 
     void ProcessMessage(uint msgid, object msg)
     {
-        LogMessage(msgid, msg);
+        if (DebugMessage)
+        {
+            LogMessage(msgid, msg);
+        }
+        
 
         _dispatcher.Invoke(msgid, msg);
     }
 
     void LogMessage( uint msgid, object msg)
     {
-        if (msgid == _peerConnectedMsgID )
+        if (msgid == MsgID_Connected )
         {
-            Debug.Log(string.Format("[{0}] Connected", Name));
+            Debug.Log(string.Format("[{0}] Connected {1}", Name, Address));
         }
-        else if ( msgid == _peerClosedMsgID )
+        else if ( msgid == MsgID_Disconnected )
         {
-            Debug.Log(string.Format("[{0}] Closed", Name));
+            Debug.Log(string.Format("[{0}] Disconnected {1}", Name, Address));
+        }
+        else if ( msgid == MsgID_ConnectError )
+        {
+            Debug.Log(string.Format("[{0}] ConnectError {1}", Name, Address ));
+        }
+        else if (msgid == MsgID_RecvError)
+        {
+            Debug.Log(string.Format("[{0}] RecvError", Name));
+        }
+        else if (msgid == MsgID_SendError)
+        {
+            Debug.Log(string.Format("[{0}] SendError", Name));
         }
         else
         {

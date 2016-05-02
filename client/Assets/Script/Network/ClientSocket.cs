@@ -8,14 +8,9 @@ using System.Threading;
 public enum NetworkReason
 {
     None = 0,
-    ConnectTimeout,
-    InvalidPacketHeader,
-    SendError,
-    ManualClose,
     RecvError,
-    NoValidIPInHost,
-    InvalidAddress,
-    ResoveHost,
+    SendError,
+    ConnectError,
 }
 
 /// <summary>
@@ -73,17 +68,21 @@ public class ClientSocket
     /// <summary>
     /// 收到消息
     /// </summary>
-    public Action<UInt32, MemoryStream> EventRecvPacket;
+    public Action<UInt32, MemoryStream> OnRecv;
 
     /// <summary>
     /// socket 关闭
     /// </summary>
-    public Action<NetworkReason> EventClosed;
+    public Action<NetworkReason> OnError;
+
+    public Action OnDisconnected;
 
     /// <summary>
     /// 连接成功/失败的回调
     /// </summary>
-    public Action EventConnected;
+    public Action OnConnected;
+
+    
 
     #endregion
 
@@ -157,7 +156,7 @@ public class ClientSocket
         string host;            
         if (!SpliteAddress(address, out host, out _port))
         {
-            Close(NetworkReason.InvalidAddress);
+            Error(NetworkReason.ConnectError, true);
             return;
         }
 
@@ -207,7 +206,7 @@ public class ClientSocket
         }
         catch (Exception)
         {
-            Close(NetworkReason.None);
+            Error(NetworkReason.ConnectError, true);
         }
     }
 
@@ -218,7 +217,7 @@ public class ClientSocket
         if (GetStage() != Stage.BeginConnect)
             return;
 
-        SetStage(Stage.Ready);            
+                    
 
         try
         {
@@ -226,7 +225,8 @@ public class ClientSocket
         }
         catch(Exception )
         {
-               
+            Error(NetworkReason.ConnectError, true);
+            return;
         }
 
         Thread thread = new Thread(new ThreadStart(IOThreadRecv));
@@ -235,9 +235,11 @@ public class ClientSocket
         thread.Start();
 
 
-        if (EventConnected != null)
+        SetStage(Stage.Ready);
+
+        if (OnConnected != null)
         {
-            EventConnected();
+            OnConnected();
         }
 
     }
@@ -276,7 +278,7 @@ public class ClientSocket
             if (!_socket.Connected)
             {
     
-                Close(NetworkReason.None);
+                Close( );
                 break;
             }
 
@@ -310,7 +312,7 @@ public class ClientSocket
             // 检查包头
             if (!header.Valid(_recvTag))
             {
-                Close(NetworkReason.InvalidPacketHeader);
+                Error(NetworkReason.RecvError, true);
                 return;
             }
 
@@ -333,9 +335,9 @@ public class ClientSocket
     void DoRecvPacket( PacketHeader header, MemoryStream stream )
     {            
         // 派发消息
-        if (EventRecvPacket != null)
+        if (OnRecv != null)
         {
-            EventRecvPacket(header.MsgID, stream);
+            OnRecv(header.MsgID, stream);
         }
 
         _recvTag++;          
@@ -389,7 +391,7 @@ public class ClientSocket
             }
             catch( Exception )
             {
-                Close(NetworkReason.None);
+                Error(NetworkReason.RecvError, true );
                 break;
             }
 
@@ -397,7 +399,7 @@ public class ClientSocket
             if (recvLen <= 0)
             {
 
-                Close(NetworkReason.None);
+                Close( );
                 break;
             }
 
@@ -445,7 +447,7 @@ public class ClientSocket
         }
         catch (Exception )
         {
-            Close(NetworkReason.SendError);
+            Error(NetworkReason.SendError, false);
         }
 
     }
@@ -465,12 +467,26 @@ public class ClientSocket
 
     public void Stop( )
     {
-        Close(NetworkReason.ManualClose);
+        Close( );
     }
 
     object _closeGuard = new object();
 
-    void Close(NetworkReason reason)
+    void Error( NetworkReason reason, bool close )
+    {
+        if ( OnError != null )
+        {
+            OnError(reason);
+        }
+
+        if ( close )
+        {
+            Close();
+        }
+
+    }
+
+    void Close( )
     {
         lock ( _closeGuard)
         {
@@ -482,6 +498,7 @@ public class ClientSocket
 
             if (_socket.Connected)
             {
+
                 try
                 {
 
@@ -492,19 +509,20 @@ public class ClientSocket
                 {
 
                 }
+
+
+                //通知外界socket已经关闭
+                if (OnDisconnected != null)
+                {
+                    OnDisconnected();
+                }
+
             }
 
             // 关闭线程
             SetThreadRunning(false);
 
             _socket = null;
-
-
-            //通知外界socket已经关闭
-            if (EventClosed != null)
-            {
-                EventClosed(reason);
-            }
         }
            
     }
