@@ -18,8 +18,7 @@ public class NetworkPeer : MonoBehaviour
 
     ClientSocket _socket;
         
-    MessageMeta _meta;
-    MessagePrinter _printer = new MessagePrinter();
+    MessageMeta _meta;    
 
     MessageDispatcher _dispatcher = new MessageDispatcher();
         
@@ -371,7 +370,7 @@ public class NetworkPeer : MonoBehaviour
         }
         else
         {
-            Debug.Log(string.Format("[{0}] {1}|{2}", Name, msg.GetType().FullName, _printer.Print(msg)));
+            Debug.Log(string.Format("[{0}] {1}|{2}", Name, msg.GetType().FullName, ProtobufText.Serializer.Serialize(msg)));
         }
 
     }
