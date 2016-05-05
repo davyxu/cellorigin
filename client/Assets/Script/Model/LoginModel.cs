@@ -5,7 +5,5 @@ class LoginModel : BaseModel
 {
     public string Account;
 
-    public string Address;
-
-    public List<gamedef.ServerInfo> ServerList;
+    public string Address;    
 }

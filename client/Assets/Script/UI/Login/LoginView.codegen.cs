@@ -6,8 +6,7 @@ partial class LoginView : BaseView
     InputField _Address;
     Button _SetDevAddress;
     Button _SetPublicAddress;
-    Dropdown _ServerList;
-    Button _EnterServer;
+    ListControl _ServerList;
 
     LoginPresenter _Presenter;
 
@@ -20,12 +19,10 @@ partial class LoginView : BaseView
         _Address = trans.Find("Address").GetComponent<InputField>();
         _SetDevAddress = trans.Find("SetDevAddress").GetComponent<Button>();
         _SetPublicAddress = trans.Find("SetPublicAddress").GetComponent<Button>();
-        _ServerList = trans.Find("ServerList").GetComponent<Dropdown>();
-        _EnterServer = trans.Find("EnterServer").GetComponent<Button>();
+        _ServerList = trans.Find("ServerList").GetComponent<ListControl>();
 
         _SetDevAddress.onClick.AddListener(_Presenter.Cmd_SetDevAddress);
-        _SetPublicAddress.onClick.AddListener(_Presenter.Cmd_SetPublicAddress);
-        _EnterServer.onClick.AddListener(_Presenter.Cmd_EnterServer);
+        _SetPublicAddress.onClick.AddListener(_Presenter.Cmd_SetPublicAddress);        
 
 
         // Account
@@ -50,6 +47,29 @@ partial class LoginView : BaseView
         };
 
         // ServerList
-        _Presenter.OnServerListChanged += OnServerListChanged;
+        _Presenter.ServerList.OnItemTotalChanged += delegate
+        {
+            _ServerList.Clear<ServerInfoView>();
+
+            _Presenter.ServerList.Visit((key, value) =>
+            {
+                _ServerList.Add<ServerInfoView, ServerInfoPresenter>(key, value);
+
+
+                return true;
+            });
+        };
+
+        _Presenter.ServerList.OnItemAdded += (key, value) =>
+        {
+            _ServerList.Add<ServerInfoView, ServerInfoPresenter>(key, value);
+        };
+
+        _Presenter.ServerList.OnItemRemoved += (key) =>
+        {
+            _ServerList.Remove<ServerInfoView>(key);
+        };
+
+
     }
 }

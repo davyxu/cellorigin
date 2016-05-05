@@ -6,24 +6,8 @@ partial class LoginPresenter : BasePresenter
 
     #region Property
 
-    public Action OnServerListChanged;
 
-    // 带有pb类型的非标准结构, 且一般一次性刷新的, 可以处理为手工列表
-    public List<gamedef.ServerInfo> ServerList
-    {
-        get { return _Model.ServerList; }
-        set 
-        { 
-            _Model.ServerList = value;
-
-            if (OnServerListChanged != null )
-            {
-                OnServerListChanged();
-            }
-        }
-    }
-
-    public gamedef.ServerInfo CurrServerInfo{get;set;}
+    //public gamedef.ServerInfo CurrServerInfo{get;set;}
 
 
     #endregion
@@ -37,17 +21,6 @@ partial class LoginPresenter : BasePresenter
     public void Cmd_SetPublicAddress()
     {
         Address = Constant.PublicAddress;
-    }
-
-    public void Cmd_EnterServer( )
-    {
-        UIManager.Instance.Hide("LoginUI");
-
-        if ( CurrServerInfo != null )
-        {
-            VerifyGame(CurrServerInfo.Address, Account);
-        }
-        
     }
 
     public void StartLogin()
@@ -124,7 +97,14 @@ partial class LoginPresenter : BasePresenter
 
     void Msg_LoginACK(NetworkPeer peer, gamedef.LoginACK msg)
     {
-        ServerList = msg.ServerList;
+        ServerList.Clear();
+
+        for( int i = 0;i< msg.ServerList.Count;i++)
+        {
+            ServerList.Add(i, new ServerInfoPresenter( msg.ServerList[i] ));
+        }
+
+        _verifyToken = msg.Token;
 
         // 停止线程及工作
         _LoginPeer.Stop();
@@ -142,16 +122,7 @@ partial class LoginPresenter : BasePresenter
         req.Token = _verifyToken;
         peer.SendMessage(req);
     }
-    public void VerifyGame(string address, string token)
-    {
-        // 处理重入
-        if (_GamePeer.Valid)
-            return;
 
-        _GamePeer.Connect(address);
-
-        _verifyToken = token;
-    }
 
 
     void Msg_VerifyGameACK(NetworkPeer peer, gamedef.VerifyGameACK msg)

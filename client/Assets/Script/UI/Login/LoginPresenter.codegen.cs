@@ -50,9 +50,13 @@ partial class LoginPresenter : BasePresenter
         }
     }
 
+    public ObservableCollection<int, ServerInfoPresenter> ServerList { get; set; }
+
     void Init( )
     {
         _Model = ModelManager.Instance.Get<LoginModel>();
+
+        ServerList = new ObservableCollection<int, ServerInfoPresenter>();
 
         // 通过切换代码生成器逻辑, 生成单元测试逻辑
 
