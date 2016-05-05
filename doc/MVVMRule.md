@@ -18,7 +18,7 @@
 
 * 变化后的事件通知
 
-    Model -> Presenter -> View
+    Presenter -> View
 
 * Command调用
 
@@ -28,29 +28,39 @@
 
     Presenter可见Model
 
-    View只可调用定义好的Command及取属性
+    View只可调用定义好的Command
+	View只从Presenter里取属性数据
 
     Model不可见任何信息
 
 
 ### Model
 
+* Mode的功能
+	
+	提供数据
+
 * Model的数据格式
     
     可以是Protobuf类型或者C#原生类型
 
-* Model的功能封装
+* Model的数据封装
     
     Model不建议添加函数进行功能封装, 相关封装应放在Presenter中
 
 * Model的通知
+
     和WPF的MVVM相比, 出于性能和复杂度考虑, 框架的Model不应具有修改后通知功能
     
 ### Presenter
 
-* 大部分逻辑应该写在Present
+* Presenter的功能
 
-    包括网络消息处理. 提供给View使用的功能应封装为Command暴露
+		为View的显示数据提供封装
+	
+		网络处理
+	
+		为View提供Command
     
 * Presenter需要做出良好的单元测试准备
 
@@ -58,9 +68,15 @@
     
 ### View
 
-* View可以,也应该由非程序人员来设计并生成    
+* View的功能
 
-* View的大部分代码应该被生成
+		将显示控件与Presenter提供的属性进行绑定
+	
+		将用户交互与Presenter对应的Command进行绑定
+
+* View可以,也应该由非程序人员来设计并生成  
+  
+* View不能用来编写业务逻辑
 
     只有需要程序控制的动画和纯界面类逻辑才能被写到View中
     
