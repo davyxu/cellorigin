@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-partial class CharListPresenter : BasePresenter
+partial class CharListPresenter : Framework.BasePresenter
 {
     CharListModel _Model;
 
@@ -33,7 +33,7 @@ partial class CharListPresenter : BasePresenter
         }
     }
 
-    public ObservableCollection<int, SimpleCharInfoPresenter> CharInfoList { get; set; }
+    public Framework.ObservableCollection<int, SimpleCharInfoPresenter> CharInfoList { get; set; }
 
     #endregion
 
@@ -44,9 +44,9 @@ partial class CharListPresenter : BasePresenter
     public void Init( )
     {
         // 属性初始化
-        CharInfoList = new ObservableCollection<int, SimpleCharInfoPresenter>();
+        CharInfoList = new Framework.ObservableCollection<int, SimpleCharInfoPresenter>();
 
-        _Model = ModelManager.Instance.Get<CharListModel>();
+        _Model = Framework.ModelManager.Instance.Get<CharListModel>();
 
         _GamePeer = PeerManager.Instance.Get("game");
 

@@ -8,7 +8,7 @@ public class SimpleCharInfoModel
 }
 
 // 每个Item都有一个
-partial class SimpleCharInfoPresenter : BasePresenter
+partial class SimpleCharInfoPresenter : Framework.BasePresenter
 {
     public SimpleCharInfoPresenter()
     {

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 
 
-partial class SimpleCharInfoView : BaseItemView
+partial class SimpleCharInfoView : Framework.BaseItemView
 {
   
 }

@@ -1,44 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
-
-public class ModelManager : Singleton<ModelManager>
+namespace Framework
 {
-    Dictionary<Type, BaseModel> _modelMap = new Dictionary<Type,BaseModel>();
-
-    void Register<T>() where T : BaseModel, new()
+    public class ModelManager : Singleton<ModelManager>
     {
+        Dictionary<Type, BaseModel> _modelMap = new Dictionary<Type, BaseModel>();
 
-        _modelMap.Add( typeof(T), new T() );
-    }
-
-    public T Get<T>( ) where T:BaseModel
-    {
-        Init();
-
-        BaseModel m;
-        if ( _modelMap.TryGetValue(typeof(T), out m) )
+        void Register<T>() where T : BaseModel, new()
         {
-            return m as T;
+
+            _modelMap.Add(typeof(T), new T());
         }
 
-        return default(T);
+        public T Get<T>() where T : BaseModel
+        {
+            Init();
+
+            BaseModel m;
+            if (_modelMap.TryGetValue(typeof(T), out m))
+            {
+                return m as T;
+            }
+
+            return default(T);
+        }
+
+        static bool _initDone;
+
+        void Init()
+        {
+            if (_initDone)
+                return;
+
+            // TODO 从配置表导入初始化
+
+            Register<LoginModel>();
+            Register<CharListModel>();
+
+            _initDone = true;
+        }
     }
 
-    static bool _initDone;
 
-    void Init()
-    {
-        if (_initDone)
-            return;
-
-        // TODO 从配置表导入初始化
-
-        Register<LoginModel>();
-        Register<CharListModel>();
-
-        _initDone = true;
-    }
 }
-

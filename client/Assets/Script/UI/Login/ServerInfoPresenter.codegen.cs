@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-partial class ServerInfoPresenter : BasePresenter
+partial class ServerInfoPresenter : Framework.BasePresenter
 {
 
 

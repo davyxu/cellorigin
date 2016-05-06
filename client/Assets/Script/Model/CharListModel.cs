@@ -1,7 +1,7 @@
 ﻿
 
 
-class CharListModel : BaseModel
+class CharListModel : Framework.BaseModel
 {
     public string CharNameForCreate;
 

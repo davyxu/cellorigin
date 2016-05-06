@@ -1,3 +1,0 @@
-﻿using UnityEditor;using UnityEngine;/// <summary>
-/// 在界面上显示UIBinder的两个主要功能
-/// </summary>[CustomEditor(typeof(UIBinder))]class UIBinderEditor : Editor{    public override void OnInspectorGUI()    {        UIBinder binder = target as UIBinder;        if (GUILayout.Button("Add Binder To Top Child"))        {            binder.AddBinderToAllTopChild();        }        if (GUILayout.Button("Remove All Top Child Binder"))        {            binder.RemoveAllTopChildBinder();        }        base.OnInspectorGUI();    }}

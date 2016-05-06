@@ -1,8 +1,10 @@
-﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.UI;
+﻿
 
-public class BasePresenter
+namespace Framework
 {
+    public class BasePresenter
+    {
 
+    }
 }
+

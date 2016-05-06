@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-partial class SimpleCharInfoPresenter : BasePresenter
+partial class SimpleCharInfoPresenter : Framework.BasePresenter
 {
     SimpleCharInfoModel _Model;
 

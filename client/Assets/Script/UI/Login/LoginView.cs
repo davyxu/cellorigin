@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-partial class LoginView : BaseView
+partial class LoginView : Framework.BaseView
 {
     void Awake( )
     {

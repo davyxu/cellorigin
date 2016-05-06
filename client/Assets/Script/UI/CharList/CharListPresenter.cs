@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 
 
-partial class CharListPresenter : BasePresenter
+partial class CharListPresenter : Framework.BasePresenter
 {
     public void Cmd_CreateChar( )
     {

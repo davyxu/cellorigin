@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-partial class LoginPresenter : BasePresenter
+partial class LoginPresenter : Framework.BasePresenter
 {
 
     #region Property
@@ -133,7 +133,7 @@ partial class LoginPresenter : BasePresenter
         {
             case gamedef.VerifyGameResult.VerifyOK:
                 {
-                    UIManager.Instance.Show("CharListUI");
+                    Framework.ViewManager.Instance.Show("CharListUI");
                 }
                 break;
             default:

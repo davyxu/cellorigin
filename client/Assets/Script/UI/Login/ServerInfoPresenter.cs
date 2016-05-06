@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 
 // 每个Item都有一个
-partial class ServerInfoPresenter : BasePresenter
+partial class ServerInfoPresenter : Framework.BasePresenter
 {
     gamedef.ServerInfo _Model;
 
@@ -36,7 +36,7 @@ partial class ServerInfoPresenter : BasePresenter
         if (peer.Valid)
             return;
 
-        UIManager.Instance.Hide("LoginUI");
+        Framework.ViewManager.Instance.Hide("LoginUI");
 
         peer.Connect(_Model.Address);
     }

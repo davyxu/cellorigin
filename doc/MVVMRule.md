@@ -1,4 +1,4 @@
-# MVVM 框架
+# MVVM 规则
 
 ## 命名规则
 
@@ -29,7 +29,7 @@
     Presenter可见Model
 
     View只可调用定义好的Command
-	View只从Presenter里取属性数据
+	View只从Presenter里取Property数据
 
     Model不可见任何信息
 
@@ -70,7 +70,7 @@
 
 * View的功能
 
-		将显示控件与Presenter提供的属性进行绑定
+		将显示控件与Presenter提供的Property进行绑定
 	
 		将用户交互与Presenter对应的Command进行绑定
 

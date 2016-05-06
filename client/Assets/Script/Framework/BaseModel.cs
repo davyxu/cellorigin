@@ -1,6 +1,9 @@
 ﻿
-
-public class BaseModel
+namespace Framework
 {
+    public class BaseModel
+    {
 
+    }
 }
+

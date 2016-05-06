@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 
-class LoginModel : BaseModel
+class LoginModel : Framework.BaseModel
 {
     public string Account;
 

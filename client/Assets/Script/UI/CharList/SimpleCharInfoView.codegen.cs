@@ -2,14 +2,14 @@
 
 
 
-partial class SimpleCharInfoView : BaseItemView
+partial class SimpleCharInfoView : Framework.BaseItemView
 {
     SimpleCharInfoPresenter _Presenter;
 
     Text _CharName;
     Button _SelectChar;
 
-    public override void Bind(BasePresenter presenter)
+    public override void Bind(Framework.BasePresenter presenter)
     {
         _Presenter = presenter as SimpleCharInfoPresenter;
 

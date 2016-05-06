@@ -2,14 +2,14 @@
 
 
 
-partial class ServerInfoView : BaseItemView
+partial class ServerInfoView : Framework.BaseItemView
 {
     ServerInfoPresenter _Presenter;
 
     Text _Name;
     Button _Select;
 
-    public override void Bind(BasePresenter presenter)
+    public override void Bind(Framework.BasePresenter presenter)
     {
         _Presenter = presenter as ServerInfoPresenter;
 

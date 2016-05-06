@@ -1,20 +1,20 @@
 ﻿using UnityEngine.UI;
 
-partial class CharListView : BaseView
+partial class CharListView : Framework.BaseView
 {
     CharListPresenter _Presenter;
 
     InputField _CharName;
     Button _CreateChar;
 
-    ListControl _CharList;
+    Framework.ListControl _CharList;
 
     Button _DebugAdd;
     Button _DebugRemove;
     Button _DebugModify;
 
 
-    public override void Bind( BasePresenter presenter)
+    public override void Bind(Framework.BasePresenter presenter)
     {
         _Presenter = presenter as CharListPresenter;
 
@@ -22,7 +22,7 @@ partial class CharListView : BaseView
         _CharName = trans.Find("CharName").GetComponent<InputField>();
         _CreateChar = trans.Find("CreateChar").GetComponent<Button>();
 
-        _CharList = trans.Find("CharList").GetComponent<ListControl>();
+        _CharList = trans.Find("CharList").GetComponent<Framework.ListControl>();
 
 
         _DebugAdd = trans.Find("DebugAdd").GetComponent<Button>();
@@ -37,27 +37,7 @@ partial class CharListView : BaseView
 
 
         // CharList
-        _Presenter.CharInfoList.OnItemTotalChanged += delegate {
-            _CharList.Clear<SimpleCharInfoView>();
-
-            _Presenter.CharInfoList.Visit((key, value) =>
-            {
-                _CharList.Add<SimpleCharInfoView, SimpleCharInfoPresenter>(key, value);
-                
-
-                return true;
-            });
-        };
-
-        _Presenter.CharInfoList.OnItemAdded += (key, value) =>
-        {
-            _CharList.Add<SimpleCharInfoView, SimpleCharInfoPresenter>(key, value);
-        };
-
-        _Presenter.CharInfoList.OnItemRemoved += ( key ) =>
-        {
-            _CharList.Remove<SimpleCharInfoView>(key);
-        };
+        Framework.Utility.BindCollectionView<int, SimpleCharInfoPresenter, SimpleCharInfoView>(_Presenter.CharInfoList, _CharList);
 
 
         // CharName
