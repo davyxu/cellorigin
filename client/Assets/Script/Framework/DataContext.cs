@@ -5,16 +5,16 @@ using UnityEngine.UI;
 namespace Framework
 {
 
-    public enum ObjectDetectType
+    public enum WidgetType
     {
         Unknown,
-        GenAsCanvas,
-        GenAsButton,
-        GenAsInputField,
-        GenAsText,
-        GenAsImage,
-        GenAsWindow,
-        GenAsDropdown,
+        Canvas,
+        Button,
+        InputField,
+        Text,
+        Image,
+        Window,
+        Dropdown,
     }
 
     public enum DataSyncType
@@ -31,7 +31,7 @@ namespace Framework
     public class DataContext : MonoBehaviour
     {
 
-        public ObjectDetectType Type;
+        public WidgetType Type;
 
         // 控件设置
 
@@ -58,7 +58,7 @@ namespace Framework
 
             if (!CheckName(gameObject.name))
             {
-                Type = ObjectDetectType.Unknown;
+                Type = WidgetType.Unknown;
                 Debug.LogError(string.Format("UIBinder: 对象名包含非法字符(不能以数字开头), 生成代码会导致错误, {0} ", gameObject.name));
             }
 
@@ -94,7 +94,7 @@ namespace Framework
             foreach (Transform trans in transform)
             {
                 // 子控件是可探测类型, 自动添加
-                if (DetectType(trans.gameObject) != ObjectDetectType.Unknown)
+                if (DetectType(trans.gameObject) != WidgetType.Unknown)
                 {
                     if (trans.gameObject.GetComponent<DataContext>() == null)
                     {
@@ -121,13 +121,13 @@ namespace Framework
         /// </summary>
         /// <param name="go"></param>
         /// <returns></returns>
-        static ObjectDetectType DetectType(GameObject go)
+        static WidgetType DetectType(GameObject go)
         {
             if (go.GetComponent<Canvas>() != null &&
                     go.GetComponent<CanvasScaler>() != null &&
                     go.GetComponent<GraphicRaycaster>() != null)
             {
-                return ObjectDetectType.GenAsCanvas;
+                return WidgetType.Canvas;
             }
 
             // 父级是canvas, 且带有UI尾缀, 识别为窗口
@@ -135,36 +135,36 @@ namespace Framework
                 go.transform.parent.GetComponent<Canvas>() &&
                 go.name.EndsWith("UI"))
             {
-                return ObjectDetectType.GenAsWindow;
+                return WidgetType.Window;
             }
 
 
             if (go.GetComponent<Button>() != null)
             {
-                return ObjectDetectType.GenAsButton;
+                return WidgetType.Button;
             }
 
             if (go.GetComponent<Dropdown>() != null)
             {
-                return ObjectDetectType.GenAsDropdown;
+                return WidgetType.Dropdown;
             }
 
             if (go.GetComponent<InputField>() != null)
             {
-                return ObjectDetectType.GenAsInputField;
+                return WidgetType.InputField;
             }
 
             if (go.GetComponent<Text>() != null)
             {
-                return ObjectDetectType.GenAsText;
+                return WidgetType.Text;
             }
 
             if (go.GetComponent<Image>() != null)
             {
-                return ObjectDetectType.GenAsImage;
+                return WidgetType.Image;
             }
 
-            return ObjectDetectType.Unknown;
+            return WidgetType.Unknown;
         }
     }
 
