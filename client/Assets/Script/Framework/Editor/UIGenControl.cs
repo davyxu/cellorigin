@@ -17,7 +17,7 @@ namespace Framework
             _window = win;
         }
 
-        public CodeGenObjectType ObjectType
+        public ObjectDetectType ObjectType
         {
             get { return _binder.Type; }
         }
@@ -36,7 +36,7 @@ namespace Framework
 
         public void PrintButtonClickRegisterCode(CodeGenerator gen)
         {
-            if (_binder.Type != CodeGenObjectType.GenAsButton)
+            if (_binder.Type != ObjectDetectType.GenAsButton)
                 return;
 
             gen.PrintLine("_", Name, ".onClick.AddListener( ", ButtonCallbackName, " );");
@@ -72,7 +72,7 @@ namespace Framework
 
         public void PrintButtonClickImplementCode(CodeGenerator gen)
         {
-            if (_binder.Type != CodeGenObjectType.GenAsButton)
+            if (_binder.Type != ObjectDetectType.GenAsButton)
                 return;
 
             var path = ObjectUtility.GetGameObjectPath(_binder.gameObject, _window.Obj);
@@ -95,15 +95,15 @@ namespace Framework
         {
             switch (_binder.Type)
             {
-                case CodeGenObjectType.GenAsButton:
+                case ObjectDetectType.GenAsButton:
                     return "Button";
-                case CodeGenObjectType.GenAsText:
+                case ObjectDetectType.GenAsText:
                     return "Text";
-                case CodeGenObjectType.GenAsInputField:
+                case ObjectDetectType.GenAsInputField:
                     return "InputField";
-                case CodeGenObjectType.GenAsImage:
+                case ObjectDetectType.GenAsImage:
                     return "Image";
-                case CodeGenObjectType.GenAsDropdown:
+                case ObjectDetectType.GenAsDropdown:
                     return "Dropdown";
             }
 

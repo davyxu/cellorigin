@@ -1,7 +1,7 @@
 ﻿
 namespace Framework
 {
-    public class BaseModel
+    public class BaseModel : UnityEngine.Object
     {
 
     }

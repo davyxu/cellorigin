@@ -17,14 +17,14 @@ namespace Framework
             var rootObject = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
 
             // 暂时只支持1个Canvas情况
-            var canvasObj = FindGameObjectByType(rootObject, CodeGenObjectType.GenAsCanvas);
+            var canvasObj = FindGameObjectByType(rootObject, ObjectDetectType.GenAsCanvas);
             ScanWindowObject(canvasObj);
 
             // 生成完成后, 刷新数据库, 显示出来
             AssetDatabase.Refresh();
         }
 
-        static DataContext FindGameObjectByType(GameObject[] objlist, CodeGenObjectType type)
+        static DataContext FindGameObjectByType(GameObject[] objlist, ObjectDetectType type)
         {
             foreach (GameObject go in objlist)
             {
@@ -56,7 +56,7 @@ namespace Framework
                 if (binder == null)
                     continue;
 
-                if (binder.Type != CodeGenObjectType.GenAsWindow)
+                if (binder.Type != ObjectDetectType.GenAsWindow)
                 {
                     continue;
                 }

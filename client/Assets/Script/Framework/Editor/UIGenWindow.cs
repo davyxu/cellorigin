@@ -21,7 +21,7 @@ namespace Framework
                 if (ctrlBinder == null)
                     continue;
 
-                if (ctrlBinder.Type == CodeGenObjectType.Unknown)
+                if (ctrlBinder.Type == ObjectDetectType.Unknown)
                 {
                     continue;
                 }
@@ -104,7 +104,7 @@ namespace Framework
             {
                 foreach (UIGenControl ctrl in _controls)
                 {
-                    if (ctrl.ObjectType != CodeGenObjectType.GenAsButton)
+                    if (ctrl.ObjectType != ObjectDetectType.GenAsButton)
                     {
                         continue;
                     }
