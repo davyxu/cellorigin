@@ -21,7 +21,7 @@ namespace Framework
                 if (ctrlBinder == null)
                     continue;
 
-                if (ctrlBinder.Type == ObjectDetectType.Unknown)
+                if (ctrlBinder.Type == WidgetType.Unknown)
                 {
                     continue;
                 }
@@ -92,7 +92,7 @@ namespace Framework
             // 按钮回调
             foreach (UIGenControl ctrl in _controls)
             {
-                ctrl.PrintButtonClickRegisterCode(gen);
+             //   ctrl.PrintButtonClickRegisterCode(gen);
             }
 
             gen.Out();
@@ -104,10 +104,10 @@ namespace Framework
             {
                 foreach (UIGenControl ctrl in _controls)
                 {
-                    if (ctrl.ObjectType != ObjectDetectType.GenAsButton)
-                    {
-                        continue;
-                    }
+                    //if (ctrl.ObjectType != WidgetTypeButton)
+                    //{
+                    //    continue;
+                    //}
 
                     // 当主类存在方法, 就不用生成替代的
                     if (ctrl.ButtonCallbackExists)

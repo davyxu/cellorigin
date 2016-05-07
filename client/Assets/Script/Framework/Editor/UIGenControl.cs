@@ -17,7 +17,7 @@ namespace Framework
             _window = win;
         }
 
-        public ObjectDetectType ObjectType
+        public WidgetType ObjectType
         {
             get { return _binder.Type; }
         }
@@ -34,22 +34,6 @@ namespace Framework
         }
 
 
-        public void PrintButtonClickRegisterCode(CodeGenerator gen)
-        {
-            if (_binder.Type != ObjectDetectType.GenAsButton)
-                return;
-
-            gen.PrintLine("_", Name, ".onClick.AddListener( ", ButtonCallbackName, " );");
-        }
-
-        public string ButtonCallbackName
-        {
-            get
-            {
-                return Name + "_Click";
-            }
-        }
-
         public bool ButtonCallbackExists
         {
             get
@@ -64,7 +48,7 @@ namespace Framework
                     return false;
 
                 // 取方法, 查方法是否存在
-                var methodInfo = classInfo.GetMethod(ButtonCallbackName, BindingFlags.NonPublic | BindingFlags.Instance);
+                var methodInfo = classInfo.GetMethod("", BindingFlags.NonPublic | BindingFlags.Instance);
 
                 return methodInfo != null;
             }
@@ -72,13 +56,11 @@ namespace Framework
 
         public void PrintButtonClickImplementCode(CodeGenerator gen)
         {
-            if (_binder.Type != ObjectDetectType.GenAsButton)
-                return;
 
             var path = ObjectUtility.GetGameObjectPath(_binder.gameObject, _window.Obj);
 
             gen.PrintLine("// Button @ ", path);
-            gen.PrintLine("void ", ButtonCallbackName, "( )");
+            gen.PrintLine("void ",  "( )");
             gen.PrintLine("{");
             gen.PrintLine();
             gen.PrintLine("}");
@@ -95,16 +77,14 @@ namespace Framework
         {
             switch (_binder.Type)
             {
-                case ObjectDetectType.GenAsButton:
+                case WidgetType.Button:
                     return "Button";
-                case ObjectDetectType.GenAsText:
+                case WidgetType.Text:
                     return "Text";
-                case ObjectDetectType.GenAsInputField:
+                case WidgetType.InputField:
                     return "InputField";
-                case ObjectDetectType.GenAsImage:
+                case WidgetType.Image:
                     return "Image";
-                case ObjectDetectType.GenAsDropdown:
-                    return "Dropdown";
             }
 
             return "Unknown";

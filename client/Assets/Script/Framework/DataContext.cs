@@ -7,14 +7,13 @@ namespace Framework
 
     public enum WidgetType
     {
-        Unknown,
-        Canvas,
+        Unknown,        
         Button,
         InputField,
         Text,
         Image,
-        Window,
-        Dropdown,
+        View,
+        ScrollRect,
     }
 
     public enum DataSyncType
@@ -35,12 +34,13 @@ namespace Framework
 
         // 控件设置
 
-        public string NameInView;
+        // 控件名称
+        public string Name 
+        { 
+            get { return gameObject.name; } 
+        }
 
-        public string NameInPresenter;
-
-        public string NameInModel;
-
+        // 数据同步类型
         public DataSyncType SyncType;       
 
         // View设置
@@ -51,21 +51,18 @@ namespace Framework
         public string CodeGenPath; // 代码生成路径
 
 
+
+
         public void SmartFill()
         {
             // 启动探测类型
             Type = DetectType(gameObject);
 
-            if (!CheckName(gameObject.name))
+            if (!CheckName(Name))
             {
                 Type = WidgetType.Unknown;
                 Debug.LogError(string.Format("UIBinder: 对象名包含非法字符(不能以数字开头), 生成代码会导致错误, {0} ", gameObject.name));
             }
-
-            var name = gameObject.name;
-            NameInView = name;
-            NameInPresenter = name;
-            NameInModel = name;
 
             SyncType = Framework.DataSyncType.PresenterToView;
             CodeGenPath = "Assets/Script/UI";
@@ -123,30 +120,14 @@ namespace Framework
         /// <returns></returns>
         static WidgetType DetectType(GameObject go)
         {
-            if (go.GetComponent<Canvas>() != null &&
-                    go.GetComponent<CanvasScaler>() != null &&
-                    go.GetComponent<GraphicRaycaster>() != null)
-            {
-                return WidgetType.Canvas;
-            }
-
-            // 父级是canvas, 且带有UI尾缀, 识别为窗口
-            if (go.transform.parent != null &&
-                go.transform.parent.GetComponent<Canvas>() &&
-                go.name.EndsWith("UI"))
-            {
-                return WidgetType.Window;
-            }
-
-
             if (go.GetComponent<Button>() != null)
             {
                 return WidgetType.Button;
             }
 
-            if (go.GetComponent<Dropdown>() != null)
+            if (go.GetComponent<ScrollRect>() != null)
             {
-                return WidgetType.Dropdown;
+                return WidgetType.ScrollRect;
             }
 
             if (go.GetComponent<InputField>() != null)
