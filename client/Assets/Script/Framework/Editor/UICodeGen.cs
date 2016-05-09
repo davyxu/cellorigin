@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System.Collections.Generic;
 
 namespace Framework
 {
@@ -14,6 +15,38 @@ namespace Framework
         [MenuItem("UITools/生成当前场景UI绑定代码")]
         public static void GenCode()
         {
+            var rootObj = Selection.activeGameObject;
+            if (rootObj == null)
+                return;
+
+            var viewContext = rootObj.GetComponent<DataContext>();
+            if (viewContext == null)
+            {
+                Debug.LogError("根对象组件类型没有发现DataContext组件");
+                return;
+            }
+
+
+            if ( viewContext.Type != WidgetType.View )
+            {
+                Debug.LogError("根对象组件类型必须是View类型");
+                return;
+            }
+
+            var ctxList = new List<DataContext>();
+
+            foreach (Transform childTrans in rootObj.transform)
+            {
+                IterateDataContext(childTrans, ref ctxList);
+            }
+            
+
+            var gen = new CodeGenerator();
+
+            ViewTemplate.Class(gen, viewContext, ctxList);
+
+            
+
             //var rootObject = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
 
             //// 暂时只支持1个Canvas情况
@@ -23,22 +56,21 @@ namespace Framework
             //// 生成完成后, 刷新数据库, 显示出来
             //AssetDatabase.Refresh();
         }
+        
 
-        static DataContext FindGameObjectByType(GameObject[] objlist, WidgetType type)
+
+        static void IterateDataContext(Transform trans, ref List<DataContext> ctxList )
         {
-            foreach (GameObject go in objlist)
+            var childContext = trans.GetComponent<DataContext>();
+            if (childContext != null)
             {
-                var binder = go.GetComponent<DataContext>();
-                if (binder == null)
-                    continue;
-
-                if (binder.Type == type)
-                {
-                    return binder;
-                }
+                ctxList.Add(childContext);
             }
 
-            return null;
+            foreach (Transform childTrans in trans)
+            {
+                IterateDataContext(childTrans, ref ctxList);
+            }
         }
 
         ///// <summary>

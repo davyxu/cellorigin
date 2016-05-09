@@ -48,9 +48,8 @@ namespace Framework
         public UnityEngine.Object Presenter;
         public UnityEngine.Object Model;
 
-        public string CodeGenPath; // 代码生成路径
 
-
+        public string Peer;
 
 
         public void SmartFill()
@@ -65,7 +64,7 @@ namespace Framework
             }
 
             SyncType = Framework.DataSyncType.PresenterToView;
-            CodeGenPath = "Assets/Script/UI";
+
 
         }
 
