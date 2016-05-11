@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package gamedef;
+
+
+enum ModelGenType
+{
+	MGT_Singleton = 0;  // 通过ModelManager初始化, 全局1份
+	MGT_Instance = 1;	// 在Presenter中new出来, 适合
+	MGT_Manual = 2;		// 手动使用Model
+}
+
+
+message CodeGenPeer
+{
+	string Name = 1;  // Peer名, 表示Module依赖某个Peer网络
+	
+	repeated string RecvMessage = 2;	
+}
+
+message CodeGenModule
+{
+	string Name = 1;		// 自动在Assets/Resources/View下抓取对应名称的Prefab
+	
+	repeated CodeGenPeer Peer = 2;
+	
+	ModelGenType ModelGen = 3;
+	
+	bool NoGenPresenterCode = 4;
+}
+
+message CodeGenFile
+{
+	repeated CodeGenModule CodeGen = 1;
+}

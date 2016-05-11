@@ -36,7 +36,7 @@ namespace Framework
             // TODO 从配置表导入初始化
 
             Register<LoginModel>();
-            Register<CharListModel>();
+            Register<LoginCharListModel>();
 
             _initDone = true;
         }

@@ -42,6 +42,8 @@ namespace ProtobufText
             return _source[Index + offset ];
         }
 
+        public int Line { get; set; }
+
 
         public void Consume( int count = 1 )
         {
@@ -51,6 +53,11 @@ namespace ProtobufText
         public bool EOF(int offset = 0)
         {
             return Index + offset >= _source.Length;
+        }
+
+        public void IncLine( )
+        {
+            Line++;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace ProtobufText
             {
                 tz.Consume();
 
-            } while (tz.Current != '\n' || tz.Current != '\0');
+            } while (tz.Current != '\n' && tz.Current != '\0');
 
 
 

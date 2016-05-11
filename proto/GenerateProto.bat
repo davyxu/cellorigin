@@ -12,4 +12,5 @@ tool.proto
 network.proto ^
 game.proto ^
 client.proto ^
+framework.proto ^
 login.proto

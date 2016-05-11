@@ -20,9 +20,52 @@ namespace ProtobufText
             if (prop == null)
                 return;
 
-            object v = Convert.ChangeType(value, prop.PropertyType);
+            if ( prop.PropertyType.IsGenericType )
+            {
+                // 取泛型第一个类型
+                // 取泛型第一个类型
+                var elementType = prop.PropertyType.GetGenericArguments()[0];
 
-            prop.SetValue(_ins, v, null);
+                object v;
+
+                // 枚举List
+                if ( elementType.IsEnum )
+                {
+                    v = Enum.Parse(elementType, value);
+                }
+                else
+                {
+                    v = Convert.ChangeType(value, elementType);
+                }
+
+                // 找到这个字段List的实例
+                var listIns = prop.GetValue(_ins, null);
+
+                // List没有分配实例
+                if ( listIns != null )
+                {
+                    // 取出List的Add函数
+                    var listAdd = listIns.GetType().GetMethod("Add");
+
+                    // 调用Add函数传入创建好的对象
+                    listAdd.Invoke(listIns, new object[] { v });
+                }
+            }
+            else if ( prop.PropertyType.IsEnum )
+            {
+                object v = Enum.Parse(prop.PropertyType, value);
+
+                prop.SetValue(_ins, v, null);
+                
+            }
+            else
+            {
+                object v = Convert.ChangeType(value, prop.PropertyType);
+
+                prop.SetValue(_ins, v, null);
+            }
+
+            
         }
 
         public Message AddMessage(string field)

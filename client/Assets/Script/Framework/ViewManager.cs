@@ -19,7 +19,7 @@ namespace Framework
 
         public void Show(string name)
         {
-            var prefab = Resources.Load<GameObject>("UI/" + name);
+            var prefab = Resources.Load<GameObject>("View/" + name);
             if (prefab == null)
             {
                 Debug.LogError("UIManager.Show UI没找到: " + name);

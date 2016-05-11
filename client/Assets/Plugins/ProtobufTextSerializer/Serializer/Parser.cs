@@ -48,42 +48,58 @@ namespace ProtobufText
             {
                 key = _token.Value;
 
-                Expect(TokenType.Identifier);
-
-                bool isNormalValue = false;
 
                 switch (_token.Type)
                 {
-                    case TokenType.Comma:
+                    case TokenType.Identifier:
                         {
-                            isNormalValue = true;
-                        }
-                        break;
-                    case TokenType.LBrace:
-                        {                            
-                            OnMsgBegin(key);
+                            Expect(TokenType.Identifier);
+
+                            bool isNormalValue = false;
+
+                            switch (_token.Type)
+                            {
+                                case TokenType.Comma:
+                                    {
+                                        isNormalValue = true;
+                                    }
+                                    break;
+                                case TokenType.LBrace:
+                                    {
+                                        OnMsgBegin(key);
+
+                                        Next();
+                                        continue;
+                                    }
+                            }
 
                             Next();
-                            continue;
-                        }            
+
+                            var valueToken = _token;
+
+                            if (isNormalValue)
+                            {
+                                OnSetValue(key, valueToken.Value);
+                            }
+
+                            Next();
+
+                            if (_token.Type == TokenType.RBrace)
+                            {
+                                OnMsgEnd();
+                                Next();
+                            }                
+                        }
+                        break;
+                    case TokenType.RBrace:
+                        {
+                            OnMsgEnd();
+                            Next();
+                        }
+                        break;
                 }
 
-                Next();
-
-                var valueToken = _token;
-
-                if ( isNormalValue )
-                {
-                    OnSetValue(key, valueToken.Value );
-                }
-
-                Next();
-
-                if ( _token.Type == TokenType.RBrace)
-                {
-                    OnMsgEnd();
-                    Next();
-                }                
+               
                 
 
             } while (_token.Type != TokenType.EOF);
@@ -95,7 +111,7 @@ namespace ProtobufText
         {
             if (_token.Type != t)
             {
-                throw new Exception(string.Format("expect token: {0}", t.ToString()));
+                throw new Exception(string.Format("expect token: {0} @ {1}", t.ToString(), _lexer.ToString() ));
             }
 
             Next();
@@ -129,7 +145,15 @@ namespace ProtobufText
 
         void OnSetValue(string name, string value )
         {
-            _msg.SetValue(name, value);
+            try
+            {
+                _msg.SetValue(name, value);
+            }
+            catch( Exception ex )
+            {
+                string err = ex.ToString() + _lexer.ToString();
+            }
+            
         }
 
         void OnMsgEnd()

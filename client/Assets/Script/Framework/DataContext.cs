@@ -13,6 +13,7 @@ namespace Framework
         Text,
         Image,
         View,
+        ItemView,
         ScrollRect,
     }
 
@@ -43,13 +44,10 @@ namespace Framework
         // 数据同步类型
         public DataSyncType SyncType;       
 
-        // View设置
-        public Framework.BaseView View;
-        public UnityEngine.Object Presenter;
-        public UnityEngine.Object Model;
-
-
-        public string Peer;
+        //// View设置
+        //public Framework.BaseView View;
+        //public UnityEngine.Object Presenter;
+        //public UnityEngine.Object Model;
 
 
         public void SmartFill()

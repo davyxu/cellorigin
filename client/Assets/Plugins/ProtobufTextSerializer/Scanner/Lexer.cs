@@ -7,6 +7,7 @@ namespace ProtobufText
         IList<Matcher> _tokenmatcher = new List<Matcher>();
         IEnumerator<Token> _tokeniter;
         int _index;
+        int _line = 1;
 
         public void AddMatcher(Matcher matcher)
         {
@@ -16,7 +17,7 @@ namespace ProtobufText
         public override string ToString()
         {
             if (_tokeniter != null)
-                return string.Format("{0} @ {1}",Peek().ToString(), _index);
+                return string.Format("{0} @line {1}",Peek().ToString(), _line);
 
             return base.ToString();
         }
@@ -31,6 +32,8 @@ namespace ProtobufText
                 foreach (var matcher in _tokenmatcher)
                 {
                     var token = matcher.Match(tz);
+                    _line = tz.Line;
+
                     if (token == null)
                     {
                         continue;

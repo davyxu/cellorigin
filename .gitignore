@@ -1,4 +1,6 @@
 *.exe
+*.user
+*.suo
 /client/Library
 /client/Temp
 /proto/*.exe
@@ -23,8 +25,5 @@ server/src/gatesvc/gatesvc_Build.bat
 tool/MyUpdate3rd.bat
 tool/bin/protoc-gen-table.exe
 tool/protoc-gen-sharpnet.exe
-/client/*.suo
-/client/*.csproj
-/client/*.sln
 /server/cfg/Local.pbt
 /client/*.userprefs

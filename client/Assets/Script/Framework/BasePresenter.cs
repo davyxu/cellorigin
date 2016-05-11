@@ -2,7 +2,7 @@
 
 namespace Framework
 {
-    public class BasePresenter : UnityEngine.Object
+    public class BasePresenter
     {
 
     }
