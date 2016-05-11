@@ -570,7 +570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 2
-  SyncType: 0
+  SyncType: 2
 --- !u!114 &11440674
 MonoBehaviour:
   m_ObjectHideFlags: 1

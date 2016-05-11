@@ -155,7 +155,7 @@ namespace Framework
                             gen.In();
                             gen.PrintLine("_Presenter.", PresenterTemplate.Property(widgetContext), " = x;");
                             gen.Out();
-                            gen.PrintLine("};");
+                            gen.PrintLine("} );");
 
                             // 初始赋值
                             gen.PrintLine("_Presenter.", PresenterTemplate.Property(widgetContext), " = ", WidgetData(widgetContext), ";");

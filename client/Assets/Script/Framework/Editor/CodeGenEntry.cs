@@ -47,7 +47,7 @@ namespace Framework
             // 深度遍历所有的DataContext
             foreach (Transform childTrans in rootObj.transform)
             {
-                IterateDataContext(childTrans, ref ctxList);
+                IterateDataContext(rootContext, childTrans, ref ctxList);
             }
 
             // 生成View代码
@@ -97,7 +97,7 @@ namespace Framework
         }
 
 
-        static void IterateDataContext(Transform trans, ref List<DataContext> ctxList )
+        static void IterateDataContext(DataContext rootctx, Transform trans, ref List<DataContext> ctxList )
         {
             var childContext = trans.GetComponent<DataContext>();
             if (childContext != null)
@@ -107,12 +107,19 @@ namespace Framework
                     throw new Exception("重名" + childContext.Name);
                 }
 
+                if ( childContext.Type == WidgetType.Unknown )
+                {
+                    var path = ObjectUtility.GetGameObjectPath(childContext.gameObject, rootctx.gameObject);
+
+                    throw new Exception("类型未设置:" + path);
+                }
+
                 ctxList.Add(childContext);
             }
 
             foreach (Transform childTrans in trans)
             {
-                IterateDataContext(childTrans, ref ctxList);
+                IterateDataContext(rootctx, childTrans, ref ctxList);
             }
         }
     }

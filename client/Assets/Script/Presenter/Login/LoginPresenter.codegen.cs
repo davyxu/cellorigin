@@ -58,24 +58,24 @@ partial class LoginPresenter : Framework.BasePresenter
 		
 		_loginPeer.RegisterMessage<gamedef.PeerConnected>( obj =>
 		{
-			Msg_login_PeerConnected( _loginPeer, obj as gamedef.PeerConnected);
+			Msg_login_PeerConnected( _loginPeer, obj as gamedef.PeerConnected );
 		});
 		
 		_loginPeer.RegisterMessage<gamedef.LoginACK>( obj =>
 		{
-			Msg_login_LoginACK( _loginPeer, obj as gamedef.LoginACK);
+			Msg_login_LoginACK( _loginPeer, obj as gamedef.LoginACK );
 		});
 		
 		_gamePeer = PeerManager.Instance.Get("game");
 		
 		_gamePeer.RegisterMessage<gamedef.PeerConnected>( obj =>
 		{
-			Msg_game_PeerConnected( _gamePeer, obj as gamedef.PeerConnected);
+			Msg_game_PeerConnected( _gamePeer, obj as gamedef.PeerConnected );
 		});
 		
 		_gamePeer.RegisterMessage<gamedef.VerifyGameACK>( obj =>
 		{
-			Msg_game_VerifyGameACK( _gamePeer, obj as gamedef.VerifyGameACK);
+			Msg_game_VerifyGameACK( _gamePeer, obj as gamedef.VerifyGameACK );
 		});
 		
 	}

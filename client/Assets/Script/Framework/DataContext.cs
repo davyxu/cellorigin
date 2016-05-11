@@ -29,8 +29,12 @@ namespace Framework
    // [ExecuteInEditMode]
     public class DataContext : MonoBehaviour
     {
-
+        [HideInInspector]
         public WidgetType Type;
+
+        // 数据同步类型
+        [HideInInspector]
+        public DataSyncType SyncType;     
 
         // 控件设置
 
@@ -56,11 +60,10 @@ namespace Framework
             }
         }
 
-        // 数据同步类型
-        public DataSyncType SyncType;       
+  
 
 
-        public void SmartFill()
+        public void Detect()
         {
             // 启动探测类型
             Type = DetectType(gameObject);
@@ -72,8 +75,18 @@ namespace Framework
             }
 
             SyncType = Framework.DataSyncType.PresenterToView;
+        }
 
+        public void DetectAllChild( )
+        {
+            foreach (Transform trans in transform)
+            {
+                var ctx = trans.GetComponent<DataContext>();
+                if (ctx == null)
+                    continue;
 
+                ctx.Detect();
+            }
         }
 
 
@@ -93,25 +106,23 @@ namespace Framework
         /// <summary>
         /// 将本类添加到所有的顶级子对象中
         /// </summary>
-        public void AddBinderToAllTopChild()
+        public void AddToTopChild()
         {
             foreach (Transform trans in transform)
             {
                 // 子控件是可探测类型, 自动添加
-                if (DetectType(trans.gameObject) != WidgetType.Unknown)
+                if (trans.gameObject.GetComponent<DataContext>() == null)
                 {
-                    if (trans.gameObject.GetComponent<DataContext>() == null)
-                    {
-                        trans.gameObject.AddComponent<DataContext>();
-                    }
-                }
+                    var ctx = trans.gameObject.AddComponent<DataContext>();
+                    ctx.Detect();
+                }   
             }
         }
 
         /// <summary>
         /// 从顶级子对象中移除本类
         /// </summary>
-        public void RemoveAllTopChildBinder()
+        public void RemoveAllChild()
         {
             foreach (Transform trans in transform)
             {

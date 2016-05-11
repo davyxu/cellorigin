@@ -38,7 +38,7 @@ partial class LoginCharBoardPresenter : Framework.BasePresenter
 		
 		_gamePeer.RegisterMessage<gamedef.CharListACK>( obj =>
 		{
-			Msg_game_CharListACK( _gamePeer, obj as gamedef.CharListACK);
+			Msg_game_CharListACK( _gamePeer, obj as gamedef.CharListACK );
 		});
 		
 	}

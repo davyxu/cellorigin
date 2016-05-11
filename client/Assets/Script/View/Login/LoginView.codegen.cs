@@ -24,6 +24,11 @@ partial class LoginView : Framework.BaseView
 		_SetPublicAddress = trans.Find("SetPublicAddress").GetComponent<Button>();
 		_LoginServerList = trans.Find("LoginServerList").GetComponent<Framework.ListControl>();
 		
+		_Account.onValueChanged.AddListener( x =>
+		{
+			_Presenter.Account = x;
+		} );
+		_Presenter.Account = _Account.text;
 		_Presenter.OnAccountChanged += delegate()
 		{
 			_Account.text = _Presenter.Account;
