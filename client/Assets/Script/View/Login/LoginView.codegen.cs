@@ -10,7 +10,7 @@ partial class LoginView : Framework.BaseView
 	InputField _Address;
 	Button _SetDevAddress;
 	Button _SetPublicAddress;
-	Framework.ListControl _LoginServerInfo;
+	Framework.ListControl _LoginServerList;
 	
 	public override void Bind( Framework.BasePresenter presenter )
 	{
@@ -22,7 +22,7 @@ partial class LoginView : Framework.BaseView
 		_Address = trans.Find("Address").GetComponent<InputField>();
 		_SetDevAddress = trans.Find("SetDevAddress").GetComponent<Button>();
 		_SetPublicAddress = trans.Find("SetPublicAddress").GetComponent<Button>();
-		_LoginServerInfo = trans.Find("LoginServerInfo").GetComponent<Framework.ListControl>();
+		_LoginServerList = trans.Find("LoginServerList").GetComponent<Framework.ListControl>();
 		
 		_Presenter.OnAccountChanged += delegate()
 		{
@@ -44,7 +44,7 @@ partial class LoginView : Framework.BaseView
 		
 		_SetDevAddress.onClick.AddListener( _Presenter.Cmd_SetDevAddress );
 		_SetPublicAddress.onClick.AddListener( _Presenter.Cmd_SetPublicAddress );
-		Framework.Utility.BindCollectionView<int, LoginServerInfoPresenter, LoginServerInfoView>( _Presenter.LoginServerInfoCollection, _LoginServerInfo );
+		Framework.Utility.BindCollection<int, LoginServerInfoPresenter, LoginServerInfoView>( _Presenter.LoginServerList, _LoginServerList );
 		
 	}
 	

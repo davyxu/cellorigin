@@ -10,6 +10,11 @@ namespace Framework
             return ctx.Name + "Presenter";
         }
 
+        public static string ClassItemName(DataContext ctx)
+        {
+            return ctx.ItemName + "Presenter";
+        }
+
         // Presenter中的事件名
         public static string Event(DataContext ctx)
         {
@@ -47,7 +52,7 @@ namespace Framework
             {
                 case WidgetType.ScrollRect:
                     {
-                        gen.PrintLine("public Framework.ObservableCollection<int, ", ClassName(ctx), "> ", Property(ctx), "Collection { get; set; }");
+                        gen.PrintLine("public Framework.ObservableCollection<int, ", ClassItemName(ctx), "> ", Property(ctx), " { get; set; }");
                     }
                     break;
                 case WidgetType.Text:
@@ -109,7 +114,7 @@ namespace Framework
         {
             if (ctx.Type == WidgetType.ScrollRect)
             {
-                gen.PrintLine(Property(ctx), "Collection = new Framework.ObservableCollection<int, ", ClassName(ctx), ">();");
+                gen.PrintLine(Property(ctx), " = new Framework.ObservableCollection<int, ", ClassItemName(ctx), ">();");
             }
         }
 
@@ -211,7 +216,7 @@ namespace Framework
                 gen.PrintLine("{");
                 gen.In();
 
-                gen.PrintLine(NetworkCallback(peer, msgType), "( ", NetworkPeerInstance(peer), ", obj as ", msgType, ");");
+                gen.PrintLine(NetworkCallback(peer, msgType), "( ", NetworkPeerInstance(peer), ", obj as ", msgType, " );");
 
                 gen.Out();
                 gen.PrintLine("});");

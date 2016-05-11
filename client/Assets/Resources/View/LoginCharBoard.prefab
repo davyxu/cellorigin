@@ -30,7 +30,7 @@ GameObject:
   - 114: {fileID: 11448412}
   - 114: {fileID: 11454390}
   m_Layer: 5
-  m_Name: LoginCharList
+  m_Name: LoginCharBoard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -175,7 +175,7 @@ GameObject:
   - 114: {fileID: 11433744}
   - 114: {fileID: 11468018}
   m_Layer: 5
-  m_Name: LoginCharInfo
+  m_Name: LoginCharList
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -11,6 +11,11 @@ namespace Framework
         {
             return ctx.Name + "View";
         }
+
+        public static string ClassItemName(DataContext ctx)
+        {
+            return ctx.ItemName + "View";
+        }
        
         public static string WidgetVariable(DataContext ctx)
         {
@@ -127,10 +132,10 @@ namespace Framework
             {
                 case WidgetType.ScrollRect:
                     {
-                        gen.PrintLine("Framework.Utility.BindCollectionView<int, ",
-                                    PresenterTemplate.ClassName(widgetContext), ", ",
-                                    ClassName(widgetContext), ">( _Presenter.", PresenterTemplate.Property(widgetContext),
-                                    "Collection, ", WidgetVariable(widgetContext), " );"
+                        gen.PrintLine("Framework.Utility.BindCollection<int, ",
+                                    PresenterTemplate.ClassItemName(widgetContext), ", ",
+                                    ClassItemName(widgetContext), ">( _Presenter.", PresenterTemplate.Property(widgetContext),
+                                    ", ", WidgetVariable(widgetContext), " );"
                                 );
                         gen.PrintLine();
                     }

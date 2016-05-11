@@ -30,7 +30,7 @@ CodeGen
 
 CodeGen 
 {
-	Name: "LoginCharList"
+	Name: "LoginCharBoard"
 	Peer
 	{
 		Name: "game"

@@ -152,6 +152,7 @@ namespace ProtobufText
             catch( Exception ex )
             {
                 string err = ex.ToString() + _lexer.ToString();
+                throw new Exception(err);
             }
             
         }

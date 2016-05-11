@@ -47,13 +47,13 @@ partial class LoginPresenter : Framework.BasePresenter
 		}
 	}
 	
-	public Framework.ObservableCollection<int, LoginServerInfoPresenter> LoginServerInfoCollection { get; set; }
+	public Framework.ObservableCollection<int, LoginServerInfoPresenter> LoginServerList { get; set; }
 	
 	public void Init( )
 	{
 		_Model = Framework.ModelManager.Instance.Get<LoginModel>();
 		
-		LoginServerInfoCollection = new Framework.ObservableCollection<int, LoginServerInfoPresenter>();
+		LoginServerList = new Framework.ObservableCollection<int, LoginServerInfoPresenter>();
 		_loginPeer = PeerManager.Instance.Get("login");
 		
 		_loginPeer.RegisterMessage<gamedef.PeerConnected>( obj =>

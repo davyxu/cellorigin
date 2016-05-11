@@ -6,7 +6,7 @@ using UnityEditor;
 /// </summary>
 public class ShowSelectObjectPath : MonoBehaviour {
 
-    [MenuItem("UITools/查看路径")]
+    [MenuItem("CellOrigin/查看GameObject路径")]
     public static void ShowPath( )
     {
         foreach( Object obj in Selection.objects )

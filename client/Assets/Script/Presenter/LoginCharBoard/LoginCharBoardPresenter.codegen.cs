@@ -3,9 +3,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-partial class LoginCharListPresenter : Framework.BasePresenter
+partial class LoginCharBoardPresenter : Framework.BasePresenter
 {
-	LoginCharListModel _Model;
+	LoginCharBoardModel _Model;
 	
 	NetworkPeer _gamePeer;
 	
@@ -27,13 +27,13 @@ partial class LoginCharListPresenter : Framework.BasePresenter
 		}
 	}
 	
-	public Framework.ObservableCollection<int, LoginCharInfoPresenter> LoginCharInfoCollection { get; set; }
+	public Framework.ObservableCollection<int, LoginCharInfoPresenter> LoginCharList { get; set; }
 	
 	public void Init( )
 	{
-		_Model = Framework.ModelManager.Instance.Get<LoginCharListModel>();
+		_Model = Framework.ModelManager.Instance.Get<LoginCharBoardModel>();
 		
-		LoginCharInfoCollection = new Framework.ObservableCollection<int, LoginCharInfoPresenter>();
+		LoginCharList = new Framework.ObservableCollection<int, LoginCharInfoPresenter>();
 		_gamePeer = PeerManager.Instance.Get("game");
 		
 		_gamePeer.RegisterMessage<gamedef.CharListACK>( obj =>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 
 
-partial class LoginCharListPresenter : Framework.BasePresenter
+partial class LoginCharBoardPresenter : Framework.BasePresenter
 {
     public void Cmd_CreateChar( )
     {
@@ -21,7 +21,7 @@ partial class LoginCharListPresenter : Framework.BasePresenter
             var vm = new LoginCharInfoPresenter();
             vm.CharName = _base.ToString();
 
-            LoginCharInfoCollection.Add(_base, vm);
+            LoginCharList.Add(_base, vm);
             _base++;
         }
 
@@ -29,10 +29,10 @@ partial class LoginCharListPresenter : Framework.BasePresenter
 
     public void Cmd_DebugRemove()
     {
-        LoginCharInfoCollection.Visit((key, value) =>
+        LoginCharList.Visit((key, value) =>
         {
 
-            LoginCharInfoCollection.Remove((int)key);
+            LoginCharList.Remove((int)key);
 
 
             return false;
@@ -41,23 +41,23 @@ partial class LoginCharListPresenter : Framework.BasePresenter
 
     public void Cmd_DebugModify( )
     {
-        LoginCharInfoCollection.Get(1).CharName = "m";
+        LoginCharList.Get(1).CharName = "m";
     }
 
-    public LoginCharListPresenter()
+    public LoginCharBoardPresenter()
     {
         Init();
     }
 
     public void Msg_game_CharListACK(NetworkPeer peer, gamedef.CharListACK msg)
     {
-        LoginCharInfoCollection.Clear();
+        LoginCharList.Clear();
 
         for (int i = 0; i < msg.CharInfo.Count; i++)
         {
             var sm = new LoginCharInfoPresenter();
             sm.CharName = msg.CharInfo[i].CharName;
-            LoginCharInfoCollection.Add(i, sm);
+            LoginCharList.Add(i, sm);
         }
 
     }

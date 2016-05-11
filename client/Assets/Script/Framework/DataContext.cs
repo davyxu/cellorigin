@@ -40,13 +40,24 @@ namespace Framework
             get { return gameObject.name; } 
         }
 
+        // 控件做Item时的名称
+        public string ItemName
+        {
+            get
+            {
+                var listctrl = gameObject.GetComponent<ListControl>();
+                if (listctrl == null)
+                    return "ListControlLost";
+
+                if (listctrl.ItemPrefab == null)
+                    return "ItemPrefabNotSet";
+
+                return listctrl.ItemPrefab.name;
+            }
+        }
+
         // 数据同步类型
         public DataSyncType SyncType;       
-
-        //// View设置
-        //public Framework.BaseView View;
-        //public UnityEngine.Object Presenter;
-        //public UnityEngine.Object Model;
 
 
         public void SmartFill()

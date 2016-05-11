@@ -1,12 +1,12 @@
 ﻿
 using UnityEngine;
 
-partial class LoginCharListView : Framework.BaseView
+partial class LoginCharBoardView : Framework.BaseView
 {
 
     void Awake()
     {
-        Bind(new LoginCharListPresenter());
+        Bind(new LoginCharBoardPresenter());
     }
 
     void Start()

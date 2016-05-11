@@ -5,7 +5,7 @@ namespace Framework
     public class Utility
     {
 
-        public static void BindCollectionView<CollectionKeyType, PresentType, ViewType>(
+        public static void BindCollection<CollectionKeyType, PresentType, ViewType>(
             Framework.ObservableCollection<CollectionKeyType, PresentType> presenterCollection,
             Framework.ListControl viewList)
             where ViewType : Framework.BaseView

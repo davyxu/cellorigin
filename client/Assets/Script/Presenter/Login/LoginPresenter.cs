@@ -97,11 +97,11 @@ partial class LoginPresenter : Framework.BasePresenter
 
     void Msg_login_LoginACK(NetworkPeer peer, gamedef.LoginACK msg)
     {
-        LoginServerInfoCollection.Clear();
+        LoginServerList.Clear();
 
         for (int i = 0; i < msg.ServerList.Count; i++)
         {
-            LoginServerInfoCollection.Add(i, new LoginServerInfoPresenter(msg.ServerList[i]));
+            LoginServerList.Add(i, new LoginServerInfoPresenter(msg.ServerList[i]));
         }
 
         _verifyToken = msg.Token;
@@ -133,7 +133,7 @@ partial class LoginPresenter : Framework.BasePresenter
         {
             case gamedef.VerifyGameResult.VerifyOK:
                 {
-                    Framework.ViewManager.Instance.Show("LoginCharList");
+                    Framework.ViewManager.Instance.Show("LoginCharBoard");
                 }
                 break;
             default:

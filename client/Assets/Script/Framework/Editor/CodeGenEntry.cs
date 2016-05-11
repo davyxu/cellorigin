@@ -8,12 +8,13 @@ namespace Framework
 {
     public class CodeGenEntry : MonoBehaviour
     {
-        [MenuItem("CellOrigin/生成选中对象框架代码")]
-        public static void GenCodeBySelectedObject()
-        {
-            var rootObj = Selection.activeGameObject;
 
-            //GenCodeByPrefab(rootObj, null );
+        [MenuItem("CellOrigin/从文件生成框架代码")]
+        public static void GenCodeByFile()
+        {
+            var file = ProtobufUtility.LoadTextFile<gamedef.CodeGenFile>("Assets/Script/CodeGen/ui.pbt");
+
+            GenCodeByManifest(file);
         }
 
         static void GenCodeByPrefab( GameObject rootObj, gamedef.CodeGenModule module )
@@ -34,7 +35,7 @@ namespace Framework
                 return;
             }
 
-
+            // 必须从View的根开始生成
             if (rootContext.Type != WidgetType.View )
             {
                 Debug.LogError("根对象组件类型必须是View类型 " + rootContext.Name);
@@ -43,11 +44,13 @@ namespace Framework
 
             var ctxList = new List<DataContext>();
 
+            // 深度遍历所有的DataContext
             foreach (Transform childTrans in rootObj.transform)
             {
                 IterateDataContext(childTrans, ref ctxList);
             }
 
+            // 生成View代码
             {
                 var gen = new CodeGenerator();
 
@@ -56,6 +59,7 @@ namespace Framework
                 ViewTemplate.Save(gen, rootContext);
             }
 
+            // 生成Presenter代码
             if (!module.NoGenPresenterCode)
             {
                 var gen = new CodeGenerator();
@@ -68,14 +72,6 @@ namespace Framework
 
 
             AssetDatabase.Refresh();
-        }
-
-        [MenuItem("CellOrigin/从文件生成框架代码")]
-        public static void GenCodeByFile()
-        {
-            var file = ProtobufUtility.LoadTextFile<gamedef.CodeGenFile>("Assets/Script/CodeGen/ui.pbt");
-
-            GenCodeByManifest(file);
         }
 
         static void GenCodeByManifest( gamedef.CodeGenFile file )

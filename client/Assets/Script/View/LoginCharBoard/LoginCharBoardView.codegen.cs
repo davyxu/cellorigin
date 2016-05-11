@@ -2,20 +2,20 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-partial class LoginCharListView : Framework.BaseView
+partial class LoginCharBoardView : Framework.BaseView
 {
-	LoginCharListPresenter _Presenter;
+	LoginCharBoardPresenter _Presenter;
 	
 	InputField _CharName;
 	Button _CreateChar;
 	Button _DebugAdd;
 	Button _DebugRemove;
 	Button _DebugModify;
-	Framework.ListControl _LoginCharInfo;
+	Framework.ListControl _LoginCharList;
 	
 	public override void Bind( Framework.BasePresenter presenter )
 	{
-		_Presenter = presenter as LoginCharListPresenter;
+		_Presenter = presenter as LoginCharBoardPresenter;
 		
 		var trans = this.transform;
 		
@@ -24,7 +24,7 @@ partial class LoginCharListView : Framework.BaseView
 		_DebugAdd = trans.Find("DebugAdd").GetComponent<Button>();
 		_DebugRemove = trans.Find("DebugRemove").GetComponent<Button>();
 		_DebugModify = trans.Find("DebugModify").GetComponent<Button>();
-		_LoginCharInfo = trans.Find("LoginCharInfo").GetComponent<Framework.ListControl>();
+		_LoginCharList = trans.Find("LoginCharList").GetComponent<Framework.ListControl>();
 		
 		_Presenter.OnCharNameChanged += delegate()
 		{
@@ -39,7 +39,7 @@ partial class LoginCharListView : Framework.BaseView
 		_DebugAdd.onClick.AddListener( _Presenter.Cmd_DebugAdd );
 		_DebugRemove.onClick.AddListener( _Presenter.Cmd_DebugRemove );
 		_DebugModify.onClick.AddListener( _Presenter.Cmd_DebugModify );
-		Framework.Utility.BindCollectionView<int, LoginCharInfoPresenter, LoginCharInfoView>( _Presenter.LoginCharInfoCollection, _LoginCharInfo );
+		Framework.Utility.BindCollection<int, LoginCharInfoPresenter, LoginCharInfoView>( _Presenter.LoginCharList, _LoginCharList );
 		
 	}
 	
