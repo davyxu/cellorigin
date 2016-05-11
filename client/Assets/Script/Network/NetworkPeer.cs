@@ -358,15 +358,15 @@ public class NetworkPeer : MonoBehaviour
         }
         else if ( msgid == MsgID_ConnectError )
         {
-            Debug.Log(string.Format("[{0}] ConnectError {1}", Name, Address ));
+            Debug.LogError(string.Format("[{0}] ConnectError {1}", Name, Address ));
         }
         else if (msgid == MsgID_RecvError)
         {
-            Debug.Log(string.Format("[{0}] RecvError", Name));
+            Debug.LogError(string.Format("[{0}] RecvError", Name));
         }
         else if (msgid == MsgID_SendError)
         {
-            Debug.Log(string.Format("[{0}] SendError", Name));
+            Debug.LogError(string.Format("[{0}] SendError", Name));
         }
         else
         {

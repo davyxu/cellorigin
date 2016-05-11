@@ -27,3 +27,6 @@ tool/bin/protoc-gen-table.exe
 tool/protoc-gen-sharpnet.exe
 /server/cfg/Local.pbt
 /client/*.userprefs
+/client/*.csproj
+/client/*.sln
+/client/obj
