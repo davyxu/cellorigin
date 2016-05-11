@@ -68,10 +68,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 5
   SyncType: 0
-  View: {fileID: 0}
-  Presenter: {fileID: 0}
-  Model: {fileID: 0}
-  Peer: 
 --- !u!114 &11437120
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -186,10 +182,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 3
   SyncType: 0
-  View: {fileID: 0}
-  Presenter: {fileID: 0}
-  Model: {fileID: 0}
-  Peer: 
 --- !u!114 &11483078
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -203,10 +195,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 1
   SyncType: 0
-  View: {fileID: 0}
-  Presenter: {fileID: 0}
-  Model: {fileID: 0}
-  Peer: 
 --- !u!114 &11489032
 MonoBehaviour:
   m_ObjectHideFlags: 1

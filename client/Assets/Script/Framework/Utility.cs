@@ -8,7 +8,7 @@ namespace Framework
         public static void BindCollectionView<CollectionKeyType, PresentType, ViewType>(
             Framework.ObservableCollection<CollectionKeyType, PresentType> presenterCollection,
             Framework.ListControl viewList)
-            where ViewType : Framework.BaseItemView
+            where ViewType : Framework.BaseView
             where PresentType : Framework.BasePresenter
         {
             presenterCollection.OnItemTotalChanged += delegate

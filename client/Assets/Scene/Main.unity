@@ -307,9 +307,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 1
   SyncType: 0
-  View: {fileID: 0}
-  Presenter: {fileID: 0}
-  Model: {fileID: 0}
 --- !u!114 &1619778885
 MonoBehaviour:
   m_ObjectHideFlags: 0

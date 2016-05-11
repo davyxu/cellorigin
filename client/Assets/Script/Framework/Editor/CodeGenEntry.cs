@@ -35,9 +35,9 @@ namespace Framework
             }
 
 
-            if (rootContext.Type != WidgetType.View && rootContext.Type != WidgetType.ItemView)
+            if (rootContext.Type != WidgetType.View )
             {
-                Debug.LogError("根对象组件类型必须是View类型");
+                Debug.LogError("根对象组件类型必须是View类型 " + rootContext.Name);
                 return;
             }
 

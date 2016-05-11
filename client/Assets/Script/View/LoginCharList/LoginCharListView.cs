@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-partial class LoginCharListView : Framework.BaseItemView
+partial class LoginCharListView : Framework.BaseView
 {
 
     void Awake()

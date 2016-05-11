@@ -4,6 +4,7 @@ namespace Framework
 {
     public class BaseView : MonoBehaviour
     {
+        public object ItemKey;
 
         public virtual void Bind(BasePresenter presenter)
         {
@@ -14,7 +15,7 @@ namespace Framework
 
     public class BaseItemView : BaseView
     {
-        public object ItemKey;
+
     }
 
 }

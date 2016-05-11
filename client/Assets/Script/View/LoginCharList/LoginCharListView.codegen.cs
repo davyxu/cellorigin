@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-partial class LoginCharListView : Framework.BaseItemView
+partial class LoginCharListView : Framework.BaseView
 {
 	LoginCharListPresenter _Presenter;
 	

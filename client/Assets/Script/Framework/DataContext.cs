@@ -12,8 +12,7 @@ namespace Framework
         InputField,
         Text,
         Image,
-        View,
-        ItemView,
+        View,        
         ScrollRect,
     }
 

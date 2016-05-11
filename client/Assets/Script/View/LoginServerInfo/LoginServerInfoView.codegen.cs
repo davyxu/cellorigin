@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-partial class LoginServerInfoView : Framework.BaseItemView
+partial class LoginServerInfoView : Framework.BaseView
 {
 	LoginServerInfoPresenter _Presenter;
 	

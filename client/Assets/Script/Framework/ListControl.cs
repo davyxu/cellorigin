@@ -10,7 +10,7 @@ namespace Framework
         public GameObject ItemPrefab;
 
         public void Add<ViewType, PresenterType>(object key, PresenterType value)
-            where ViewType : BaseItemView
+            where ViewType : BaseView
             where PresenterType : BasePresenter
         {
             var newItem = GameObject.Instantiate<GameObject>(ItemPrefab);
@@ -22,7 +22,7 @@ namespace Framework
         }
 
         public ViewType Get<ViewType>(object key)
-            where ViewType : BaseItemView
+            where ViewType : BaseView
         {
             var list = Content.GetComponentsInChildren<ViewType>();
             foreach (ViewType view in list)
@@ -37,7 +37,7 @@ namespace Framework
         }
 
         public void Remove<ViewType>(object key)
-            where ViewType : BaseItemView
+            where ViewType : BaseView
         {
             var list = Content.GetComponentsInChildren<ViewType>();
             foreach (ViewType view in list)
@@ -51,7 +51,7 @@ namespace Framework
         }
 
         public void Clear<ViewType>()
-            where ViewType : BaseItemView
+            where ViewType : BaseView
         {
             var list = Content.GetComponentsInChildren<ViewType>();
             foreach (ViewType item in list)
