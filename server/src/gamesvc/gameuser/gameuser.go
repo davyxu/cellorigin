@@ -27,7 +27,7 @@ func (self *DBAccount) GetChar(charname string) *CharData {
 
 type AccountData struct {
 	AccountID string // 账号标示号
-	Diamond   int32
+
 }
 
 // 角色信息
@@ -35,6 +35,7 @@ type CharData struct {
 	CharName     string
 	Coin         int32
 	LastLoginUTC int64 // 上次登录的时间戳
+	Diamond      int32
 
 	// 这里会有角色内的所有model
 }

@@ -1,8 +1,3 @@
-CodeGen 
-{
-	Name: "LoginCharInfo"
-	ModelGen: MGT_Instance
-}
 
 
 CodeGen 
@@ -30,6 +25,16 @@ CodeGen
 
 CodeGen 
 {
+	Name: "LoginServerInfo"
+	
+	NoGenPresenterCode: true
+}
+
+
+
+
+CodeGen 
+{
 	Name: "LoginCharBoard"
 	Peer
 	{
@@ -40,12 +45,9 @@ CodeGen
 	}
 }
 
+
 CodeGen 
 {
-	Name: "LoginServerInfo"
-	
-	NoGenPresenterCode: true
+	Name: "LoginCharInfo"
+	ModelGen: MGT_Instance
 }
-
-
-
