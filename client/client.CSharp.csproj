@@ -82,6 +82,7 @@
     <Compile Include="Assets\Script\Framework\Utility.cs" />
     <Compile Include="Assets\Script\Framework\ViewManager.cs" />
     <Compile Include="Assets\Script\Model\LoginCharBoardModel.cs" />
+    <Compile Include="Assets\Script\Model\TestBoardModel.cs" />
     <Compile Include="Assets\Script\Model\LoginModel.cs" />
     <Compile Include="Assets\Script\Network\ClientSocket.cs" />
     <Compile Include="Assets\Script\Network\MessageDispatcher.cs" />
@@ -91,10 +92,11 @@
     <Compile Include="Assets\Script\Presenter\Login\LoginPresenter.codegen.cs" />
     <Compile Include="Assets\Script\Presenter\Login\LoginPresenter.cs" />
     <Compile Include="Assets\Script\Presenter\LoginCharBoard\LoginCharBoardPresenter.codegen.cs" />
+    <Compile Include="Assets\Script\Presenter\LoginCharBoard\LoginCharBoardPresenter.cs" />
     <Compile Include="Assets\Script\Presenter\LoginCharInfo\LoginCharInfoPresenter.codegen.cs" />
     <Compile Include="Assets\Script\Presenter\LoginCharInfo\LoginCharInfoPresenter.cs" />
-    <Compile Include="Assets\Script\Presenter\LoginCharBoard\LoginCharBoardPresenter.cs" />
     <Compile Include="Assets\Script\Presenter\LoginServerInfo\LoginServerInfoPresenter.cs" />
+    <Compile Include="Assets\Script\Presenter\TestBoard\TestBoardPresenter.codegen.cs" />
     <Compile Include="Assets\Script\Proto\client.cs" />
     <Compile Include="Assets\Script\Proto\framework.cs" />
     <Compile Include="Assets\Script\Proto\game.cs" />
@@ -108,9 +110,10 @@
     <Compile Include="Assets\Script\View\Login\LoginView.codegen.cs" />
     <Compile Include="Assets\Script\View\Login\LoginView.cs" />
     <Compile Include="Assets\Script\View\LoginCharBoard\LoginCharBoardView.codegen.cs" />
-    <Compile Include="Assets\Script\View\LoginCharInfo\LoginCharInfoView.codegen.cs" />
     <Compile Include="Assets\Script\View\LoginCharBoard\LoginCharBoardView.cs" />
+    <Compile Include="Assets\Script\View\LoginCharInfo\LoginCharInfoView.codegen.cs" />
     <Compile Include="Assets\Script\View\LoginServerInfo\LoginServerInfoView.codegen.cs" />
+    <Compile Include="Assets\Script\View\TestBoard\TestBoardView.codegen.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />
 </Project>
