@@ -20,6 +20,9 @@ namespace Framework
 
         public void SetValue(object v)
         {
+            if (v == null)
+                return;
+
             _ctrl.text = (string)v;
         }
 

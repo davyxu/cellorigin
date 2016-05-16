@@ -8,21 +8,31 @@ namespace gamedef
 	{
 		public CodeGenPeer() {}
 		
-		private string _Name = "";
+		string _Name = "";
+		bool _hasName = false;
 		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"Name", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		[global::System.ComponentModel.DefaultValue("")]
 		public string Name
 		{
 			get { return _Name; }
-			set { _Name = value; }
+			set { _Name = value; 
+			      _hasName = true;
+			}
 		}
 		
-		private readonly global::System.Collections.Generic.List<string> _RecvMessage = new global::System.Collections.Generic.List<string>();
+		public bool HasName
+		{
+			get { return _hasName; }
+			set { _hasName = value; }
+		}
+		
+		readonly global::System.Collections.Generic.List<string> _RecvMessage = new global::System.Collections.Generic.List<string>();
 		[global::ProtoBuf.ProtoMember(2, Name=@"RecvMessage", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		public global::System.Collections.Generic.List<string> RecvMessage
 		{
 			get { return _RecvMessage; }
 		}
+		
 		
 		private global::ProtoBuf.IExtension extensionObject;
 		global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
@@ -33,38 +43,66 @@ namespace gamedef
 	{
 		public CodeGenModule() {}
 		
-		private string _Name = "";
+		string _Name = "";
+		bool _hasName = false;
 		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"Name", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		[global::System.ComponentModel.DefaultValue("")]
 		public string Name
 		{
 			get { return _Name; }
-			set { _Name = value; }
+			set { _Name = value; 
+			      _hasName = true;
+			}
 		}
 		
-		private readonly global::System.Collections.Generic.List<gamedef.CodeGenPeer> _Peer = new global::System.Collections.Generic.List<gamedef.CodeGenPeer>();
+		public bool HasName
+		{
+			get { return _hasName; }
+			set { _hasName = value; }
+		}
+		
+		readonly global::System.Collections.Generic.List<gamedef.CodeGenPeer> _Peer = new global::System.Collections.Generic.List<gamedef.CodeGenPeer>();
 		[global::ProtoBuf.ProtoMember(2, Name=@"Peer", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		public global::System.Collections.Generic.List<gamedef.CodeGenPeer> Peer
 		{
 			get { return _Peer; }
 		}
 		
-		private gamedef.ModelGenType _ModelGen = gamedef.ModelGenType.MGT_Singleton;
+		
+		gamedef.ModelGenType _ModelGen = gamedef.ModelGenType.MGT_Singleton;
+		bool _hasModelGen = false;
 		[global::ProtoBuf.ProtoMember(3, IsRequired = false, Name=@"ModelGen", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
 		[global::System.ComponentModel.DefaultValue(gamedef.ModelGenType.MGT_Singleton)]
 		public gamedef.ModelGenType ModelGen
 		{
 			get { return _ModelGen; }
-			set { _ModelGen = value; }
+			set { _ModelGen = value; 
+			      _hasModelGen = true;
+			}
 		}
 		
-		private bool _NoGenPresenterCode = default(bool);
+		public bool HasModelGen
+		{
+			get { return _hasModelGen; }
+			set { _hasModelGen = value; }
+		}
+		
+		bool _NoGenPresenterCode = default(bool);
+		bool _hasNoGenPresenterCode = false;
 		[global::ProtoBuf.ProtoMember(4, IsRequired = false, Name=@"NoGenPresenterCode", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		[global::System.ComponentModel.DefaultValue(default(bool))]
 		public bool NoGenPresenterCode
 		{
 			get { return _NoGenPresenterCode; }
-			set { _NoGenPresenterCode = value; }
+			set { _NoGenPresenterCode = value; 
+			      _hasNoGenPresenterCode = true;
+			}
+		}
+		
+		public bool HasNoGenPresenterCode
+		{
+			get { return _hasNoGenPresenterCode; }
+			set { _hasNoGenPresenterCode = value; }
 		}
 		
 		private global::ProtoBuf.IExtension extensionObject;
@@ -76,12 +114,13 @@ namespace gamedef
 	{
 		public CodeGenFile() {}
 		
-		private readonly global::System.Collections.Generic.List<gamedef.CodeGenModule> _CodeGen = new global::System.Collections.Generic.List<gamedef.CodeGenModule>();
+		readonly global::System.Collections.Generic.List<gamedef.CodeGenModule> _CodeGen = new global::System.Collections.Generic.List<gamedef.CodeGenModule>();
 		[global::ProtoBuf.ProtoMember(1, Name=@"CodeGen", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		public global::System.Collections.Generic.List<gamedef.CodeGenModule> CodeGen
 		{
 			get { return _CodeGen; }
 		}
+		
 		
 		private global::ProtoBuf.IExtension extensionObject;
 		global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
