@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 class TestBoardModel
 {
-    public string _TextInfo;
+    string _TextInfo;
 
 
 

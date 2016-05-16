@@ -8,29 +8,22 @@ partial class TestBoardPresenter : Framework.BasePresenter
 {
 	TestBoardModel _Model;
 
-    public Action OnTextInfoChanged;
-    public virtual string TextInfo
-    {
-        get
-        {
-            return _Model.TextInfo;
-        }
-        set
-        {
-            _Model.TextInfo = value;
-
-            if (OnTextInfoChanged != null)
-            {
-                OnTextInfoChanged();
-            }
-        }
-    }
-
+    Framework.IProperty _TextInfo;
 
 	
 	public void Init( )
 	{
-		_Model = Framework.ModelManager.Instance.Get<TestBoardModel>();
+        _Model = new TestBoardModel();
+
+        _TextInfo = GetProperty("TextInfo");
+
+
+        _Model.OnTextInfoChanged += () =>{
+            _TextInfo.SetValue(_Model.TextInfo);
+        };
+        _TextInfo.SetValue(_Model.TextInfo);
+
+        
 		
 	}
 	

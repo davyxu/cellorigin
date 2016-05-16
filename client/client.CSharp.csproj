@@ -74,8 +74,10 @@
     <Compile Include="Assets\Script\Event\UIEvent.cs" />
     <Compile Include="Assets\Script\Framework\BaseModel.cs" />
     <Compile Include="Assets\Script\Framework\BasePresenter.cs" />
+    <Compile Include="Assets\Script\Framework\Property.cs" />
     <Compile Include="Assets\Script\Framework\BaseView.cs" />
     <Compile Include="Assets\Script\Framework\DataContext.cs" />
+    <Compile Include="Assets\Script\Framework\Dictionary.cs" />
     <Compile Include="Assets\Script\Framework\ListControl.cs" />
     <Compile Include="Assets\Script\Framework\ModelManager.cs" />
     <Compile Include="Assets\Script\Framework\ObservableCollection.cs" />
@@ -113,6 +115,7 @@
     <Compile Include="Assets\Script\View\LoginCharBoard\LoginCharBoardView.cs" />
     <Compile Include="Assets\Script\View\LoginCharInfo\LoginCharInfoView.codegen.cs" />
     <Compile Include="Assets\Script\View\LoginServerInfo\LoginServerInfoView.codegen.cs" />
+    <Compile Include="Assets\Script\View\TestBoard\TestBoardView.cs" />
     <Compile Include="Assets\Script\View\TestBoard\TestBoardView.codegen.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />
