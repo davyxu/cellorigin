@@ -126,6 +126,138 @@ namespace gamedef
 		global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
 		{ return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
 	}
+	[global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"TestProfile")]
+	public partial class TestProfile : global::ProtoBuf.IExtensible
+	{
+		public TestProfile() {}
+		
+		int _HP = default(int);
+		bool _hasHP = false;
+		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"HP", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+		[global::System.ComponentModel.DefaultValue(default(int))]
+		public int HP
+		{
+			get { return _HP; }
+			set { _HP = value; 
+			      _hasHP = true;
+			}
+		}
+		
+		public bool HasHP
+		{
+			get { return _hasHP; }
+			set { _hasHP = value; }
+		}
+		
+		private global::ProtoBuf.IExtension extensionObject;
+		global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+		{ return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
+	}
+	[global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"TestBag")]
+	public partial class TestBag : global::ProtoBuf.IExtensible
+	{
+		public TestBag() {}
+		
+		uint _ID = default(uint);
+		bool _hasID = false;
+		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"ID", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+		[global::System.ComponentModel.DefaultValue(default(uint))]
+		public uint ID
+		{
+			get { return _ID; }
+			set { _ID = value; 
+			      _hasID = true;
+			}
+		}
+		
+		public bool HasID
+		{
+			get { return _hasID; }
+			set { _hasID = value; }
+		}
+		
+		string _Name = "";
+		bool _hasName = false;
+		[global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"Name", DataFormat = global::ProtoBuf.DataFormat.Default)]
+		[global::System.ComponentModel.DefaultValue("")]
+		public string Name
+		{
+			get { return _Name; }
+			set { _Name = value; 
+			      _hasName = true;
+			}
+		}
+		
+		public bool HasName
+		{
+			get { return _hasName; }
+			set { _hasName = value; }
+		}
+		
+		private global::ProtoBuf.IExtension extensionObject;
+		global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+		{ return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
+	}
+	[global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"TestProfileSyncACK")]
+	public partial class TestProfileSyncACK : global::ProtoBuf.IExtensible
+	{
+		public TestProfileSyncACK() {}
+		
+		gamedef.TestProfile _Profile = null;
+		bool _hasProfile = false;
+		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"Profile", DataFormat = global::ProtoBuf.DataFormat.Default)]
+		[global::System.ComponentModel.DefaultValue(null)]
+		public gamedef.TestProfile Profile
+		{
+			get { return _Profile; }
+			set { _Profile = value; 
+			      _hasProfile = true;
+			}
+		}
+		
+		public bool HasProfile
+		{
+			get { return _hasProfile; }
+			set { _hasProfile = value; }
+		}
+		
+		private global::ProtoBuf.IExtension extensionObject;
+		global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+		{ return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
+	}
+	[global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"TestBagSyncACK")]
+	public partial class TestBagSyncACK : global::ProtoBuf.IExtensible
+	{
+		public TestBagSyncACK() {}
+		
+		readonly global::System.Collections.Generic.List<gamedef.TestBag> _Bag_Add = new global::System.Collections.Generic.List<gamedef.TestBag>();
+		[global::ProtoBuf.ProtoMember(1, Name=@"Bag_Add", DataFormat = global::ProtoBuf.DataFormat.Default)]
+		public global::System.Collections.Generic.List<gamedef.TestBag> Bag_Add
+		{
+			get { return _Bag_Add; }
+		}
+		
+		
+		readonly global::System.Collections.Generic.List<uint> _Bag_Delete = new global::System.Collections.Generic.List<uint>();
+		[global::ProtoBuf.ProtoMember(2, Name=@"Bag_Delete", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+		public global::System.Collections.Generic.List<uint> Bag_Delete
+		{
+			get { return _Bag_Delete; }
+		}
+		
+		
+		readonly global::System.Collections.Generic.List<gamedef.TestBag> _Bag_Set = new global::System.Collections.Generic.List<gamedef.TestBag>();
+		[global::ProtoBuf.ProtoMember(3, Name=@"Bag_Set", DataFormat = global::ProtoBuf.DataFormat.Default)]
+		public global::System.Collections.Generic.List<gamedef.TestBag> Bag_Set
+		{
+			get { return _Bag_Set; }
+		}
+		
+		
+		private global::ProtoBuf.IExtension extensionObject;
+		global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+		{ return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
+	}
 	
 	[global::ProtoBuf.ProtoContract(Name=@"ModelGenType")]
 	public enum ModelGenType

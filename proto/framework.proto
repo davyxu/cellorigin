@@ -33,3 +33,28 @@ message CodeGenFile
 {
 	repeated CodeGenModule CodeGen = 1;
 }
+
+
+message TestProfile
+{
+	int32 HP = 1;
+}
+
+message TestBag
+{
+	uint32 ID = 1;
+	string Name = 2;
+}
+
+message TestProfileSyncACK
+{
+	TestProfile Profile = 1;
+}
+
+message TestBagSyncACK
+{
+	repeated TestBag Bag_Add = 1;
+	repeated uint32 Bag_Delete = 2;
+	repeated TestBag Bag_Set = 3;
+}
+

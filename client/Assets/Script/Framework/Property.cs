@@ -5,11 +5,13 @@ namespace Framework
 {
     public interface IProperty
     {
-        void SetValue(object v);
+        // 万物皆字符串
+        void SetValue(string v);
 
-        object GetValue();
+        string GetValue();
     }
 
+    
     class TextProperty : IProperty
     {
         Text _ctrl;
@@ -18,15 +20,15 @@ namespace Framework
             _ctrl = ctrl;
         }
 
-        public void SetValue(object v)
+        public void SetValue(string v)
         {
             if (v == null)
                 return;
 
-            _ctrl.text = (string)v;
+            _ctrl.text = v;
         }
 
-        public object GetValue()
+        public string GetValue()
         {
             return _ctrl.text;
         }
