@@ -35,26 +35,34 @@ message CodeGenFile
 }
 
 
-message TestProfile
+enum ModelSyncBehavior
 {
-	int32 HP = 1;
+	MSB_None = 0;		// 外部有侦听修改
+	MSB_Modified = 1;	// 已修改
+	MSB_Added = 2;		// 已添加(集合)
+	MSB_Removed = 3;	// 已删除(集合)
 }
 
-message TestBag
+
+message ModelDataPair
 {
-	uint32 ID = 1;
-	string Name = 2;
+	// Key
+	uint32 KeyID = 1;			// hash后的key
+	string KeyStr = 2;			// 原始Key
+	
+	
+	// Value
+	int32 Integer = 11;
+	string Str = 12;
+	float Number = 13;
+	bool Bool = 14;
+	
+	ModelSyncBehavior SyncBehavior = 30;	// 同步行为
 }
 
-message TestProfileSyncACK
+// svc -> client
+message ModelDataACK
 {
-	TestProfile Profile = 1;
-}
-
-message TestBagSyncACK
-{
-	repeated TestBag Bag_Add = 1;
-	repeated uint32 Bag_Delete = 2;
-	repeated TestBag Bag_Set = 3;
+	repeated ModelDataPair Data = 1;
 }
 

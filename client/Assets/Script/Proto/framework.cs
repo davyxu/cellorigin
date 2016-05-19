@@ -126,131 +126,151 @@ namespace gamedef
 		global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
 		{ return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
 	}
-	[global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"TestProfile")]
-	public partial class TestProfile : global::ProtoBuf.IExtensible
+	[global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"ModelDataPair")]
+	public partial class ModelDataPair : global::ProtoBuf.IExtensible
 	{
-		public TestProfile() {}
+		public ModelDataPair() {}
 		
-		int _HP = default(int);
-		bool _hasHP = false;
-		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"HP", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
-		[global::System.ComponentModel.DefaultValue(default(int))]
-		public int HP
-		{
-			get { return _HP; }
-			set { _HP = value; 
-			      _hasHP = true;
-			}
-		}
-		
-		public bool HasHP
-		{
-			get { return _hasHP; }
-			set { _hasHP = value; }
-		}
-		
-		private global::ProtoBuf.IExtension extensionObject;
-		global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
-		{ return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
-	}
-	[global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"TestBag")]
-	public partial class TestBag : global::ProtoBuf.IExtensible
-	{
-		public TestBag() {}
-		
-		uint _ID = default(uint);
-		bool _hasID = false;
-		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"ID", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+		uint _KeyID = default(uint);
+		bool _hasKeyID = false;
+		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"KeyID", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
 		[global::System.ComponentModel.DefaultValue(default(uint))]
-		public uint ID
+		public uint KeyID
 		{
-			get { return _ID; }
-			set { _ID = value; 
-			      _hasID = true;
+			get { return _KeyID; }
+			set { _KeyID = value; 
+			      _hasKeyID = true;
 			}
 		}
 		
-		public bool HasID
+		public bool HasKeyID
 		{
-			get { return _hasID; }
-			set { _hasID = value; }
+			get { return _hasKeyID; }
+			set { _hasKeyID = value; }
 		}
 		
-		string _Name = "";
-		bool _hasName = false;
-		[global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"Name", DataFormat = global::ProtoBuf.DataFormat.Default)]
+		string _KeyStr = "";
+		bool _hasKeyStr = false;
+		[global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"KeyStr", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		[global::System.ComponentModel.DefaultValue("")]
-		public string Name
+		public string KeyStr
 		{
-			get { return _Name; }
-			set { _Name = value; 
-			      _hasName = true;
+			get { return _KeyStr; }
+			set { _KeyStr = value; 
+			      _hasKeyStr = true;
 			}
 		}
 		
-		public bool HasName
+		public bool HasKeyStr
 		{
-			get { return _hasName; }
-			set { _hasName = value; }
+			get { return _hasKeyStr; }
+			set { _hasKeyStr = value; }
+		}
+		
+		int _Integer = default(int);
+		bool _hasInteger = false;
+		[global::ProtoBuf.ProtoMember(11, IsRequired = false, Name=@"Integer", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+		[global::System.ComponentModel.DefaultValue(default(int))]
+		public int Integer
+		{
+			get { return _Integer; }
+			set { _Integer = value; 
+			      _hasInteger = true;
+			}
+		}
+		
+		public bool HasInteger
+		{
+			get { return _hasInteger; }
+			set { _hasInteger = value; }
+		}
+		
+		string _Str = "";
+		bool _hasStr = false;
+		[global::ProtoBuf.ProtoMember(12, IsRequired = false, Name=@"Str", DataFormat = global::ProtoBuf.DataFormat.Default)]
+		[global::System.ComponentModel.DefaultValue("")]
+		public string Str
+		{
+			get { return _Str; }
+			set { _Str = value; 
+			      _hasStr = true;
+			}
+		}
+		
+		public bool HasStr
+		{
+			get { return _hasStr; }
+			set { _hasStr = value; }
+		}
+		
+		float _Number = default(float);
+		bool _hasNumber = false;
+		[global::ProtoBuf.ProtoMember(13, IsRequired = false, Name=@"Number", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
+		[global::System.ComponentModel.DefaultValue(default(float))]
+		public float Number
+		{
+			get { return _Number; }
+			set { _Number = value; 
+			      _hasNumber = true;
+			}
+		}
+		
+		public bool HasNumber
+		{
+			get { return _hasNumber; }
+			set { _hasNumber = value; }
+		}
+		
+		bool _Bool = default(bool);
+		bool _hasBool = false;
+		[global::ProtoBuf.ProtoMember(14, IsRequired = false, Name=@"Bool", DataFormat = global::ProtoBuf.DataFormat.Default)]
+		[global::System.ComponentModel.DefaultValue(default(bool))]
+		public bool Bool
+		{
+			get { return _Bool; }
+			set { _Bool = value; 
+			      _hasBool = true;
+			}
+		}
+		
+		public bool HasBool
+		{
+			get { return _hasBool; }
+			set { _hasBool = value; }
+		}
+		
+		gamedef.ModelSyncBehavior _SyncBehavior = gamedef.ModelSyncBehavior.MSB_None;
+		bool _hasSyncBehavior = false;
+		[global::ProtoBuf.ProtoMember(30, IsRequired = false, Name=@"SyncBehavior", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+		[global::System.ComponentModel.DefaultValue(gamedef.ModelSyncBehavior.MSB_None)]
+		public gamedef.ModelSyncBehavior SyncBehavior
+		{
+			get { return _SyncBehavior; }
+			set { _SyncBehavior = value; 
+			      _hasSyncBehavior = true;
+			}
+		}
+		
+		public bool HasSyncBehavior
+		{
+			get { return _hasSyncBehavior; }
+			set { _hasSyncBehavior = value; }
 		}
 		
 		private global::ProtoBuf.IExtension extensionObject;
 		global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
 		{ return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
 	}
-	[global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"TestProfileSyncACK")]
-	public partial class TestProfileSyncACK : global::ProtoBuf.IExtensible
+	[global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"ModelDataACK")]
+	public partial class ModelDataACK : global::ProtoBuf.IExtensible
 	{
-		public TestProfileSyncACK() {}
+		public ModelDataACK() {}
 		
-		gamedef.TestProfile _Profile = null;
-		bool _hasProfile = false;
-		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"Profile", DataFormat = global::ProtoBuf.DataFormat.Default)]
-		[global::System.ComponentModel.DefaultValue(null)]
-		public gamedef.TestProfile Profile
+		readonly global::System.Collections.Generic.List<gamedef.ModelDataPair> _Data = new global::System.Collections.Generic.List<gamedef.ModelDataPair>();
+		[global::ProtoBuf.ProtoMember(1, Name=@"Data", DataFormat = global::ProtoBuf.DataFormat.Default)]
+		public global::System.Collections.Generic.List<gamedef.ModelDataPair> Data
 		{
-			get { return _Profile; }
-			set { _Profile = value; 
-			      _hasProfile = true;
-			}
-		}
-		
-		public bool HasProfile
-		{
-			get { return _hasProfile; }
-			set { _hasProfile = value; }
-		}
-		
-		private global::ProtoBuf.IExtension extensionObject;
-		global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
-		{ return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
-	}
-	[global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"TestBagSyncACK")]
-	public partial class TestBagSyncACK : global::ProtoBuf.IExtensible
-	{
-		public TestBagSyncACK() {}
-		
-		readonly global::System.Collections.Generic.List<gamedef.TestBag> _Bag_Add = new global::System.Collections.Generic.List<gamedef.TestBag>();
-		[global::ProtoBuf.ProtoMember(1, Name=@"Bag_Add", DataFormat = global::ProtoBuf.DataFormat.Default)]
-		public global::System.Collections.Generic.List<gamedef.TestBag> Bag_Add
-		{
-			get { return _Bag_Add; }
-		}
-		
-		
-		readonly global::System.Collections.Generic.List<uint> _Bag_Delete = new global::System.Collections.Generic.List<uint>();
-		[global::ProtoBuf.ProtoMember(2, Name=@"Bag_Delete", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
-		public global::System.Collections.Generic.List<uint> Bag_Delete
-		{
-			get { return _Bag_Delete; }
-		}
-		
-		
-		readonly global::System.Collections.Generic.List<gamedef.TestBag> _Bag_Set = new global::System.Collections.Generic.List<gamedef.TestBag>();
-		[global::ProtoBuf.ProtoMember(3, Name=@"Bag_Set", DataFormat = global::ProtoBuf.DataFormat.Default)]
-		public global::System.Collections.Generic.List<gamedef.TestBag> Bag_Set
-		{
-			get { return _Bag_Set; }
+			get { return _Data; }
 		}
 		
 		
@@ -270,6 +290,22 @@ namespace gamedef
 		
 		[global::ProtoBuf.ProtoEnum(Name=@"MGT_Manual", Value=2)]
 		MGT_Manual = 2
+		
+	}
+	[global::ProtoBuf.ProtoContract(Name=@"ModelSyncBehavior")]
+	public enum ModelSyncBehavior
+	{
+		[global::ProtoBuf.ProtoEnum(Name=@"MSB_None", Value=0)]
+		MSB_None = 0,
+		
+		[global::ProtoBuf.ProtoEnum(Name=@"MSB_Modified", Value=1)]
+		MSB_Modified = 1,
+		
+		[global::ProtoBuf.ProtoEnum(Name=@"MSB_Added", Value=2)]
+		MSB_Added = 2,
+		
+		[global::ProtoBuf.ProtoEnum(Name=@"MSB_Removed", Value=3)]
+		MSB_Removed = 3
 		
 	}
 }

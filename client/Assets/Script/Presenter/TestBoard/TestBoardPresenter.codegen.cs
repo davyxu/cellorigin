@@ -5,38 +5,24 @@ using System;
 
 
 partial class TestBoardPresenter : Framework.BasePresenter
-{
-    TestBoardModel _TestBoardModel;
-
+{    
     Framework.IProperty _TextInfo;
-
-    NetworkPeer _gamePeer;
 	
 	public void Init( )
 	{
-        _TestBoardModel = new TestBoardModel();
-
+        
         _TextInfo = GetProperty("TextInfo");
 
-
-        _TestBoardModel.OnTextInfoChanged += () =>
+        var mdm = Framework.ModelDataManager.Instance;
+        mdm.Listen("Coin", (msb) =>
         {
-            _TextInfo.SetValue(_TestBoardModel.TextInfo);
-        };
-        _TextInfo.SetValue(_TestBoardModel.TextInfo);
-
-
-        _gamePeer = PeerManager.Instance.Get("game");
-
-        _gamePeer.RegisterMessage<gamedef.TestProfileSyncACK>(obj =>
-        {
-            Msg_game_TestProfileSyncACK(_gamePeer, obj as gamedef.TestProfileSyncACK);
+            _TextInfo.SetValue(mdm.GetValueAsString("Coin"));
         });
 
-        _gamePeer.RegisterMessage<gamedef.TestBagSyncACK>(obj =>
-        {
-            Msg_game_TestBagSyncACK(_gamePeer, obj as gamedef.TestBagSyncACK);
-        });
+        _TextInfo.SetValue(mdm.GetValueAsString("HP"));
+
+
+        
 	}
 	
 }

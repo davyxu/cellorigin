@@ -11,14 +11,5 @@ partial class TestBoardPresenter : Framework.BasePresenter
         Init();
 	}
 
-    void Msg_game_TestProfileSyncACK(NetworkPeer peer, gamedef.TestProfileSyncACK msg )
-    {
-        
-    }
 
-
-    void Msg_game_TestBagSyncACK(NetworkPeer peer, gamedef.TestBagSyncACK msg)
-    {
-
-    }
 }
