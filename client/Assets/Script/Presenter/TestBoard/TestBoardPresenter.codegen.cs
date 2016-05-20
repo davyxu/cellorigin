@@ -12,14 +12,18 @@ partial class TestBoardPresenter : Framework.BasePresenter
 	{
         
         _TextInfo = GetProperty("TextInfo");
+        
 
         var mdm = Framework.ModelDataManager.Instance;
+
+        mdm.Register<Framework.IntegerModel>("Coin");
+
         mdm.Listen("Coin", (msb) =>
         {
             _TextInfo.SetValue(mdm.GetValueAsString("Coin"));
         });
 
-        _TextInfo.SetValue(mdm.GetValueAsString("HP"));
+        _TextInfo.SetValue(mdm.GetValueAsString("Coin"));
 
 
         

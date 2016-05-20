@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Framework
 {
-    class ModelContext
+    public class ModelContext
     {
         public Action<gamedef.ModelSyncBehavior> Changed;
         public gamedef.ModelSyncBehavior SyncBehavior = gamedef.ModelSyncBehavior.MSB_None;
@@ -12,7 +12,7 @@ namespace Framework
         public Type OutputType;
     }
 
-    class IntegerModel : ModelContext
+    public class IntegerModel : ModelContext
     {
         public int Data;
 
@@ -29,7 +29,7 @@ namespace Framework
         }
     }
 
-    class StringModel : ModelContext
+    public class StringModel : ModelContext
     {
         public string Data;
 
@@ -39,7 +39,7 @@ namespace Framework
         }
     }
 
-    class FloatModel : ModelContext
+    public class FloatModel : ModelContext
     {
         public float Data;
 
@@ -49,7 +49,7 @@ namespace Framework
         }
     }
 
-    class BoolModel : ModelContext
+    public class BoolModel : ModelContext
     {
         public bool Data;
 
