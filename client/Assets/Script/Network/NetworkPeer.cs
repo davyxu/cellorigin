@@ -220,7 +220,7 @@ public class NetworkPeer : MonoBehaviour
             return;
         }
 
-        _socket.SendPacket(msgID, data);
+        _socket.SendPacket(msgID, data.ToArray());
 
     }        
 
