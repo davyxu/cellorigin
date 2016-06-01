@@ -5,8 +5,30 @@ public class MessageDispatcher
 {
     Dictionary<uint, Action<object>> _msgCallbacks = new Dictionary<uint, Action<object>>();
 
+    struct CallbackGuard
+    {
+        public uint msgid;
+        public Action<object> callback;
+
+        public override int GetHashCode()
+        {
+            return msgid.GetHashCode() + callback.GetHashCode();
+        }
+    }
+
+    HashSet<CallbackGuard> _callbackGuard = new HashSet<CallbackGuard>();
+
     public void Add(uint msgid, Action<object> callback)
     {
+        CallbackGuard guard;
+        guard.msgid = msgid;
+        guard.callback = callback;
+
+        if (_callbackGuard.Contains(guard))
+            return;
+
+        _callbackGuard.Add(guard);
+
         Action<object> callbacks;
         if (_msgCallbacks.TryGetValue(msgid, out callbacks))
         {
@@ -23,6 +45,12 @@ public class MessageDispatcher
 
     public void Remove(uint msgid, Action<object> callback)
     {
+        CallbackGuard guard;
+        guard.msgid = msgid;
+        guard.callback = callback;
+
+        _callbackGuard.Remove(guard);
+
         Action<object> callbacks;
         if (_msgCallbacks.TryGetValue(msgid, out callbacks))
         {

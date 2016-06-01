@@ -421,9 +421,9 @@ public class ClientSocket
 
     #region SendMessage
 
-    public void SendPacket(UInt32 msgID, MemoryStream stream)
+    public void SendPacket(UInt32 msgID, byte[] data)
     {
-        if (_socket == null || !_socket.Connected || stream  == null )
+        if (_socket == null || !_socket.Connected || data == null)
         {                
             return;
         }
@@ -432,8 +432,8 @@ public class ClientSocket
         BinaryWriter writer = new BinaryWriter(pktStream);            
         writer.Write(msgID);
         writer.Write(GenSendTag());
-        writer.Write((UInt16)(PacketHeaderSize + stream.Length));
-        writer.Write(stream.GetBuffer(), 0, (int)stream.Length);
+        writer.Write((UInt16)(PacketHeaderSize + data.Length));
+        writer.Write(data, 0, (int)data.Length);
         writer.Flush();
 
         try
