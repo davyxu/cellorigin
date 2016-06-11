@@ -31,3 +31,4 @@ tool/protoc-gen-sharpnet.exe
 /client/*.sln
 /client/obj
 /client/ProjectSettings/ProjectVersion.txt
+/client/*.csproj
