@@ -355,7 +355,6 @@ public class ClientSocket
     struct AsyncData
     {
         public int Size;
-        public byte[] Data;
         public MemoryStream Stream;
         public Action<MemoryStream, object> Callback;
         public object Tag;
@@ -366,7 +365,6 @@ public class ClientSocket
     {
         // TODO bytebuffer 优化
         AsyncData ad;
-        ad.Data = new byte[size];
         ad.Stream = new MemoryStream();
         ad.Callback = callback;
         ad.Size = size;
@@ -374,6 +372,7 @@ public class ClientSocket
         ReadPacket(ad);
     }
 
+    byte[] _recvBuffer = new byte[1024];
         
     void ReadPacket( AsyncData ad )
     {
@@ -382,12 +381,16 @@ public class ClientSocket
             if (_socket == null)
                 break;
 
+
+            int needRecvSize = Math.Min(_recvBuffer.Length, ad.Size);
+
+
             int recvLen;
 
             try
             {
 
-                recvLen = _socket.Receive(ad.Data);
+                recvLen = _socket.Receive(_recvBuffer, needRecvSize, SocketFlags.None);
             }
             catch( Exception )
             {
@@ -405,7 +408,7 @@ public class ClientSocket
 
             ad.Size -= recvLen;
 
-            ad.Stream.Write(ad.Data, 0, recvLen);
+            ad.Stream.Write(_recvBuffer, 0, recvLen);
 
 
             if (ad.Size == 0)
