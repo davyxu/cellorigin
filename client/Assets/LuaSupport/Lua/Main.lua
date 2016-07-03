@@ -1,18 +1,39 @@
-require "Class"
 
+
+Class.Define("TestClass", {
+
+	Awake = function( self )
+
+		print( "awake",self)
+		
+	end,
+	
+	Start = function( self )
+
+		print( "Start" ,self.gameObject.name)
+
+		
+	end,
+	--[[
+	Update = function( self )
+
+		--print( "Update",self)
+		
+	end,
+	]]
+	
+
+
+
+})
+
+
+    
+	
+	
 --主入口函数。从这里开始lua逻辑
-function Main()					
-	 		local TestClass = Class("TestClass")
+function Main()
 
-
-function TestClass:foo( a )
-	print( self,a )
-end
-
-
-local ins = TestClass.New()
-ins:foo("hello")
-print(ins)
 
 end
 
