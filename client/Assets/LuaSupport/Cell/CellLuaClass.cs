@@ -25,9 +25,16 @@ public class CellLuaClass : MonoBehaviour {
 
     void Awake()
     {
-        _state = CellLuaLoader.GetMainState();        
+        _state = CellLuaLoader.GetMainState();
+        if ( _state == null )
+        {
+            Debug.LogError("CellLuaLoader未挂载到场景中或优先度低于CellLuaClass");
+            return;
+        }
 
         _callMethod = _state.GetFunction("Class.CallMethod");
+
+        MakeHasMethod();
 
         CallMethod(MethodName.Awake);
     }
@@ -35,6 +42,9 @@ public class CellLuaClass : MonoBehaviour {
     // 返回脚本实际存在的函数情况来决定是否调用其函数
     void MakeHasMethod( )
     {
+        if (_state == null)
+            return;
+
         var hasMethod = _state.GetFunction("Class.HasMethod");
         if (hasMethod != null)
         {

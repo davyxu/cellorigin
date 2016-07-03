@@ -1,11 +1,11 @@
 
-local classDescriptor = {}
+local descriptorMap = {}
 
 Class = {}
 
 
 local function getClassDescriptor( className )
-	local descriptor = classDescriptor[className]
+	local descriptor = descriptorMap[className]
 
 	if descriptor == nil then
 		error("class not defined: " .. className)
@@ -17,11 +17,11 @@ end
 
 function Class.Define( className, descriptor )	
 
-	if classDescriptor[className] then
+	if descriptorMap[className] then
 		error("duplicate class className: " .. className)
 	end
 	descriptor.__index = descriptor
-	classDescriptor[className] = descriptor
+	descriptorMap[className] = descriptor
 
 end
 

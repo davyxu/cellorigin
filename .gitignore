@@ -32,3 +32,4 @@ tool/protoc-gen-sharpnet.exe
 /client/obj
 /client/ProjectSettings/ProjectVersion.txt
 /client/*.csproj
+/client/Assets/Lua/**/*.meta

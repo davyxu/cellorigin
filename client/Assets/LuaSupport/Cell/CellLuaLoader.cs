@@ -25,6 +25,7 @@ public class CellLuaLoader : LuaClient
         luaState.AddSearchPath( CellLuaDir);
 
         luaState.Require("Class");
+        luaState.Require("Model");
 
         luaState.DoFile("Main.lua");
         CallMain();

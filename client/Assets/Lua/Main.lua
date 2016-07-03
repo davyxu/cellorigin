@@ -1,4 +1,6 @@
-
+require "Presenter/LoginPresenter"
+require "View/LoginView"
+require "Model/LoginModel"
 
 Class.Define("TestClass", {
 

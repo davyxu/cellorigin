@@ -9,7 +9,7 @@ using System.Reflection;
 public static class CustomSettings
 {
     public static string saveDir = Application.dataPath + "/LuaSupport/Source/Generate/";
-    public static string luaDir = Application.dataPath + "/LuaSupport/Lua/";
+    public static string luaDir = Application.dataPath + "/Lua/";
     public static string toluaBaseType = Application.dataPath + "/LuaSupport/ToLua/BaseType/";
     public static string toluaLuaDir = Application.dataPath + "/LuaSupport/ToLua/Lua";
 
@@ -27,6 +27,7 @@ public static class CustomSettings
         typeof(UnityEngine.RenderSettings),
         typeof(UnityEngine.QualitySettings),
         typeof(UnityEngine.GL),
+        typeof(UnityEngine.PlayerPrefs),
     };
 
     //附加导出委托类型(在导出委托时, customTypeList 中牵扯的委托类型都会导出， 无需写在这里)
@@ -74,7 +75,8 @@ public static class CustomSettings
         _GT(typeof(Rigidbody)),
         _GT(typeof(Camera)),
         _GT(typeof(AudioSource)),     
-                        
+        _GT(typeof(UnityEngine.PlayerPrefs)),
+
         _GT(typeof(Behaviour)),
         _GT(typeof(MonoBehaviour)),        
         _GT(typeof(GameObject)),
@@ -125,6 +127,16 @@ public static class CustomSettings
         _GT(typeof(RenderSettings)),                                                   
         _GT(typeof(BlendWeights)),           
         _GT(typeof(RenderTexture)),
+
+                //for LuaFramework
+        _GT(typeof(RectTransform)),
+        _GT(typeof(UnityEngine.UI.Text)),
+        _GT(typeof(UnityEngine.UI.Button)),
+        _GT(typeof(UnityEngine.UI.Button.ButtonClickedEvent)),
+        _GT(typeof(UnityEngine.UI.ScrollRect)),
+        _GT(typeof(UnityEngine.UI.InputField)),
+        _GT(typeof(UnityEngine.UI.InputField.OnChangeEvent)),
+        _GT(typeof(UnityEngine.UI.InputField.SubmitEvent)),
     };
 
     public static List<Type> dynamicList = new List<Type>()

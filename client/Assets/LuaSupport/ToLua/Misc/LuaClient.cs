@@ -227,6 +227,9 @@ public class LuaClient : MonoBehaviour
 
     public static LuaState GetMainState()
     {
+        if (Instance == null)
+            return null;
+
         return Instance.luaState;
     }
 
