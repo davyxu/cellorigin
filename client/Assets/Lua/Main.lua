@@ -1,45 +1,14 @@
+require "Class"
+require "Model"
+require "PropertySet"
+
 require "Presenter/LoginPresenter"
 require "View/LoginView"
-require "Model/LoginModel"
-
-Class.Define("TestClass", {
-
-	Awake = function( self )
-
-		print( "awake",self)
-		
-	end,
-	
-	Start = function( self )
-
-		print( "Start" ,self.gameObject.name)
-
-		
-	end,
-	--[[
-	Update = function( self )
-
-		--print( "Update",self)
-		
-	end,
-	]]
-	
-
-
-
-})
-
-
-    
+require "Model/LoginModel"    
 	
 	
 --主入口函数。从这里开始lua逻辑
 function Main()
+Time.timeSinceLevelLoad = 0
 
-
-end
-
---场景切换通知
-function OnLevelWasLoaded(level)
-	Time.timeSinceLevelLoad = 0
 end

@@ -1,15 +1,19 @@
 require "Model/LoginModel"
 
+local PlayerPrefs = UnityEngine.PlayerPrefs
+
 Class.Define("LoginPresenter", {
 
+	PropertySet = Class.New("PropertySet"),
 
-	Awake = function( self )
+	Init = function( self )
 	
-		Model.Listen( "LoginModel", "Address", function( ) 
-			
+		Model.Listen( "LoginModel", "Address", function( v ) 
+			self.PropertySet:SetValue("Address", v )
 		end)
 		
-	
+		self:LoadSetting()
+		
 	end,
 	
 	Cmd_SetDevAddress = function( self )
@@ -22,7 +26,7 @@ Class.Define("LoginPresenter", {
 
 	Cmd_SetPublicAddress = function( self )
 		LoginModel.Address = LoginConstant.PublicAddress
-		
+
 	end,
 	
 	Cmd_Start = function( self )

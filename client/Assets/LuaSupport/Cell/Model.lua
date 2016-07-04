@@ -17,17 +17,21 @@ end
 
 local function notifyChange( name, key, value )
 
+	--print("changed", name, key, value)
+
 	local m = getDefine(name)
 	
 	local callbackchain = m.listener[key]
+
 	
 	if callbackchain == nil then
 		return
 	end
 	
-	for _, callback in ipairs(callbackchain) do
 	
-		callback( key, value )
+	for _, callback in ipairs(callbackchain) do	
+	
+		callback( value )
 		
 	end
 
@@ -46,7 +50,7 @@ function Model.Define( name, descriptor )
 			if v == nil then
 				error("can not dynamic create model value: ".. name .. "." .. key)
 			else
-				rawset( self, key, value )
+				rawset( descriptor, key, value )
 				notifyChange( name, key, value )
 			end
 		end,

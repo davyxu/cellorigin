@@ -31,6 +31,10 @@ function Class.New( className )
 	local descriptor = getClassDescriptor( className )
 	
 	local ins = setmetatable( {}, descriptor )
+	
+	if ins.Init ~= nil then
+		ins:Init()
+	end
 		
 	return ins
 

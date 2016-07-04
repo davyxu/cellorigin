@@ -24,9 +24,6 @@ public class CellLuaLoader : LuaClient
         CellLuaDir = Application.dataPath + "/LuaSupport/Cell";        //tolua lua文件目录
         luaState.AddSearchPath( CellLuaDir);
 
-        luaState.Require("Class");
-        luaState.Require("Model");
-
         luaState.DoFile("Main.lua");
         CallMain();
     }

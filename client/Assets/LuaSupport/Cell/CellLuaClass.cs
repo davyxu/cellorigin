@@ -91,6 +91,12 @@ public class CellLuaClass : MonoBehaviour {
         CallMethod(MethodName.Update);
 	}
 
+    void OnEnable( )
+    {
+        CallMethod(MethodName.OnEnable);
+    }
+
+
     void OnDestroy( )
     {
         if (_callMethod != null)
