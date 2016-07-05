@@ -11,3 +11,7 @@
 * 使用DataContext设定脚本绑定
 * 生成对应的lua文件, 在加载期配合界面一起加载
 
+
+# 一些引用
+* ToLua源码
+https://github.com/topameng/tolua_runtime
