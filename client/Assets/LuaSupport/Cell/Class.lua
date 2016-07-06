@@ -40,33 +40,6 @@ function Class.New( className )
 
 end
 
--- Unity在脚本中存在时会调用这些函数
-local unityMethodList = {
-	"Awake",
-	"OnEnable",
-	"Start",
-	"Update",
-	"OnDisable",
-	"OnDestory",
-}
-
-function Class.HasMethod( className )
-
-	local descriptor = getClassDescriptor( className )
-	
-	local ret = {}
-	
-	for _, name in ipairs(unityMethodList) do
-	
-		local has = type(descriptor[name]) == "function"
-	
-		table.insert( ret, has )
-	
-	end
-
-	return ret
-end
-
 
 
 local instanceMap = {}
