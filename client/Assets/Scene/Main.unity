@@ -99,7 +99,6 @@ GameObject:
   - 81: {fileID: 881399905}
   - 114: {fileID: 881399910}
   - 114: {fileID: 881399911}
-  - 114: {fileID: 881399912}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -202,17 +201,6 @@ MonoBehaviour:
   _name: game
   Address: 
   DebugMessage: 1
---- !u!114 &881399912
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 881399904}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aeb3fe4aef247214dbfc7c584b98679f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &931129645
 Prefab:
   m_ObjectHideFlags: 0
@@ -389,7 +377,6 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0

@@ -26,21 +26,46 @@ function Class.Define( className, descriptor )
 end
 
 
-function Class.New( className )
+function Class.New( className, ... )
 
 	local descriptor = getClassDescriptor( className )
 	
 	local ins = setmetatable( {}, descriptor )
 	
-	if ins.Init ~= nil then
-		ins:Init()
+	if ins.New ~= nil then
+		ins:New(...)
 	end
 		
 	return ins
 
 end
 
+-- Unity在脚本中存在时会调用这些函数
+local unityMethodList = {
+    "Awake",
+    "OnEnable",
+    "Start",
+    "OnDisable",
+    "OnDestory",
+}
 
+function Class.HasMethod( className )
+
+    local descriptor = getClassDescriptor( className )
+    
+    local ret = {}
+    
+    for _, name in ipairs(unityMethodList) do
+    
+        local has = type(descriptor[name]) == "function"
+    
+        table.insert( ret, has )
+    
+    end
+
+    return ret
+end
+   
 
 local instanceMap = {}
 
@@ -48,8 +73,6 @@ function Class.CallMethod( className, name, go )
 
 	local descriptor = getClassDescriptor( className )
 	
-	
-	local ins
 	
 	if name == "Awake" then
 	

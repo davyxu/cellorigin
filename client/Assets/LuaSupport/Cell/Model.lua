@@ -103,3 +103,20 @@ end)
 m.foo= 2
 ]]
 
+
+function BindData( modelName, modelKey, view, viewPropertyName )
+
+	viewPropertyName = viewPropertyName and viewPropertyName or modelKey
+
+	Model.Listen( modelName, modelKey, function( v ) 
+		
+		local obj = view[viewPropertyName]
+		
+		if type(obj) == "userdata" then
+			obj.text = tostring(v)
+		end
+
+	end)
+
+end
+

@@ -2,37 +2,54 @@
 using UnityEngine;
 
 
-public class CellLuaManager : MonoBehaviour
+public class CellLuaManager
 {
-    LuaState _state = null;
-    LuaInterface.LuaFunction _callMethod;
+    static LuaState _state = null;
+    static LuaInterface.LuaFunction _callMethod;
+    static LuaInterface.LuaFunction _hasMethod;
 
-    public static CellLuaManager Instance
+    static int _ref;
+
+    public static void Attach( )
     {
-        get;
-        protected set;
+        if ( _ref == 0 )
+        {
+            Init();
+        }
+
+        _ref++;
     }
 
-    public static LuaState GetMainState()
+    public static void Detach()
     {
-        if (Instance == null)
-            return null;
+        if (_state == null)
+            return;
 
-        return Instance._state;
+        _ref--;
+
+        if ( _ref == 0 )
+        {
+            Destroy();
+        }
     }
 
-    LuaFileUtils InitLoader()
+    static void Destroy()
     {
-        return new LuaResLoader();
+        _hasMethod.Dispose();
+        _hasMethod = null;
+
+        _callMethod.Dispose();
+        _callMethod = null;
+
+        LuaState state = _state;
+        _state = null;
+
+        state.Dispose();
+        state = null;
     }
 
-    void Awake( )
-    {
-        Instance = this;
-        Init();
-    }
 
-    void Init( )
+    static void Init()
     {
         new LuaFileUtils();
 
@@ -48,9 +65,6 @@ public class CellLuaManager : MonoBehaviour
 
 
         LuaBinder.Bind(_state);
-        LuaCoroutine.Register(_state, this);
-
-        
 
         _state.Start();        
         _state.AddSearchPath(Application.dataPath + "/LuaSupport/Cell");
@@ -59,6 +73,7 @@ public class CellLuaManager : MonoBehaviour
 
 
         _callMethod = _state.GetFunction("Class.CallMethod");
+        _hasMethod = _state.GetFunction("Class.HasMethod");
 
         LuaFunction func = _state.GetFunction("Main");
         func.Call();
@@ -66,7 +81,8 @@ public class CellLuaManager : MonoBehaviour
         func = null;
     }
 
-    public void ClassCallMethod(string className, string methodName, GameObject go )
+       
+    public static void ClassCallMethod(string className, string methodName, GameObject go )
     {
         if (_callMethod != null)
         {
@@ -74,30 +90,26 @@ public class CellLuaManager : MonoBehaviour
         }
     }
 
-    protected void OnDestroy()
-    {
-        Destroy();
-    }
 
-    protected void OnApplicationQuit()
+    // 返回脚本实际存在的函数情况来决定是否调用其函数
+    public static bool[] ClassHasMethod(string className)
     {
-        Destroy();
-    }
+        var methodExistsStatus = new bool[(int)CellLuaClass.MethodName.Max];
 
-    protected void Destroy()
-    {
-        if (_state != null)
+        if (_hasMethod != null)
         {
-            _callMethod.Dispose();
-            _callMethod = null;
+            var ret = _hasMethod.Call(className)[0] as LuaInterface.LuaTable;
 
-            LuaState state = _state;
-            _state = null;
-
-            state.Dispose();
-            Instance = null;
+            for (int i = 0; i < ret.Length; i++)
+            {
+                methodExistsStatus[i] = (bool)ret[i + 1];
+            }            
         }
+
+        return methodExistsStatus;
     }
+
+
 
 
 }

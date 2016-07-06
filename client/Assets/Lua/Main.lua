@@ -1,6 +1,5 @@
 require "Class"
 require "Model"
-require "PropertySet"
 
 require "Presenter/LoginPresenter"
 require "View/LoginView"

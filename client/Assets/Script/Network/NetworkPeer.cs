@@ -222,7 +222,7 @@ public class NetworkPeer : MonoBehaviour
 
         _socket.SendPacket(msgID, data.ToArray());
 
-    }        
+    }
 
     /// <summary>
     /// 手工投递一个消息

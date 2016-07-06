@@ -6,29 +6,58 @@ public class CellLuaClass : MonoBehaviour {
 
     public string ClassName;
 
-    LuaInterface.LuaState _state;
-   
+
+    public enum MethodName
+    {
+        Awake = 0,
+        OnEnable,
+        Start,
+        OnDisable,
+        OnDestroy,
+        Max,
+    }
+
+    bool[] _hasMethod = new bool[(int)MethodName.Max];
+
 
    
     void Awake()
     {
-        _state = CellLuaManager.GetMainState();
-        if ( _state == null )
-        {
-            Debug.LogError("CellLuaLoader未挂载到场景中或优先度低于CellLuaClass");
-            return;
-        }
+        CellLuaManager.Attach();
 
+        _hasMethod = CellLuaManager.ClassHasMethod(ClassName);
 
-
-        CellLuaManager.Instance.ClassCallMethod(ClassName, "Awake", gameObject);
+        CallMethod(MethodName.Awake);
+        
     }
 
+    void CallMethod( MethodName name )
+    {
+        if ( _hasMethod[(int)name] )
+        {
+            CellLuaManager.ClassCallMethod(ClassName, name.ToString(), gameObject);
+        }
+    }
 
+    void OnEnable( )
+    {
+        CallMethod(MethodName.OnEnable);
+    }
+    void OnDisable()
+    {
+        CallMethod(MethodName.OnDisable);
+    }
+
+    void OnDestroy( )
+    {
+        CallMethod(MethodName.OnDestroy);
+
+        CellLuaManager.Detach();
+    }
 
 	
 	void Start () 
     {
-        CellLuaManager.Instance.ClassCallMethod(ClassName, "Start", gameObject);
+        CallMethod(MethodName.Start);
 	}
 }

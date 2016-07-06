@@ -3,14 +3,16 @@ Class.Define("LoginView", {
 
 	Awake = function( self )
 	
-		self.presenter = Class.New("LoginPresenter")
+		self.presenter = Class.New("LoginPresenter" )
 	
 		self:Bind( self.presenter )
-	
+			
+		self.presenter:Init( self )
+		
 	end,
 	
 	
-	Bind = function( self, presenter )
+	Bind = function( self, presenter  )
 
 		local trans = self.gameObject.transform
 		
@@ -22,7 +24,7 @@ Class.Define("LoginView", {
 		self.SetPublicAddress = trans:Find("SetPublicAddress"):GetComponent("Button")
 		
 		
-		-- 指令
+	-- 指令
 		self.SetDevAddress.onClick:AddListener( function( )
 			presenter:Cmd_SetDevAddress( )
 		end)
@@ -31,24 +33,15 @@ Class.Define("LoginView", {
 			presenter:Cmd_SetPublicAddress( )
 		end)
 		
-		-- 属性
-		presenter.PropertySet:Register("Account", self.Account)
-		presenter.PropertySet:Register("Address", self.Address)
-		
-		
 		
 	end,
 	
-	OnDisable = function( self )
-		print("ondisable")
+	
+	OnDisable = function( self )		
 	
 		self.presenter:SaveSetting()
 	
 	end,
-	
-	
-
-
 
 })
 
