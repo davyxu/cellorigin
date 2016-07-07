@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LuaInterface;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -18,7 +19,7 @@ public class NetworkPeer : MonoBehaviour
 
     ClientSocket _socket;
         
-    MessageMeta _meta;    
+    MessageMetaSet _metaSet;    
 
     MessageDispatcher _dispatcher = new MessageDispatcher();
         
@@ -28,9 +29,9 @@ public class NetworkPeer : MonoBehaviour
     struct MsgData
     {
         public uint MsgID;
-        public object Data;
+        public MemoryStream Data;
 
-        public MsgData(uint msgid, object data)
+        public MsgData(uint msgid, MemoryStream data)
         {
             MsgID = msgid;
             Data = data;
@@ -46,7 +47,7 @@ public class NetworkPeer : MonoBehaviour
     struct DelayMsgData
     {
         public uint MsgID;
-        public object Data;
+        public MemoryStream Data;
         DateTime tick;
 
         public DelayMsgData(MsgData md)
@@ -85,13 +86,13 @@ public class NetworkPeer : MonoBehaviour
     {
         DebugMessage = true;
 
-        _meta = PeerManager.Instance.MsgMeta;
+        _metaSet = PeerManager.Instance.MsgMeta;
 
-        MsgID_Connected = _meta.GetMessageID<gamedef.PeerConnected>();
-        MsgID_Disconnected = _meta.GetMessageID<gamedef.PeerDisconnected>();
-        MsgID_ConnectError = _meta.GetMessageID<gamedef.PeerConnectError>();
-        MsgID_SendError = _meta.GetMessageID<gamedef.PeerSendError>();
-        MsgID_RecvError = _meta.GetMessageID<gamedef.PeerRecvError>();
+        MsgID_Connected = _metaSet.GetByType<gamedef.PeerConnected>().id;
+        MsgID_Disconnected = _metaSet.GetByType<gamedef.PeerDisconnected>().id;
+        MsgID_ConnectError = _metaSet.GetByType<gamedef.PeerConnectError>().id;
+        MsgID_SendError = _metaSet.GetByType<gamedef.PeerSendError>().id;
+        MsgID_RecvError = _metaSet.GetByType<gamedef.PeerRecvError>().id;
     }
 
    
@@ -138,16 +139,19 @@ public class NetworkPeer : MonoBehaviour
 
         _socket = new ClientSocket();
 
-        _socket.OnRecv += OnReceiveSocketMessage;
+        _socket.OnRecv += (msgid, stream) =>
+        {
+            PostStream(msgid, stream);
+        };
 
         _socket.OnConnected += delegate()
         {
-            PostMessage(MsgID_Connected, null);
+            PostStream(MsgID_Connected, null);
         };
 
         _socket.OnDisconnected += delegate()
         {
-            PostMessage(MsgID_Disconnected, null);
+            PostStream(MsgID_Disconnected, null);
         };
 
         _socket.OnError += delegate(NetworkReason reason )
@@ -156,17 +160,17 @@ public class NetworkPeer : MonoBehaviour
             {
                 case NetworkReason.ConnectError:
                     {
-                        PostMessage(MsgID_ConnectError, null);
+                        PostStream(MsgID_ConnectError, null);
                     }
                     break;
                 case NetworkReason.SendError:
                     {
-                        PostMessage(MsgID_SendError, null);
+                        PostStream(MsgID_SendError, null);
                     }
                     break;
                 case NetworkReason.RecvError:
                     {
-                        PostMessage(MsgID_RecvError, null);
+                        PostStream(MsgID_RecvError, null);
                     }
                     break;
             }
@@ -178,127 +182,25 @@ public class NetworkPeer : MonoBehaviour
 
     }
 
-                
-
-    /// <summary>
-    /// 发一个消息
-    /// </summary>
-    /// <typeparam name="T">消息类型</typeparam>
-    /// <param name="msg">消息内容</param>
-    public void SendMessage<T>(T msg)
-    {
-        if (_socket == null)
-            return;
-
-        uint msgID = _meta.GetMessageID<T>();
-
-        if (msgID == 0)
-        {
-            throw new InvalidCastException("Error when getting msgID:" + typeof(T).FullName);
-        }
-
-        if (DebugMessage)
-        {
-            LogMessage(msgID, msg);
-        }
-        
-
-        if (OnSend != null)
-        {
-            OnSend(this, msgID, msg);
-        }
-
-        MemoryStream data = new MemoryStream();
-
-        try
-        {
-            ProtoBuf.Serializer.Serialize(data, msg);                
-        }
-        catch (Exception e)
-        {
-            Debug.LogError(e.ToString());
-            return;
-        }
-
-        _socket.SendPacket(msgID, data.ToArray());
-
-    }
-
     /// <summary>
     /// 手工投递一个消息
     /// </summary>
     /// <param name="msgID">消息ID</param>
     /// <param name="msg">消息内容</param>
-    public void PostMessage(uint msgID, object msg)
+    [NoToLuaAttribute]
+    public void PostStream(uint msgID, MemoryStream stream)
     {
         lock (_msgQueueGuard)
         {
             MsgData md;
-            md.Data = msg;
+            md.Data = stream;
             md.MsgID = msgID;
 
             _msgQueue.Enqueue(md);
         }
     }
 
-    /// <summary>
-    /// 手工投递一个消息
-    /// </summary>
-    /// <typeparam name="T">消息类型</typeparam>
-    /// <param name="msg">消息内容</param>
-    public void PostMessage<T>(T msg)
-    {
-        uint msgID = _meta.GetMessageID<T>();
-
-        if (msgID == 0)
-        {
-            throw new InvalidCastException("Error when getting msgID:" + typeof(T).FullName);
-        }
-
-        MemoryStream data = new MemoryStream();
-        ProtoBuf.Serializer.Serialize(data, msg);
-
-        PostMessage(msgID, data );
-    }
-
-    void OnReceiveSocketMessage(uint msgid, MemoryStream stream)
-    {
-        object msg;
-
-        try
-        {
-            var msgtype = _meta.GetMessageType(msgid);
-            msg = ProtoBuf.Serializer.NonGeneric.Deserialize(msgtype, stream);
-        }
-        catch (Exception e)
-        {
-            Debug.LogError(e.ToString());
-            return;
-        }
-
-        if (msg == null)
-        {
-            return;
-        }
-
-        PostMessage(msgid, msg);
-    }
-
-    /// <summary>
-    /// 注册一个消息
-    /// </summary>
-    /// <typeparam name="T">消息类型</typeparam>
-    /// <param name="callback">回调处理</param>
-    public void RegisterMessage<T>(Action<object> callback)
-    {
-        _dispatcher.Add(_meta.GetMessageID<T>(), callback);
-    }
-    public void UnRegisterMessage<T>(Action<object> callback)
-    {
-        _dispatcher.Remove(_meta.GetMessageID<T>(), callback);
-    }
-
-
+    [NoToLuaAttribute]
     public void Polling()
     {
         // 有延迟消息到达投递点
@@ -308,7 +210,7 @@ public class NetworkPeer : MonoBehaviour
             if (dm.IsTimeup(_emulateDelayMS))
             {
                 _delayQueue.Dequeue();
-                ProcessMessage(dm.MsgID, dm.Data);
+                ProcessStream(dm.MsgID, dm.Data);
             }
         }
 
@@ -330,20 +232,35 @@ public class NetworkPeer : MonoBehaviour
         }
         else
         {
-            ProcessMessage(msg.MsgID, msg.Data);
+            ProcessStream(msg.MsgID, msg.Data);
         }
     }
 
 
-    void ProcessMessage(uint msgid, object msg)
+    void ProcessStream(uint msgid, MemoryStream stream)
     {
-        if (DebugMessage)
+        try
         {
-            LogMessage(msgid, msg);
-        }
-        
+            var meta = _metaSet.GetByID(msgid);
+            if (meta != MessageMetaSet.NullMeta)
+            {
+                var msg = ProtoBuf.Serializer.NonGeneric.Deserialize(meta.type, stream);
 
-        _dispatcher.Invoke(msgid, msg);
+                if (DebugMessage)
+                {
+                    LogMessage(msgid, msg);
+                }
+
+                _dispatcher.Invoke(msgid, msg);
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e.ToString());
+        }
+
+
+        InvokeDecodeMessage(msgid, stream);
     }
 
     void LogMessage( uint msgid, object msg)
@@ -385,6 +302,139 @@ public class NetworkPeer : MonoBehaviour
     void OnDisable()
     {
         Stop();
+    }
+
+
+    #endregion
+
+    #region C#接口
+
+    /// <summary>
+    /// 发一个消息
+    /// </summary>
+    /// <typeparam name="T">消息类型</typeparam>
+    /// <param name="msg">消息内容</param>
+    [NoToLuaAttribute]
+    public void SendMessage<T>(T msg)
+    {
+        if (_socket == null)
+            return;
+
+        uint msgID = _metaSet.GetByType<T>().id;
+
+        if (msgID == 0)
+        {
+            throw new InvalidCastException("Error when getting msgID:" + typeof(T).FullName);
+        }
+
+        if (DebugMessage)
+        {
+            LogMessage(msgID, msg);
+        }
+
+
+        if (OnSend != null)
+        {
+            OnSend(this, msgID, msg);
+        }
+
+        MemoryStream data = new MemoryStream();
+
+        try
+        {
+            ProtoBuf.Serializer.Serialize(data, msg);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e.ToString());
+            return;
+        }
+
+        _socket.SendPacket(msgID, data.ToArray());
+
+    }
+
+    /// <summary>
+    /// 手工投递一个消息
+    /// </summary>
+    /// <typeparam name="T">消息类型</typeparam>
+    /// <param name="msg">消息内容</param>\
+    [NoToLuaAttribute]
+    public void PostMessage<T>(T msg)
+    {
+        var meta = _metaSet.GetByType<T>();
+
+        if (meta == MessageMetaSet.NullMeta)
+        {
+            Debug.LogError("未注册的消息: " + typeof(T).FullName);
+            return;
+        }
+
+        MemoryStream data = new MemoryStream();
+        ProtoBuf.Serializer.Serialize(data, msg);
+
+        PostStream(meta.id, data);
+    }
+    /// <summary>
+    /// 注册一个消息
+    /// </summary>
+    /// <typeparam name="T">消息类型</typeparam>
+    /// <param name="callback">回调处理</param>
+    [NoToLuaAttribute]
+    public void RegisterMessage<T>(Action<object> callback)
+    {
+        var meta = _metaSet.GetByType<T>();
+        if (meta == MessageMetaSet.NullMeta)
+        {
+            Debug.LogError("未注册的消息:" + typeof(T).FullName);
+            return;
+        }
+
+        _dispatcher.Add(meta.id, callback);
+    }
+    [NoToLuaAttribute]
+    public void UnRegisterMessage<T>(Action<object> callback)
+    {
+        var meta = _metaSet.GetByType<T>();
+        if (meta == MessageMetaSet.NullMeta)
+        {
+            Debug.LogError("未注册的消息:" + typeof(T).FullName);
+            return;
+        }
+
+        _dispatcher.Remove(meta.id, callback);
+    }
+
+    #endregion
+
+    #region Lua接口
+
+    Dictionary<uint, Action<MemoryStream>> _scriptCallback = new Dictionary<uint,Action<MemoryStream>>();
+
+    public void RegisterMessage( string msgName, LuaFunction func )
+    {
+        _scriptCallback.Add(StringUtility.HashNoCase(msgName), (stream) =>
+        {
+            CellLuaManager.NetworkDecodeRecv(msgName, stream, func);
+        });
+    }
+
+    void InvokeDecodeMessage( uint msgid, MemoryStream stream )
+    {
+        Action<MemoryStream> callback;
+        if ( _scriptCallback.TryGetValue( msgid, out callback ) )
+        {
+            callback(stream);
+        }
+    }
+    public void SendMessage(string msgName, byte[] data)
+    {
+        if (_socket == null)
+            return;
+
+        var msgid = StringUtility.HashNoCase(msgName);
+        
+        _socket.SendPacket(msgid, data);
     }
 
 

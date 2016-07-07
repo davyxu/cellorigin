@@ -33,3 +33,5 @@ tool/protoc-gen-sharpnet.exe
 /client/ProjectSettings/ProjectVersion.txt
 /client/*.csproj
 /client/Assets/Lua/**/*.meta
+*.pb
+client/Assets/game.pb.meta

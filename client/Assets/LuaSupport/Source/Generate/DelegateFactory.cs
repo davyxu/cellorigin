@@ -27,6 +27,7 @@ public static class DelegateFactory
 		dict.Add(typeof(UnityEngine.RectTransform.ReapplyDrivenProperties), UnityEngine_RectTransform_ReapplyDrivenProperties);
 		dict.Add(typeof(UnityEngine.UI.InputField.OnValidateInput), UnityEngine_UI_InputField_OnValidateInput);
 		dict.Add(typeof(UnityEngine.Events.UnityAction<string>), UnityEngine_Events_UnityAction_string);
+		dict.Add(typeof(System.Action<NetworkPeer,uint,object>), System_Action_NetworkPeer_uint_object);
 	}
 
     [NoToLuaAttribute]
@@ -312,6 +313,33 @@ public static class DelegateFactory
 		}
 
 		UnityEngine.Events.UnityAction<string> d = (new UnityEngine_Events_UnityAction_string_Event(func)).Call;
+		return d;
+	}
+
+	class System_Action_NetworkPeer_uint_object_Event : LuaDelegate
+	{
+		public System_Action_NetworkPeer_uint_object_Event(LuaFunction func) : base(func) { }
+
+		public void Call(NetworkPeer param0,uint param1,object param2)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.Push(param1);
+			func.Push(param2);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public static Delegate System_Action_NetworkPeer_uint_object(LuaFunction func)
+	{
+		if (func == null)
+		{
+			System.Action<NetworkPeer,uint,object> fn = delegate { };
+			return fn;
+		}
+
+		System.Action<NetworkPeer,uint,object> d = (new System_Action_NetworkPeer_uint_object_Event(func)).Call;
 		return d;
 	}
 

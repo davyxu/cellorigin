@@ -2,26 +2,49 @@
 using System.Collections.Generic;
 using System.Reflection;
 
+public class MessageMeta
+{
+    public Type type;
+    public uint id;
+
+    public string name
+    {
+        get { return type.FullName; }
+    }
+
+    public MessageMeta(Type t)
+    {
+        this.type = t;
+        this.id = StringUtility.HashNoCase(t.FullName);
+    }
+}
+
+
+
 /// <summary>
 /// 消息类型与id的映射表
 /// </summary>
-public class MessageMeta
+public class MessageMetaSet
 {
-    Dictionary<uint, Type> _id2type = new Dictionary<uint, Type>();
-    Dictionary<Type, uint> _type2id = new Dictionary<Type, uint>();
+    
+    public readonly static MessageMeta NullMeta = new MessageMeta(typeof(MessageMeta));
+
+    Dictionary<uint, MessageMeta> _idmap = new Dictionary<uint, MessageMeta>();
+    Dictionary<Type, MessageMeta> _typemap = new Dictionary<Type, MessageMeta>();
+    Dictionary<string, MessageMeta> _namemap = new Dictionary<string, MessageMeta>();
 
     /// <summary>
     /// 扫描一个命名空间下的所有消息, 并以名字注册为消息
     /// </summary>
     /// <param name="NameSpace">命名空间名字</param>
     /// <returns></returns>
-    public MessageMeta Scan( string NameSpace )
+    public MessageMetaSet Scan( string NameSpace )
     {
         foreach( Type t in Assembly.GetExecutingAssembly().GetTypes() )
         {
             if ( t.Namespace == NameSpace && t.IsClass )
             {
-                RegisterMessage(Utility.StringUtility.HashNoCase(t.FullName), t);
+                RegisterMessage(t);
             }
         }
 
@@ -33,15 +56,20 @@ public class MessageMeta
     /// </summary>
     /// <param name="id"></param>
     /// <param name="t"></param>
-    void RegisterMessage( uint id, Type t )
+    void RegisterMessage( Type t )
     {
-        if (GetMessageType(id) == t)
+        if (GetByType(t) != NullMeta)
         {
-            throw new Exception("Duplicate message id");
+            throw new Exception("重复的消息ID");
         }
 
-        _id2type.Add(id, t);
-        _type2id.Add(t, id);
+        var mi = new MessageMeta(t);
+        mi.id = StringUtility.HashNoCase(t.FullName);
+        mi.type = t;
+
+        _idmap.Add(mi.id, mi);
+        _typemap.Add(t, mi);
+        _namemap.Add(mi.name, mi);
     }
 
     /// <summary>
@@ -49,15 +77,15 @@ public class MessageMeta
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public Type GetMessageType( uint id )
+    public MessageMeta GetByID( uint id )
     {
-        Type t;
-        if (_id2type.TryGetValue(id, out t))
+        MessageMeta t;
+        if (_idmap.TryGetValue(id, out t))
         {
             return t;
         }
 
-        return null;
+        return NullMeta;
     }
 
     /// <summary>
@@ -65,19 +93,32 @@ public class MessageMeta
     /// </summary>
     /// <param name="t"></param>
     /// <returns></returns>
-    public uint GetMessageID( Type t )
+    public MessageMeta GetByType(Type t)
     {
-        uint id;
-        if (_type2id.TryGetValue(t, out id))
+        MessageMeta mi;
+        if (_typemap.TryGetValue(t, out mi))
         {
-            return id;
+            return mi;
         }
 
-        return 0;
+        return NullMeta;
     }
 
-    public uint GetMessageID<T>( )
+    public MessageMeta GetByName(string name)
     {
-        return GetMessageID(typeof(T));
+        MessageMeta mi;
+        if (_namemap.TryGetValue(name, out mi))
+        {
+            return mi;
+        }
+
+        return NullMeta;
     }
+
+    public MessageMeta GetByType<T>()
+    {
+        return GetByType(typeof(T));
+    }
+
+
 }

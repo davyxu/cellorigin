@@ -1,4 +1,5 @@
 ﻿using LuaInterface;
+using System.IO;
 using UnityEngine;
 
 
@@ -7,6 +8,8 @@ public class CellLuaManager
     static LuaState _state = null;
     static LuaInterface.LuaFunction _callMethod;
     static LuaInterface.LuaFunction _hasMethod;
+    static LuaInterface.LuaFunction _decodeRecvMethod;
+    static LuaInterface.LuaFunction _encodeSendMethod;
 
     static int _ref;
 
@@ -35,6 +38,12 @@ public class CellLuaManager
 
     static void Destroy()
     {
+        _encodeSendMethod.Dispose();
+        _encodeSendMethod = null;
+
+        _decodeRecvMethod.Dispose();
+        _decodeRecvMethod = null;
+
         _hasMethod.Dispose();
         _hasMethod = null;
 
@@ -74,11 +83,22 @@ public class CellLuaManager
 
         _callMethod = _state.GetFunction("Class.CallMethod");
         _hasMethod = _state.GetFunction("Class.HasMethod");
+        _decodeRecvMethod = _state.GetFunction("Network.DecodeRecv");
+        _encodeSendMethod = _state.GetFunction("Network.EncodeSend");
 
         LuaFunction func = _state.GetFunction("Main");
         func.Call();
         func.Dispose();
         func = null;
+    }
+
+
+    public static void NetworkDecodeRecv( string msgName, MemoryStream stream, LuaFunction func )
+    {
+        if (_decodeRecvMethod != null)
+        {
+            _decodeRecvMethod.Call(msgName, new LuaByteBuffer(stream.ToArray()), func);            
+        }
     }
 
        

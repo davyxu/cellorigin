@@ -9,6 +9,7 @@ public class UnityEngine_UI_InputFieldWrap
 		L.BeginClass(typeof(UnityEngine.UI.InputField), typeof(UnityEngine.UI.Selectable));
 		L.RegFunction("MoveTextEnd", MoveTextEnd);
 		L.RegFunction("MoveTextStart", MoveTextStart);
+		L.RegFunction("ScreenToLocal", ScreenToLocal);
 		L.RegFunction("OnBeginDrag", OnBeginDrag);
 		L.RegFunction("OnDrag", OnDrag);
 		L.RegFunction("OnEndDrag", OnEndDrag);
@@ -84,6 +85,24 @@ public class UnityEngine_UI_InputFieldWrap
 			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
 			obj.MoveTextStart(arg0);
 			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ScreenToLocal(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			UnityEngine.UI.InputField obj = (UnityEngine.UI.InputField)ToLua.CheckObject(L, 1, typeof(UnityEngine.UI.InputField));
+			UnityEngine.Vector2 arg0 = ToLua.ToVector2(L, 2);
+			UnityEngine.Vector2 o = obj.ScreenToLocal(arg0);
+			ToLua.Push(L, o);
+			return 1;
 		}
 		catch(Exception e)
 		{

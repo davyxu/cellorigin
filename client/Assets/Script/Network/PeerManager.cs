@@ -4,16 +4,16 @@ using System.Collections.Generic;
 
 public class PeerManager : Singleton<PeerManager>
 {
-    MessageMeta _meta;
+    MessageMetaSet _meta;
 
-    public MessageMeta MsgMeta
+    public MessageMetaSet MsgMeta
     {
         get { return _meta; }
     }
 
     public PeerManager( )
     {
-        _meta = new MessageMeta();
+        _meta = new MessageMetaSet();
         _meta.Scan("gamedef");
     }
 
