@@ -9,7 +9,7 @@ public class CellLuaManager
     static LuaInterface.LuaFunction _callMethod;
     static LuaInterface.LuaFunction _hasMethod;
     static LuaInterface.LuaFunction _decodeRecvMethod;
-    static LuaInterface.LuaFunction _encodeSendMethod;
+
 
     static int _ref;
 
@@ -38,8 +38,6 @@ public class CellLuaManager
 
     static void Destroy()
     {
-        _encodeSendMethod.Dispose();
-        _encodeSendMethod = null;
 
         _decodeRecvMethod.Dispose();
         _decodeRecvMethod = null;
@@ -64,7 +62,7 @@ public class CellLuaManager
 
         _state = new LuaState();
 
-        _state.OpenLibs(LuaDLL.luaopen_pb);
+        _state.OpenLibs(LuaDLL.luaopen_protobuf_c);
         _state.OpenLibs(LuaDLL.luaopen_struct);
         
 #if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
@@ -84,7 +82,6 @@ public class CellLuaManager
         _callMethod = _state.GetFunction("Class.CallMethod");
         _hasMethod = _state.GetFunction("Class.HasMethod");
         _decodeRecvMethod = _state.GetFunction("Network.DecodeRecv");
-        _encodeSendMethod = _state.GetFunction("Network.EncodeSend");
 
         LuaFunction func = _state.GetFunction("Main");
         func.Call();
@@ -97,7 +94,15 @@ public class CellLuaManager
     {
         if (_decodeRecvMethod != null)
         {
-            _decodeRecvMethod.Call(msgName, new LuaByteBuffer(stream.ToArray()), func);            
+            if ( stream == null )
+            {
+                _decodeRecvMethod.Call(msgName, null, func);
+            }
+            else
+            {
+                _decodeRecvMethod.Call(msgName, new LuaByteBuffer(stream.ToArray()), func);            
+            }
+            
         }
     }
 

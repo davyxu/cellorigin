@@ -239,27 +239,29 @@ public class NetworkPeer : MonoBehaviour
 
     void ProcessStream(uint msgid, MemoryStream stream)
     {
-        try
+        if (stream != null)
         {
-            var meta = _metaSet.GetByID(msgid);
-            if (meta != MessageMetaSet.NullMeta)
+            try
             {
-                var msg = ProtoBuf.Serializer.NonGeneric.Deserialize(meta.type, stream);
-
-                if (DebugMessage)
+                var meta = _metaSet.GetByID(msgid);
+                if (meta != MessageMetaSet.NullMeta)
                 {
-                    LogMessage(msgid, msg);
-                }
+                    var msg = ProtoBuf.Serializer.NonGeneric.Deserialize(meta.type, stream);
 
-                _dispatcher.Invoke(msgid, msg);
+                    if (DebugMessage)
+                    {
+                        LogMessage(msgid, msg);
+                    }
+
+                    _dispatcher.Invoke(msgid, msg);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e.ToString());
             }
         }
-        catch (Exception e)
-        {
-            Debug.LogError(e.ToString());
-        }
-
-
+       
         InvokeDecodeMessage(msgid, stream);
     }
 

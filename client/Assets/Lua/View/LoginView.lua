@@ -9,6 +9,26 @@ Class.Define("LoginView", {
 			
 		self.presenter:Init( self )
 		
+		LoginPeer:Connect( "127.0.0.1:8101" )
+		
+		LoginPeer:RegisterMessage("gamedef.PeerConnected", function( )
+		
+			print("connected")
+		
+			SendLoginMessage( "gamedef.LoginREQ", {
+				PlatformName = "dev",
+			})
+		
+		end )
+		
+		LoginPeer:RegisterMessage("gamedef.LoginACK", function( msg )
+		
+			print("loginACK",msg.Result)
+		
+		end )
+		
+		
+		
 	end,
 	
 	

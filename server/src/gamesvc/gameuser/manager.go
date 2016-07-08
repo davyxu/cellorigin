@@ -101,6 +101,10 @@ var mdb *db.MongoDriver
 
 func Start() {
 
+	if table.ServiceConfig == nil {
+		panic("config not ready")
+	}
+
 	mdb = db.NewMongoDriver()
 
 	err := mdb.Start(&db.Config{
