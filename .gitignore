@@ -13,7 +13,6 @@
 /tool/protoc-gen-go.exe
 /tool/protoc-gen-meta.exe
 /tool/protoc-gen-msg.exe
-/tool/protoc.exe
 /tool/src/protoc-gen-table/protoc-gen-table.exe
 /tool/tabtoy.exe
 server/BuildAll.bat

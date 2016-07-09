@@ -23,31 +23,11 @@ namespace Framework
                     var data = msg.Data[i];
 
                     string key = null;
-                    if ( data.HasKeyStr )
-                    {
-                        key = data.KeyStr;
-                    }
+
 
                     if (key == null)
                         continue;
 
-
-                    if ( data.HasInteger )
-                    {                        
-                        mdm.SetInteger(key, data.Integer, data.SyncBehavior);
-                    }
-                    else if ( data.HasStr )
-                    {
-                        mdm.SetString(key, data.Str, data.SyncBehavior);
-                    }
-                    else if (data.HasNumber)
-                    {
-                        mdm.SetNumber(key, data.Number, data.SyncBehavior);
-                    }
-                    else if (data.HasBool)
-                    {
-                        mdm.SetBool(key, data.Bool, data.SyncBehavior);
-                    }
                     
                 }
 

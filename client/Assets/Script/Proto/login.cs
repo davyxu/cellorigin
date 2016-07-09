@@ -8,76 +8,40 @@ namespace gamedef
 	{
 		public LoginREQ() {}
 		
-		string _PlatformToken = "";
-		bool _hasPlatformToken = false;
+		private string _PlatformToken = "";
 		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"PlatformToken", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		[global::System.ComponentModel.DefaultValue("")]
 		public string PlatformToken
 		{
 			get { return _PlatformToken; }
-			set { _PlatformToken = value; 
-			      _hasPlatformToken = true;
-			}
+			set { _PlatformToken = value; }
 		}
 		
-		public bool HasPlatformToken
-		{
-			get { return _hasPlatformToken; }
-			set { _hasPlatformToken = value; }
-		}
-		
-		string _PlatformUID = "";
-		bool _hasPlatformUID = false;
+		private string _PlatformUID = "";
 		[global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"PlatformUID", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		[global::System.ComponentModel.DefaultValue("")]
 		public string PlatformUID
 		{
 			get { return _PlatformUID; }
-			set { _PlatformUID = value; 
-			      _hasPlatformUID = true;
-			}
+			set { _PlatformUID = value; }
 		}
 		
-		public bool HasPlatformUID
-		{
-			get { return _hasPlatformUID; }
-			set { _hasPlatformUID = value; }
-		}
-		
-		string _PlatformName = "";
-		bool _hasPlatformName = false;
+		private string _PlatformName = "";
 		[global::ProtoBuf.ProtoMember(3, IsRequired = false, Name=@"PlatformName", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		[global::System.ComponentModel.DefaultValue("")]
 		public string PlatformName
 		{
 			get { return _PlatformName; }
-			set { _PlatformName = value; 
-			      _hasPlatformName = true;
-			}
+			set { _PlatformName = value; }
 		}
 		
-		public bool HasPlatformName
-		{
-			get { return _hasPlatformName; }
-			set { _hasPlatformName = value; }
-		}
-		
-		string _ClientVersion = "";
-		bool _hasClientVersion = false;
+		private string _ClientVersion = "";
 		[global::ProtoBuf.ProtoMember(4, IsRequired = false, Name=@"ClientVersion", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		[global::System.ComponentModel.DefaultValue("")]
 		public string ClientVersion
 		{
 			get { return _ClientVersion; }
-			set { _ClientVersion = value; 
-			      _hasClientVersion = true;
-			}
-		}
-		
-		public bool HasClientVersion
-		{
-			get { return _hasClientVersion; }
-			set { _hasClientVersion = value; }
+			set { _ClientVersion = value; }
 		}
 		
 		private global::ProtoBuf.IExtension extensionObject;
@@ -89,58 +53,31 @@ namespace gamedef
 	{
 		public ServerInfo() {}
 		
-		string _Name = "";
-		bool _hasName = false;
+		private string _Name = "";
 		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"Name", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		[global::System.ComponentModel.DefaultValue("")]
 		public string Name
 		{
 			get { return _Name; }
-			set { _Name = value; 
-			      _hasName = true;
-			}
+			set { _Name = value; }
 		}
 		
-		public bool HasName
-		{
-			get { return _hasName; }
-			set { _hasName = value; }
-		}
-		
-		string _DisplayName = "";
-		bool _hasDisplayName = false;
+		private string _DisplayName = "";
 		[global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"DisplayName", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		[global::System.ComponentModel.DefaultValue("")]
 		public string DisplayName
 		{
 			get { return _DisplayName; }
-			set { _DisplayName = value; 
-			      _hasDisplayName = true;
-			}
+			set { _DisplayName = value; }
 		}
 		
-		public bool HasDisplayName
-		{
-			get { return _hasDisplayName; }
-			set { _hasDisplayName = value; }
-		}
-		
-		string _Address = "";
-		bool _hasAddress = false;
+		private string _Address = "";
 		[global::ProtoBuf.ProtoMember(3, IsRequired = false, Name=@"Address", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		[global::System.ComponentModel.DefaultValue("")]
 		public string Address
 		{
 			get { return _Address; }
-			set { _Address = value; 
-			      _hasAddress = true;
-			}
-		}
-		
-		public bool HasAddress
-		{
-			get { return _hasAddress; }
-			set { _hasAddress = value; }
+			set { _Address = value; }
 		}
 		
 		private global::ProtoBuf.IExtension extensionObject;
@@ -152,49 +89,30 @@ namespace gamedef
 	{
 		public LoginACK() {}
 		
-		string _Result = "";
-		bool _hasResult = false;
+		private string _Result = "";
 		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"Result", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		[global::System.ComponentModel.DefaultValue("")]
 		public string Result
 		{
 			get { return _Result; }
-			set { _Result = value; 
-			      _hasResult = true;
-			}
+			set { _Result = value; }
 		}
 		
-		public bool HasResult
-		{
-			get { return _hasResult; }
-			set { _hasResult = value; }
-		}
-		
-		string _Token = "";
-		bool _hasToken = false;
+		private string _Token = "";
 		[global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"Token", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		[global::System.ComponentModel.DefaultValue("")]
 		public string Token
 		{
 			get { return _Token; }
-			set { _Token = value; 
-			      _hasToken = true;
-			}
+			set { _Token = value; }
 		}
 		
-		public bool HasToken
-		{
-			get { return _hasToken; }
-			set { _hasToken = value; }
-		}
-		
-		readonly global::System.Collections.Generic.List<gamedef.ServerInfo> _ServerList = new global::System.Collections.Generic.List<gamedef.ServerInfo>();
+		private readonly global::System.Collections.Generic.List<gamedef.ServerInfo> _ServerList = new global::System.Collections.Generic.List<gamedef.ServerInfo>();
 		[global::ProtoBuf.ProtoMember(3, Name=@"ServerList", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		public global::System.Collections.Generic.List<gamedef.ServerInfo> ServerList
 		{
 			get { return _ServerList; }
 		}
-		
 		
 		private global::ProtoBuf.IExtension extensionObject;
 		global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)

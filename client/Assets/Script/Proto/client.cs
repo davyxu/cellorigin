@@ -8,40 +8,22 @@ namespace gamedef
 	{
 		public LoginSetting() {}
 		
-		string _Account = "";
-		bool _hasAccount = false;
+		private string _Account = "";
 		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"Account", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		[global::System.ComponentModel.DefaultValue("")]
 		public string Account
 		{
 			get { return _Account; }
-			set { _Account = value; 
-			      _hasAccount = true;
-			}
+			set { _Account = value; }
 		}
 		
-		public bool HasAccount
-		{
-			get { return _hasAccount; }
-			set { _hasAccount = value; }
-		}
-		
-		string _Address = "";
-		bool _hasAddress = false;
+		private string _Address = "";
 		[global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"Address", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		[global::System.ComponentModel.DefaultValue("")]
 		public string Address
 		{
 			get { return _Address; }
-			set { _Address = value; 
-			      _hasAddress = true;
-			}
-		}
-		
-		public bool HasAddress
-		{
-			get { return _hasAddress; }
-			set { _hasAddress = value; }
+			set { _Address = value; }
 		}
 		
 		private global::ProtoBuf.IExtension extensionObject;

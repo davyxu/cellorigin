@@ -8,22 +8,13 @@ namespace gamedef
 	{
 		public VerifyGameREQ() {}
 		
-		string _Token = "";
-		bool _hasToken = false;
+		private string _Token = "";
 		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"Token", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		[global::System.ComponentModel.DefaultValue("")]
 		public string Token
 		{
 			get { return _Token; }
-			set { _Token = value; 
-			      _hasToken = true;
-			}
-		}
-		
-		public bool HasToken
-		{
-			get { return _hasToken; }
-			set { _hasToken = value; }
+			set { _Token = value; }
 		}
 		
 		private global::ProtoBuf.IExtension extensionObject;
@@ -35,22 +26,13 @@ namespace gamedef
 	{
 		public VerifyGameACK() {}
 		
-		gamedef.VerifyGameResult _Result = gamedef.VerifyGameResult.VerifyOK;
-		bool _hasResult = false;
+		private gamedef.VerifyGameResult _Result = gamedef.VerifyGameResult.VerifyOK;
 		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"Result", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
 		[global::System.ComponentModel.DefaultValue(gamedef.VerifyGameResult.VerifyOK)]
 		public gamedef.VerifyGameResult Result
 		{
 			get { return _Result; }
-			set { _Result = value; 
-			      _hasResult = true;
-			}
-		}
-		
-		public bool HasResult
-		{
-			get { return _hasResult; }
-			set { _hasResult = value; }
+			set { _Result = value; }
 		}
 		
 		private global::ProtoBuf.IExtension extensionObject;
@@ -62,40 +44,22 @@ namespace gamedef
 	{
 		public SimpleCharInfo() {}
 		
-		string _CharName = "";
-		bool _hasCharName = false;
+		private string _CharName = "";
 		[global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"CharName", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		[global::System.ComponentModel.DefaultValue("")]
 		public string CharName
 		{
 			get { return _CharName; }
-			set { _CharName = value; 
-			      _hasCharName = true;
-			}
+			set { _CharName = value; }
 		}
 		
-		public bool HasCharName
-		{
-			get { return _hasCharName; }
-			set { _hasCharName = value; }
-		}
-		
-		long _LastLoginUTC = default(long);
-		bool _hasLastLoginUTC = false;
+		private long _LastLoginUTC = default(long);
 		[global::ProtoBuf.ProtoMember(3, IsRequired = false, Name=@"LastLoginUTC", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
 		[global::System.ComponentModel.DefaultValue(default(long))]
 		public long LastLoginUTC
 		{
 			get { return _LastLoginUTC; }
-			set { _LastLoginUTC = value; 
-			      _hasLastLoginUTC = true;
-			}
-		}
-		
-		public bool HasLastLoginUTC
-		{
-			get { return _hasLastLoginUTC; }
-			set { _hasLastLoginUTC = value; }
+			set { _LastLoginUTC = value; }
 		}
 		
 		private global::ProtoBuf.IExtension extensionObject;
@@ -116,13 +80,12 @@ namespace gamedef
 	{
 		public CharListACK() {}
 		
-		readonly global::System.Collections.Generic.List<gamedef.SimpleCharInfo> _CharInfo = new global::System.Collections.Generic.List<gamedef.SimpleCharInfo>();
+		private readonly global::System.Collections.Generic.List<gamedef.SimpleCharInfo> _CharInfo = new global::System.Collections.Generic.List<gamedef.SimpleCharInfo>();
 		[global::ProtoBuf.ProtoMember(1, Name=@"CharInfo", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		public global::System.Collections.Generic.List<gamedef.SimpleCharInfo> CharInfo
 		{
 			get { return _CharInfo; }
 		}
-		
 		
 		private global::ProtoBuf.IExtension extensionObject;
 		global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
@@ -133,40 +96,22 @@ namespace gamedef
 	{
 		public CreateCharREQ() {}
 		
-		int _CandidateID = default(int);
-		bool _hasCandidateID = false;
+		private int _CandidateID = default(int);
 		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"CandidateID", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
 		[global::System.ComponentModel.DefaultValue(default(int))]
 		public int CandidateID
 		{
 			get { return _CandidateID; }
-			set { _CandidateID = value; 
-			      _hasCandidateID = true;
-			}
+			set { _CandidateID = value; }
 		}
 		
-		public bool HasCandidateID
-		{
-			get { return _hasCandidateID; }
-			set { _hasCandidateID = value; }
-		}
-		
-		string _CharName = "";
-		bool _hasCharName = false;
+		private string _CharName = "";
 		[global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"CharName", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		[global::System.ComponentModel.DefaultValue("")]
 		public string CharName
 		{
 			get { return _CharName; }
-			set { _CharName = value; 
-			      _hasCharName = true;
-			}
-		}
-		
-		public bool HasCharName
-		{
-			get { return _hasCharName; }
-			set { _hasCharName = value; }
+			set { _CharName = value; }
 		}
 		
 		private global::ProtoBuf.IExtension extensionObject;
@@ -178,40 +123,22 @@ namespace gamedef
 	{
 		public CreateCharACK() {}
 		
-		int _CandidateID = default(int);
-		bool _hasCandidateID = false;
+		private int _CandidateID = default(int);
 		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"CandidateID", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
 		[global::System.ComponentModel.DefaultValue(default(int))]
 		public int CandidateID
 		{
 			get { return _CandidateID; }
-			set { _CandidateID = value; 
-			      _hasCandidateID = true;
-			}
+			set { _CandidateID = value; }
 		}
 		
-		public bool HasCandidateID
-		{
-			get { return _hasCandidateID; }
-			set { _hasCandidateID = value; }
-		}
-		
-		gamedef.CreateCharResult _Result = gamedef.CreateCharResult.CreateCharOK;
-		bool _hasResult = false;
+		private gamedef.CreateCharResult _Result = gamedef.CreateCharResult.CreateCharOK;
 		[global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"Result", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
 		[global::System.ComponentModel.DefaultValue(gamedef.CreateCharResult.CreateCharOK)]
 		public gamedef.CreateCharResult Result
 		{
 			get { return _Result; }
-			set { _Result = value; 
-			      _hasResult = true;
-			}
-		}
-		
-		public bool HasResult
-		{
-			get { return _hasResult; }
-			set { _hasResult = value; }
+			set { _Result = value; }
 		}
 		
 		private global::ProtoBuf.IExtension extensionObject;
@@ -223,22 +150,13 @@ namespace gamedef
 	{
 		public EnterGameREQ() {}
 		
-		string _CharName = "";
-		bool _hasCharName = false;
+		private string _CharName = "";
 		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"CharName", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		[global::System.ComponentModel.DefaultValue("")]
 		public string CharName
 		{
 			get { return _CharName; }
-			set { _CharName = value; 
-			      _hasCharName = true;
-			}
-		}
-		
-		public bool HasCharName
-		{
-			get { return _hasCharName; }
-			set { _hasCharName = value; }
+			set { _CharName = value; }
 		}
 		
 		private global::ProtoBuf.IExtension extensionObject;
@@ -250,22 +168,13 @@ namespace gamedef
 	{
 		public EnterGameACK() {}
 		
-		gamedef.EnterGameResult _Result = gamedef.EnterGameResult.EnterGameOK;
-		bool _hasResult = false;
+		private gamedef.EnterGameResult _Result = gamedef.EnterGameResult.EnterGameOK;
 		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"Result", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
 		[global::System.ComponentModel.DefaultValue(gamedef.EnterGameResult.EnterGameOK)]
 		public gamedef.EnterGameResult Result
 		{
 			get { return _Result; }
-			set { _Result = value; 
-			      _hasResult = true;
-			}
-		}
-		
-		public bool HasResult
-		{
-			get { return _hasResult; }
-			set { _hasResult = value; }
+			set { _Result = value; }
 		}
 		
 		private global::ProtoBuf.IExtension extensionObject;
