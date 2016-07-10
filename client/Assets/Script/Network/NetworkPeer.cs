@@ -84,7 +84,7 @@ public class NetworkPeer : MonoBehaviour
 
     public NetworkPeer( )
     {
-        DebugMessage = true;
+        //DebugMessage = true;
 
         _metaSet = PeerManager.Instance.MsgMeta;
 
@@ -417,7 +417,7 @@ public class NetworkPeer : MonoBehaviour
     {
         _scriptCallback.Add(StringUtility.HashNoCase(msgName), (stream) =>
         {
-            CellLuaManager.NetworkDecodeRecv(msgName, stream, func);
+            CellLuaManager.NetworkDecodeRecv( this, msgName, stream, func);
         });
     }
 

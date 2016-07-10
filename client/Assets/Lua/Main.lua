@@ -1,6 +1,7 @@
 require "Class"
 require "Model"
 require "Network"
+require "Utility"
 
 require "Presenter/LoginPresenter"
 require "View/LoginView"
