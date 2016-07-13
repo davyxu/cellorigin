@@ -10,10 +10,13 @@ public static class LuaBinder
 		float t = Time.realtimeSinceStartup;
 		L.BeginModule(null);
 		DebuggerWrap.Register(L);
+		PBStreamWrap.Register(L);
 		LuaPBWrap.Register(L);
 		DescriptorPoolWrap.Register(L);
 		DescriptorWrap.Register(L);
 		FieldDescriptorWrap.Register(L);
+		EnumDescriptorWrap.Register(L);
+		EnumValueDescriptorWrap.Register(L);
 		PeerManagerWrap.Register(L);
 		NetworkPeerWrap.Register(L);
 		ProtoBaseWrap.Register(L);

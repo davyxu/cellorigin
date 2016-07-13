@@ -67,11 +67,14 @@ public static class CustomSettings
         _GT(typeof(AudioSource)).AddExtendType(typeof(DG.Tweening.ShortcutExtensions)),        
         _GT(typeof(LineRenderer)).AddExtendType(typeof(DG.Tweening.ShortcutExtensions)),
         _GT(typeof(TrailRenderer)).AddExtendType(typeof(DG.Tweening.ShortcutExtensions)),  */ 
-                                  
+                           
+        _GT(typeof(PBStream)),
         _GT(typeof(LuaPB)),
         _GT(typeof(DescriptorPool)),
         _GT(typeof(Descriptor)),
         _GT(typeof(FieldDescriptor)),
+        _GT(typeof(EnumDescriptor)),
+        _GT(typeof(EnumValueDescriptor)),
         _GT(typeof(Component)),
         _GT(typeof(Transform)),
         _GT(typeof(Material)),

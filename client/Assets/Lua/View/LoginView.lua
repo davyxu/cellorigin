@@ -13,12 +13,18 @@ Class.Define("LoginView", {
 		
 		-- local data = LuaPB.GetTestData()
 		
-		local size = luapb_bytesize( "tutorial.Person", {
+		local stream = luapb_encode( "tutorial.Person", {
 			name = "hello",
-			--test = {1, 2},	
+			test = {1, 2},	
+			phone = {
+	
+				{number= "789" , type = "WORK" },
+
+				{number= "456" , type = "HOME" },
+			},
 		})
 		
-		print(size)
+		LuaPB.TestStream(stream)
 		
 		--[[
 		

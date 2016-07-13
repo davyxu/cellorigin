@@ -8,20 +8,32 @@ using google.protobuf;
 public class DescriptorPool
 {
     Dictionary<string, Descriptor> _msgMap = new Dictionary<string, Descriptor>();
+
+    Dictionary<string, EnumDescriptor> _enumMap = new Dictionary<string, EnumDescriptor>();
+
+    [LuaInterface.NoToLuaAttribute]
     public void Init( FileDescriptorSet fileset )
     {
         for (int i = 0; i < fileset.file.Count; i++)
         {
             var fileDef = fileset.file[i];
 
-            var fileD = new FileDescriptor(null, fileDef);
+            var fileD = new FileDescriptor(this, null, fileDef);
 
             for (int f = 0; f < fileDef.message_type.Count; f++)
             {
                 var def = fileDef.message_type[f];
 
-                var msgD = new Descriptor(fileD, def);
+                var msgD = new Descriptor(this, fileD, def);
                 _msgMap.Add(msgD.FullName, msgD);
+            }
+
+            for (int f = 0; f < fileDef.enum_type.Count; f++)
+            {
+                var def = fileDef.enum_type[f];
+
+                var enumD = new EnumDescriptor(this, fileD, def);
+                _enumMap.Add(enumD.FullName, enumD);
             }
         }
     }
@@ -30,6 +42,17 @@ public class DescriptorPool
     {
         Descriptor ret;
         if ( _msgMap.TryGetValue( name, out ret ) )
+        {
+            return ret;
+        }
+
+        return null;
+    }
+
+    public EnumDescriptor GetEnum(string name)
+    {
+        EnumDescriptor ret;
+        if (_enumMap.TryGetValue(name, out ret))
         {
             return ret;
         }

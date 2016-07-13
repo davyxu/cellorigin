@@ -9,11 +9,12 @@ public class FileDescriptor : ProtoBase
 {
     FileDescriptorProto _def;
 
-    public FileDescriptor(ProtoBase parent, FileDescriptorProto def)        
+    [LuaInterface.NoToLuaAttribute]
+    public FileDescriptor(DescriptorPool pool, ProtoBase parent, FileDescriptorProto def)        
     {   
         _def = def;
 
-        base.Init(parent);
+        base.Init(pool, parent);
     }
 
     protected override string GetRawName()

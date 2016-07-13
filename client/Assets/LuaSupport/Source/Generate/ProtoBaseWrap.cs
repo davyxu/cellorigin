@@ -10,6 +10,7 @@ public class ProtoBaseWrap
 		L.RegFunction("New", _CreateProtoBase);
 		L.RegFunction("__tostring", Lua_ToString);
 		L.RegVar("FullName", get_FullName, null);
+		L.RegVar("Pool", get_Pool, null);
 		L.EndClass();
 	}
 
@@ -70,6 +71,25 @@ public class ProtoBaseWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index FullName on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_Pool(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			ProtoBase obj = (ProtoBase)o;
+			DescriptorPool ret = obj.Pool;
+			ToLua.PushObject(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index Pool on a nil value" : e.Message);
 		}
 	}
 }

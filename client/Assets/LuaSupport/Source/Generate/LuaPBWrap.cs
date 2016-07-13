@@ -8,6 +8,7 @@ public class LuaPBWrap
 	{
 		L.BeginStaticLibs("LuaPB");
 		L.RegFunction("GetTestData", GetTestData);
+		L.RegFunction("TestStream", TestStream);
 		L.RegFunction("RegisterFile", RegisterFile);
 		L.RegFunction("GetPool", GetPool);
 		L.RegFunction("TagSize", TagSize);
@@ -25,6 +26,22 @@ public class LuaPBWrap
 			string o = LuaPB.GetTestData();
 			LuaDLL.lua_pushstring(L, o);
 			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int TestStream(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			PBStream arg0 = (PBStream)ToLua.CheckObject(L, 1, typeof(PBStream));
+			LuaPB.TestStream(arg0);
+			return 0;
 		}
 		catch(Exception e)
 		{

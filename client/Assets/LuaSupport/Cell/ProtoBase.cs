@@ -6,11 +6,12 @@ using System.Text;
 
 public class ProtoBase
 {
-
+    DescriptorPool _pool;
     ProtoBase _parent;    
-    protected void Init( ProtoBase parent )
+    protected void Init( DescriptorPool pool, ProtoBase parent )
     {
         _parent = parent;
+        Pool = pool;
 
         var nameList = new List<string>();
 
@@ -49,6 +50,8 @@ public class ProtoBase
         return default(string);
     }
 
-    public string FullName { get; private set; }    
+    public string FullName { get; private set; }
+
+    public DescriptorPool Pool { get; private set; }
 
 }

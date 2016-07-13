@@ -9,9 +9,13 @@ public class FieldDescriptor
 {
     public FieldDescriptorProto Define { get; private set; }
 
-    public FieldDescriptor( FieldDescriptorProto def)        
+    Descriptor _d;
+
+    [LuaInterface.NoToLuaAttribute]
+    public FieldDescriptor( Descriptor d, FieldDescriptorProto def)        
     {
         Define = def;
+        _d = d;
     }
     
     public int Type
@@ -26,7 +30,30 @@ public class FieldDescriptor
 
     public Descriptor MessageType
     {
-        get { return null;  }
+        get { 
+
+            if ( Define.type_name.Length > 0 && Define.type_name[0] == '.' )
+            {
+                return _d.Pool.GetMessage(Define.type_name.Substring(1));
+            }
+
+            return _d.GetNestedMessage(Define.type_name);
+        }
+    }
+
+
+    public EnumDescriptor EnumType
+    {
+        get
+        {
+
+            if (Define.type_name.Length > 0 && Define.type_name[0] == '.')
+            {
+                return _d.Pool.GetEnum(Define.type_name.Substring(1));
+            }
+
+            return _d.GetNestedEnum(Define.type_name);
+        }
     }
 
     public bool IsRepeated

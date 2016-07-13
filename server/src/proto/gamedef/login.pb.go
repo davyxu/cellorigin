@@ -63,6 +63,8 @@ func init() {
 	proto.RegisterType((*LoginACK)(nil), "gamedef.LoginACK")
 }
 
+func init() { proto.RegisterFile("login.proto", fileDescriptor2) }
+
 var fileDescriptor2 = []byte{
 	// 263 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0x4c, 0x90, 0xbf, 0x4e, 0xf3, 0x30,

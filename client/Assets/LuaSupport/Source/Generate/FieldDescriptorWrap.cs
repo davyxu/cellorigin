@@ -7,39 +7,14 @@ public class FieldDescriptorWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(FieldDescriptor), typeof(System.Object));
-		L.RegFunction("New", _CreateFieldDescriptor);
 		L.RegFunction("__tostring", Lua_ToString);
 		L.RegVar("Define", get_Define, null);
 		L.RegVar("Type", get_Type, null);
 		L.RegVar("Number", get_Number, null);
 		L.RegVar("MessageType", get_MessageType, null);
+		L.RegVar("EnumType", get_EnumType, null);
 		L.RegVar("IsRepeated", get_IsRepeated, null);
 		L.EndClass();
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int _CreateFieldDescriptor(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-
-			if (count == 1)
-			{
-				google.protobuf.FieldDescriptorProto arg0 = (google.protobuf.FieldDescriptorProto)ToLua.CheckObject(L, 1, typeof(google.protobuf.FieldDescriptorProto));
-				FieldDescriptor obj = new FieldDescriptor(arg0);
-				ToLua.PushObject(L, obj);
-				return 1;
-			}
-			else
-			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to ctor method: FieldDescriptor.New");
-			}
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -132,6 +107,25 @@ public class FieldDescriptorWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index MessageType on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_EnumType(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			FieldDescriptor obj = (FieldDescriptor)o;
+			EnumDescriptor ret = obj.EnumType;
+			ToLua.PushObject(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index EnumType on a nil value" : e.Message);
 		}
 	}
 

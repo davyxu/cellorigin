@@ -205,6 +205,8 @@ func init() {
 	proto.RegisterEnum("gamedef.EnterGameResult", EnterGameResult_name, EnterGameResult_value)
 }
 
+func init() { proto.RegisterFile("game.proto", fileDescriptor1) }
+
 var fileDescriptor1 = []byte{
 	// 406 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0x84, 0x93, 0xdf, 0x6f, 0xa2, 0x40,

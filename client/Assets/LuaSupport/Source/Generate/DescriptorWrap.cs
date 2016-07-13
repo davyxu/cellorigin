@@ -8,35 +8,10 @@ public class DescriptorWrap
 	{
 		L.BeginClass(typeof(Descriptor), typeof(ProtoBase));
 		L.RegFunction("GetFieldByName", GetFieldByName);
-		L.RegFunction("New", _CreateDescriptor);
+		L.RegFunction("GetNestedMessage", GetNestedMessage);
+		L.RegFunction("GetNestedEnum", GetNestedEnum);
 		L.RegFunction("__tostring", Lua_ToString);
 		L.EndClass();
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int _CreateDescriptor(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-
-			if (count == 2)
-			{
-				ProtoBase arg0 = (ProtoBase)ToLua.CheckObject(L, 1, typeof(ProtoBase));
-				google.protobuf.DescriptorProto arg1 = (google.protobuf.DescriptorProto)ToLua.CheckObject(L, 2, typeof(google.protobuf.DescriptorProto));
-				Descriptor obj = new Descriptor(arg0, arg1);
-				ToLua.PushObject(L, obj);
-				return 1;
-			}
-			else
-			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to ctor method: Descriptor.New");
-			}
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -48,6 +23,42 @@ public class DescriptorWrap
 			Descriptor obj = (Descriptor)ToLua.CheckObject(L, 1, typeof(Descriptor));
 			string arg0 = ToLua.CheckString(L, 2);
 			FieldDescriptor o = obj.GetFieldByName(arg0);
+			ToLua.PushObject(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetNestedMessage(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			Descriptor obj = (Descriptor)ToLua.CheckObject(L, 1, typeof(Descriptor));
+			string arg0 = ToLua.CheckString(L, 2);
+			Descriptor o = obj.GetNestedMessage(arg0);
+			ToLua.PushObject(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetNestedEnum(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			Descriptor obj = (Descriptor)ToLua.CheckObject(L, 1, typeof(Descriptor));
+			string arg0 = ToLua.CheckString(L, 2);
+			EnumDescriptor o = obj.GetNestedEnum(arg0);
 			ToLua.PushObject(L, o);
 			return 1;
 		}

@@ -7,8 +7,8 @@ public class DescriptorPoolWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(DescriptorPool), typeof(System.Object));
-		L.RegFunction("Init", Init);
 		L.RegFunction("GetMessage", GetMessage);
+		L.RegFunction("GetEnum", GetEnum);
 		L.RegFunction("New", _CreateDescriptorPool);
 		L.RegFunction("__tostring", Lua_ToString);
 		L.EndClass();
@@ -39,23 +39,6 @@ public class DescriptorPoolWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int Init(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 2);
-			DescriptorPool obj = (DescriptorPool)ToLua.CheckObject(L, 1, typeof(DescriptorPool));
-			google.protobuf.FileDescriptorSet arg0 = (google.protobuf.FileDescriptorSet)ToLua.CheckObject(L, 2, typeof(google.protobuf.FileDescriptorSet));
-			obj.Init(arg0);
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int GetMessage(IntPtr L)
 	{
 		try
@@ -64,6 +47,24 @@ public class DescriptorPoolWrap
 			DescriptorPool obj = (DescriptorPool)ToLua.CheckObject(L, 1, typeof(DescriptorPool));
 			string arg0 = ToLua.CheckString(L, 2);
 			Descriptor o = obj.GetMessage(arg0);
+			ToLua.PushObject(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetEnum(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			DescriptorPool obj = (DescriptorPool)ToLua.CheckObject(L, 1, typeof(DescriptorPool));
+			string arg0 = ToLua.CheckString(L, 2);
+			EnumDescriptor o = obj.GetEnum(arg0);
 			ToLua.PushObject(L, o);
 			return 1;
 		}

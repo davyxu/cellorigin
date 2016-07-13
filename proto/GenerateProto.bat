@@ -17,4 +17,4 @@ descriptor.proto ^
 addressbook.proto ^
 login.proto
 
-..\tool\protoc.exe --descriptor_set_out=..\client\Assets\game.pb --proto_path "." addressbook.proto
+..\tool\protoc.exe --descriptor_set_out=..\client\game.pb --proto_path "." addressbook.proto
