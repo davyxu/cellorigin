@@ -4,7 +4,7 @@ require "pbc/protobuf"
 
 function Network.Init( pbfile )
 
-	protobuf.register_file(pbfile)
+	--protobuf.register_file(pbfile)
 	
 	LoginPeer = PeerManager.Instance:Get( "login" )
 	

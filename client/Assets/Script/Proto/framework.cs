@@ -6,23 +6,35 @@ namespace gamedef
 	[global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"CodeGenPeer")]
 	public partial class CodeGenPeer : global::ProtoBuf.IExtensible
 	{
+		
+		
 		public CodeGenPeer() {}
 		
-		private string _Name = "";
+		string _Name = "";
+		bool _hasName = false;
 		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"Name", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		[global::System.ComponentModel.DefaultValue("")]
 		public string Name
 		{
 			get { return _Name; }
-			set { _Name = value; }
+			set { _Name = value; 
+			      _hasName = true;
+			}
 		}
 		
-		private readonly global::System.Collections.Generic.List<string> _RecvMessage = new global::System.Collections.Generic.List<string>();
+		public bool HasName
+		{
+			get { return _hasName; }
+			set { _hasName = value; }
+		}
+		
+		readonly global::System.Collections.Generic.List<string> _RecvMessage = new global::System.Collections.Generic.List<string>();
 		[global::ProtoBuf.ProtoMember(2, Name=@"RecvMessage", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		public global::System.Collections.Generic.List<string> RecvMessage
 		{
 			get { return _RecvMessage; }
 		}
+		
 		
 		private global::ProtoBuf.IExtension extensionObject;
 		global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
@@ -31,40 +43,70 @@ namespace gamedef
 	[global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"CodeGenModule")]
 	public partial class CodeGenModule : global::ProtoBuf.IExtensible
 	{
+		
+		
 		public CodeGenModule() {}
 		
-		private string _Name = "";
+		string _Name = "";
+		bool _hasName = false;
 		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"Name", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		[global::System.ComponentModel.DefaultValue("")]
 		public string Name
 		{
 			get { return _Name; }
-			set { _Name = value; }
+			set { _Name = value; 
+			      _hasName = true;
+			}
 		}
 		
-		private readonly global::System.Collections.Generic.List<gamedef.CodeGenPeer> _Peer = new global::System.Collections.Generic.List<gamedef.CodeGenPeer>();
+		public bool HasName
+		{
+			get { return _hasName; }
+			set { _hasName = value; }
+		}
+		
+		readonly global::System.Collections.Generic.List<gamedef.CodeGenPeer> _Peer = new global::System.Collections.Generic.List<gamedef.CodeGenPeer>();
 		[global::ProtoBuf.ProtoMember(2, Name=@"Peer", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		public global::System.Collections.Generic.List<gamedef.CodeGenPeer> Peer
 		{
 			get { return _Peer; }
 		}
 		
-		private gamedef.ModelGenType _ModelGen = gamedef.ModelGenType.MGT_Singleton;
+		
+		gamedef.ModelGenType _ModelGen = gamedef.ModelGenType.MGT_Singleton;
+		bool _hasModelGen = false;
 		[global::ProtoBuf.ProtoMember(3, IsRequired = false, Name=@"ModelGen", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
 		[global::System.ComponentModel.DefaultValue(gamedef.ModelGenType.MGT_Singleton)]
 		public gamedef.ModelGenType ModelGen
 		{
 			get { return _ModelGen; }
-			set { _ModelGen = value; }
+			set { _ModelGen = value; 
+			      _hasModelGen = true;
+			}
 		}
 		
-		private bool _NoGenPresenterCode = default(bool);
+		public bool HasModelGen
+		{
+			get { return _hasModelGen; }
+			set { _hasModelGen = value; }
+		}
+		
+		bool _NoGenPresenterCode = default(bool);
+		bool _hasNoGenPresenterCode = false;
 		[global::ProtoBuf.ProtoMember(4, IsRequired = false, Name=@"NoGenPresenterCode", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		[global::System.ComponentModel.DefaultValue(default(bool))]
 		public bool NoGenPresenterCode
 		{
 			get { return _NoGenPresenterCode; }
-			set { _NoGenPresenterCode = value; }
+			set { _NoGenPresenterCode = value; 
+			      _hasNoGenPresenterCode = true;
+			}
+		}
+		
+		public bool HasNoGenPresenterCode
+		{
+			get { return _hasNoGenPresenterCode; }
+			set { _hasNoGenPresenterCode = value; }
 		}
 		
 		private global::ProtoBuf.IExtension extensionObject;
@@ -74,14 +116,17 @@ namespace gamedef
 	[global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"CodeGenFile")]
 	public partial class CodeGenFile : global::ProtoBuf.IExtensible
 	{
+		
+		
 		public CodeGenFile() {}
 		
-		private readonly global::System.Collections.Generic.List<gamedef.CodeGenModule> _CodeGen = new global::System.Collections.Generic.List<gamedef.CodeGenModule>();
+		readonly global::System.Collections.Generic.List<gamedef.CodeGenModule> _CodeGen = new global::System.Collections.Generic.List<gamedef.CodeGenModule>();
 		[global::ProtoBuf.ProtoMember(1, Name=@"CodeGen", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		public global::System.Collections.Generic.List<gamedef.CodeGenModule> CodeGen
 		{
 			get { return _CodeGen; }
 		}
+		
 		
 		private global::ProtoBuf.IExtension extensionObject;
 		global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
@@ -90,69 +135,134 @@ namespace gamedef
 	[global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"ModelDataPair")]
 	public partial class ModelDataPair : global::ProtoBuf.IExtensible
 	{
+		
+		
 		public ModelDataPair() {}
 		
-		private uint _KeyID = default(uint);
+		uint _KeyID = default(uint);
+		bool _hasKeyID = false;
 		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"KeyID", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
 		[global::System.ComponentModel.DefaultValue(default(uint))]
 		public uint KeyID
 		{
 			get { return _KeyID; }
-			set { _KeyID = value; }
+			set { _KeyID = value; 
+			      _hasKeyID = true;
+			}
 		}
 		
-		private string _KeyStr = "";
+		public bool HasKeyID
+		{
+			get { return _hasKeyID; }
+			set { _hasKeyID = value; }
+		}
+		
+		string _KeyStr = "";
+		bool _hasKeyStr = false;
 		[global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"KeyStr", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		[global::System.ComponentModel.DefaultValue("")]
 		public string KeyStr
 		{
 			get { return _KeyStr; }
-			set { _KeyStr = value; }
+			set { _KeyStr = value; 
+			      _hasKeyStr = true;
+			}
 		}
 		
-		private int _Integer = default(int);
+		public bool HasKeyStr
+		{
+			get { return _hasKeyStr; }
+			set { _hasKeyStr = value; }
+		}
+		
+		int _Integer = default(int);
+		bool _hasInteger = false;
 		[global::ProtoBuf.ProtoMember(11, IsRequired = false, Name=@"Integer", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
 		[global::System.ComponentModel.DefaultValue(default(int))]
 		public int Integer
 		{
 			get { return _Integer; }
-			set { _Integer = value; }
+			set { _Integer = value; 
+			      _hasInteger = true;
+			}
 		}
 		
-		private string _Str = "";
+		public bool HasInteger
+		{
+			get { return _hasInteger; }
+			set { _hasInteger = value; }
+		}
+		
+		string _Str = "";
+		bool _hasStr = false;
 		[global::ProtoBuf.ProtoMember(12, IsRequired = false, Name=@"Str", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		[global::System.ComponentModel.DefaultValue("")]
 		public string Str
 		{
 			get { return _Str; }
-			set { _Str = value; }
+			set { _Str = value; 
+			      _hasStr = true;
+			}
 		}
 		
-		private float _Number = default(float);
+		public bool HasStr
+		{
+			get { return _hasStr; }
+			set { _hasStr = value; }
+		}
+		
+		float _Number = default(float);
+		bool _hasNumber = false;
 		[global::ProtoBuf.ProtoMember(13, IsRequired = false, Name=@"Number", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
 		[global::System.ComponentModel.DefaultValue(default(float))]
 		public float Number
 		{
 			get { return _Number; }
-			set { _Number = value; }
+			set { _Number = value; 
+			      _hasNumber = true;
+			}
 		}
 		
-		private bool _Bool = default(bool);
+		public bool HasNumber
+		{
+			get { return _hasNumber; }
+			set { _hasNumber = value; }
+		}
+		
+		bool _Bool = default(bool);
+		bool _hasBool = false;
 		[global::ProtoBuf.ProtoMember(14, IsRequired = false, Name=@"Bool", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		[global::System.ComponentModel.DefaultValue(default(bool))]
 		public bool Bool
 		{
 			get { return _Bool; }
-			set { _Bool = value; }
+			set { _Bool = value; 
+			      _hasBool = true;
+			}
 		}
 		
-		private gamedef.ModelSyncBehavior _SyncBehavior = gamedef.ModelSyncBehavior.MSB_None;
+		public bool HasBool
+		{
+			get { return _hasBool; }
+			set { _hasBool = value; }
+		}
+		
+		gamedef.ModelSyncBehavior _SyncBehavior = gamedef.ModelSyncBehavior.MSB_None;
+		bool _hasSyncBehavior = false;
 		[global::ProtoBuf.ProtoMember(30, IsRequired = false, Name=@"SyncBehavior", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
 		[global::System.ComponentModel.DefaultValue(gamedef.ModelSyncBehavior.MSB_None)]
 		public gamedef.ModelSyncBehavior SyncBehavior
 		{
 			get { return _SyncBehavior; }
-			set { _SyncBehavior = value; }
+			set { _SyncBehavior = value; 
+			      _hasSyncBehavior = true;
+			}
+		}
+		
+		public bool HasSyncBehavior
+		{
+			get { return _hasSyncBehavior; }
+			set { _hasSyncBehavior = value; }
 		}
 		
 		private global::ProtoBuf.IExtension extensionObject;
@@ -162,14 +272,17 @@ namespace gamedef
 	[global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"ModelDataACK")]
 	public partial class ModelDataACK : global::ProtoBuf.IExtensible
 	{
+		
+		
 		public ModelDataACK() {}
 		
-		private readonly global::System.Collections.Generic.List<gamedef.ModelDataPair> _Data = new global::System.Collections.Generic.List<gamedef.ModelDataPair>();
+		readonly global::System.Collections.Generic.List<gamedef.ModelDataPair> _Data = new global::System.Collections.Generic.List<gamedef.ModelDataPair>();
 		[global::ProtoBuf.ProtoMember(1, Name=@"Data", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		public global::System.Collections.Generic.List<gamedef.ModelDataPair> Data
 		{
 			get { return _Data; }
 		}
+		
 		
 		private global::ProtoBuf.IExtension extensionObject;
 		global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)

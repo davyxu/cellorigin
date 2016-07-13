@@ -9,6 +9,19 @@ Class.Define("LoginView", {
 			
 		self.presenter:Init( self )
 		
+		LuaPB.RegisterFile("game.pb")
+		
+		-- local data = LuaPB.GetTestData()
+		
+		local size = luapb_bytesize( "tutorial.Person", {
+			name = "hello",
+			--test = {1, 2},	
+		})
+		
+		print(size)
+		
+		--[[
+		
 		LoginPeer:Connect( "127.0.0.1:8101" )
 		
 		LoginPeer:RegisterMessage("gamedef.PeerConnected", function( )
@@ -28,7 +41,7 @@ Class.Define("LoginView", {
 		end )
 		
 		
-		
+		]]
 	end,
 	
 	

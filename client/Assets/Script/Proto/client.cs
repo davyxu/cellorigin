@@ -6,24 +6,44 @@ namespace gamedef
 	[global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"LoginSetting")]
 	public partial class LoginSetting : global::ProtoBuf.IExtensible
 	{
+		
+		
 		public LoginSetting() {}
 		
-		private string _Account = "";
+		string _Account = "";
+		bool _hasAccount = false;
 		[global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"Account", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		[global::System.ComponentModel.DefaultValue("")]
 		public string Account
 		{
 			get { return _Account; }
-			set { _Account = value; }
+			set { _Account = value; 
+			      _hasAccount = true;
+			}
 		}
 		
-		private string _Address = "";
+		public bool HasAccount
+		{
+			get { return _hasAccount; }
+			set { _hasAccount = value; }
+		}
+		
+		string _Address = "";
+		bool _hasAddress = false;
 		[global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"Address", DataFormat = global::ProtoBuf.DataFormat.Default)]
 		[global::System.ComponentModel.DefaultValue("")]
 		public string Address
 		{
 			get { return _Address; }
-			set { _Address = value; }
+			set { _Address = value; 
+			      _hasAddress = true;
+			}
+		}
+		
+		public bool HasAddress
+		{
+			get { return _hasAddress; }
+			set { _hasAddress = value; }
 		}
 		
 		private global::ProtoBuf.IExtension extensionObject;

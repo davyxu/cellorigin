@@ -70,6 +70,7 @@ public class CellLuaManager
 #endif
         _state.LuaSetTop(0);
 
+        LuaPB.GetTestData();
 
         LuaBinder.Bind(_state);
 

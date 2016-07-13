@@ -13,4 +13,8 @@ network.proto ^
 game.proto ^
 client.proto ^
 framework.proto ^
+descriptor.proto ^
+addressbook.proto ^
 login.proto
+
+..\tool\protoc.exe --descriptor_set_out=..\client\Assets\game.pb --proto_path "." addressbook.proto
