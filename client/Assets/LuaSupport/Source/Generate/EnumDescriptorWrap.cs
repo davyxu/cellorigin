@@ -8,7 +8,10 @@ public class EnumDescriptorWrap
 	{
 		L.BeginClass(typeof(EnumDescriptor), typeof(ProtoBase));
 		L.RegFunction("GetValueByName", GetValueByName);
+		L.RegFunction("GetValueByNumber", GetValueByNumber);
 		L.RegFunction("__tostring", Lua_ToString);
+		L.RegVar("Define", get_Define, null);
+		L.RegVar("Name", get_Name, null);
 		L.EndClass();
 	}
 
@@ -21,6 +24,24 @@ public class EnumDescriptorWrap
 			EnumDescriptor obj = (EnumDescriptor)ToLua.CheckObject(L, 1, typeof(EnumDescriptor));
 			string arg0 = ToLua.CheckString(L, 2);
 			EnumValueDescriptor o = obj.GetValueByName(arg0);
+			ToLua.PushObject(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetValueByNumber(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			EnumDescriptor obj = (EnumDescriptor)ToLua.CheckObject(L, 1, typeof(EnumDescriptor));
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			EnumValueDescriptor o = obj.GetValueByNumber(arg0);
 			ToLua.PushObject(L, o);
 			return 1;
 		}
@@ -45,6 +66,44 @@ public class EnumDescriptorWrap
 		}
 
 		return 1;
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_Define(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			EnumDescriptor obj = (EnumDescriptor)o;
+			google.protobuf.EnumDescriptorProto ret = obj.Define;
+			ToLua.PushObject(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index Define on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_Name(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			EnumDescriptor obj = (EnumDescriptor)o;
+			string ret = obj.Name;
+			LuaDLL.lua_pushstring(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index Name on a nil value" : e.Message);
+		}
 	}
 }
 

@@ -2,26 +2,27 @@
 using System;
 using LuaInterface;
 
-public class PBStreamWrap
+public class PBStreamWriterWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginClass(typeof(PBStream), typeof(System.Object));
+		L.BeginClass(typeof(PBStreamWriter), typeof(System.Object));
 		L.RegFunction("WriteInt32", WriteInt32);
 		L.RegFunction("WriteFloat32", WriteFloat32);
 		L.RegFunction("WriteBool", WriteBool);
 		L.RegFunction("WriteString", WriteString);
 		L.RegFunction("WriteMessageHeader", WriteMessageHeader);
+		L.RegFunction("Flush", Flush);
 		L.RegFunction("ToString", ToString);
 		L.RegFunction("ToArray", ToArray);
-		L.RegFunction("New", _CreatePBStream);
+		L.RegFunction("New", _CreatePBStreamWriter);
 		L.RegFunction("__tostring", Lua_ToString);
 		L.RegVar("Stream", get_Stream, null);
 		L.EndClass();
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int _CreatePBStream(IntPtr L)
+	static int _CreatePBStreamWriter(IntPtr L)
 	{
 		try
 		{
@@ -29,13 +30,13 @@ public class PBStreamWrap
 
 			if (count == 0)
 			{
-				PBStream obj = new PBStream();
+				PBStreamWriter obj = new PBStreamWriter();
 				ToLua.PushObject(L, obj);
 				return 1;
 			}
 			else
 			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to ctor method: PBStream.New");
+				return LuaDLL.luaL_throw(L, "invalid arguments to ctor method: PBStreamWriter.New");
 			}
 		}
 		catch(Exception e)
@@ -50,7 +51,7 @@ public class PBStreamWrap
 		try
 		{
 			ToLua.CheckArgsCount(L, 3);
-			PBStream obj = (PBStream)ToLua.CheckObject(L, 1, typeof(PBStream));
+			PBStreamWriter obj = (PBStreamWriter)ToLua.CheckObject(L, 1, typeof(PBStreamWriter));
 			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
 			int arg1 = (int)LuaDLL.luaL_checknumber(L, 3);
 			obj.WriteInt32(arg0, arg1);
@@ -68,7 +69,7 @@ public class PBStreamWrap
 		try
 		{
 			ToLua.CheckArgsCount(L, 3);
-			PBStream obj = (PBStream)ToLua.CheckObject(L, 1, typeof(PBStream));
+			PBStreamWriter obj = (PBStreamWriter)ToLua.CheckObject(L, 1, typeof(PBStreamWriter));
 			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
 			float arg1 = (float)LuaDLL.luaL_checknumber(L, 3);
 			obj.WriteFloat32(arg0, arg1);
@@ -86,7 +87,7 @@ public class PBStreamWrap
 		try
 		{
 			ToLua.CheckArgsCount(L, 3);
-			PBStream obj = (PBStream)ToLua.CheckObject(L, 1, typeof(PBStream));
+			PBStreamWriter obj = (PBStreamWriter)ToLua.CheckObject(L, 1, typeof(PBStreamWriter));
 			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
 			bool arg1 = LuaDLL.luaL_checkboolean(L, 3);
 			obj.WriteBool(arg0, arg1);
@@ -104,7 +105,7 @@ public class PBStreamWrap
 		try
 		{
 			ToLua.CheckArgsCount(L, 3);
-			PBStream obj = (PBStream)ToLua.CheckObject(L, 1, typeof(PBStream));
+			PBStreamWriter obj = (PBStreamWriter)ToLua.CheckObject(L, 1, typeof(PBStreamWriter));
 			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
 			string arg1 = ToLua.CheckString(L, 3);
 			obj.WriteString(arg0, arg1);
@@ -122,10 +123,26 @@ public class PBStreamWrap
 		try
 		{
 			ToLua.CheckArgsCount(L, 3);
-			PBStream obj = (PBStream)ToLua.CheckObject(L, 1, typeof(PBStream));
+			PBStreamWriter obj = (PBStreamWriter)ToLua.CheckObject(L, 1, typeof(PBStreamWriter));
 			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
 			int arg1 = (int)LuaDLL.luaL_checknumber(L, 3);
 			obj.WriteMessageHeader(arg0, arg1);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Flush(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			PBStreamWriter obj = (PBStreamWriter)ToLua.CheckObject(L, 1, typeof(PBStreamWriter));
+			obj.Flush();
 			return 0;
 		}
 		catch(Exception e)
@@ -140,7 +157,7 @@ public class PBStreamWrap
 		try
 		{
 			ToLua.CheckArgsCount(L, 1);
-			PBStream obj = (PBStream)ToLua.CheckObject(L, 1, typeof(PBStream));
+			PBStreamWriter obj = (PBStreamWriter)ToLua.CheckObject(L, 1, typeof(PBStreamWriter));
 			string o = obj.ToString();
 			LuaDLL.lua_pushstring(L, o);
 			return 1;
@@ -157,7 +174,7 @@ public class PBStreamWrap
 		try
 		{
 			ToLua.CheckArgsCount(L, 1);
-			PBStream obj = (PBStream)ToLua.CheckObject(L, 1, typeof(PBStream));
+			PBStreamWriter obj = (PBStreamWriter)ToLua.CheckObject(L, 1, typeof(PBStreamWriter));
 			byte[] o = obj.ToArray();
 			ToLua.Push(L, o);
 			return 1;
@@ -193,7 +210,7 @@ public class PBStreamWrap
 		try
 		{
 			o = ToLua.ToObject(L, 1);
-			PBStream obj = (PBStream)o;
+			PBStreamWriter obj = (PBStreamWriter)o;
 			System.IO.MemoryStream ret = obj.Stream;
 			ToLua.PushObject(L, ret);
 			return 1;

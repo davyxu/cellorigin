@@ -69,7 +69,7 @@ public class UnityEngine_ColliderWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 4);
+			ToLua.CheckArgsCount(L, 3);
 			UnityEngine.Collider obj = (UnityEngine.Collider)ToLua.CheckObject(L, 1, typeof(UnityEngine.Collider));
 			UnityEngine.Ray arg0 = ToLua.ToRay(L, 2);
 			UnityEngine.RaycastHit arg1;

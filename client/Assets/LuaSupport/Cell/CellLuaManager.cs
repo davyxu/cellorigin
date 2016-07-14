@@ -73,7 +73,7 @@ public class CellLuaManager
         LuaBinder.Bind(_state);
 
         _state.Start();        
-        _state.AddSearchPath(Application.dataPath + "/LuaSupport/Cell");
+        _state.AddSearchPath(Application.dataPath + "/LuaSupport");
 
         _state.DoFile("Main.lua");
 

@@ -825,6 +825,23 @@ public static class ToLuaExport
         return param.GetCustomAttributes(typeof(ParamArrayAttribute), false).Length > 0;
     }
 
+    // by davyxu 入参数量
+    static int GetInParamCount( ParameterInfo[] paramInfos )
+    {
+        int count = 0;
+        for (int i = 0; i < paramInfos.Length;i++ )
+        {
+            var p = paramInfos[i];
+
+            if (p.IsOut)
+                continue;
+
+            count++;
+        }
+
+        return count;
+    }
+
     static void GenFunction(MethodInfo m)
     {
         string name = GetMethodName(m);
@@ -850,7 +867,8 @@ public static class ToLuaExport
 
         if (!haveParams)
         {
-            int count = paramInfos.Length + offset;
+            // by davyxu 只计算入参数量
+            int count = GetInParamCount(paramInfos) + offset;
             sb.AppendFormat("\t\t\tToLua.CheckArgsCount(L, {0});\r\n", count);
         }
         else

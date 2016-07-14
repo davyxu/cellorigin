@@ -10,7 +10,8 @@ public static class LuaBinder
 		float t = Time.realtimeSinceStartup;
 		L.BeginModule(null);
 		DebuggerWrap.Register(L);
-		PBStreamWrap.Register(L);
+		PBStreamWriterWrap.Register(L);
+		PBStreamReaderWrap.Register(L);
 		LuaPBWrap.Register(L);
 		DescriptorPoolWrap.Register(L);
 		DescriptorWrap.Register(L);

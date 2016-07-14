@@ -26,6 +26,9 @@ Class.Define("LoginView", {
 		
 		LuaPB.TestStream(stream)
 		
+		local outdata = luapb_decode( "tutorial.Person", LuaPB.GetTestData( ) )
+		dump( outdata )
+		
 		--[[
 		
 		LoginPeer:Connect( "127.0.0.1:8101" )

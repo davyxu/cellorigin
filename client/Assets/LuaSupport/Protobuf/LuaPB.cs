@@ -4,18 +4,38 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using google.protobuf;
+using Google.Protobuf;
 
 public class LuaPB
 {
     public static string GetTestData( )
     {
+        var p = new tutorial.Person();
+        p.name = "hello";
+        p.test.Add(1);
+        p.test.Add(2);
+        p.phone.Add(new tutorial.PhoneNumber
+        {
+            number = "789",
+            type = tutorial.PhoneType.WORK,
+        });
 
-       // var s = Encoding.Default.GetString(stream.ToArray());        
+        p.phone.Add(new tutorial.PhoneNumber
+        {
+            number = "456",
 
-        return default(string);
+            type = tutorial.PhoneType.HOME,
+        });
+
+        var stream = new MemoryStream();
+        ProtoBuf.Serializer.Serialize(stream, p);
+
+        var s = Encoding.Default.GetString(stream.ToArray());        
+
+        return s;
     }
 
-    public static void TestStream( PBStream s )
+    public static void TestStream( PBStreamWriter s )
     {
         var p = new tutorial.Person();
         p.name = "hello";
@@ -87,38 +107,17 @@ public class LuaPB
 
     public static int TagSize( int fieldNumber )
     {
-        return VarintSize32((uint)(fieldNumber << kTagTypeBits));
+        return CodedOutputStream.ComputeTagSize(fieldNumber);        
     }
 
-
-    const int kTagTypeBits = 3;
+    
     public static int VarintSize32( uint value )
     {
-        if (value < (1 << 7))
-        {
-            return 1;
-        }
-        else if (value < (1 << 14))
-        {
-            return 2;
-        }
-        else if (value < (1 << 21))
-        {
-            return 3;
-        }
-        else if (value < (1 << 28))
-        {
-            return 4;
-        }
-
-        return 5;
+        return CodedOutputStream.ComputeRawVarint32Size(value);
     }
 
     public static int Int32Size( int value )
     {
-        if (value < 0)
-            return 10;
-
-        return VarintSize32((uint)value);
+        return CodedOutputStream.ComputeInt32Size(value);
     }    
 }

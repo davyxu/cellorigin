@@ -389,7 +389,7 @@ public class UnityEngine_AudioSourceWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 3);
+			ToLua.CheckArgsCount(L, 2);
 			UnityEngine.AudioSource obj = (UnityEngine.AudioSource)ToLua.CheckObject(L, 1, typeof(UnityEngine.AudioSource));
 			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
 			float arg1;

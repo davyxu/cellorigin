@@ -39,7 +39,7 @@ public class LuaPBWrap
 		try
 		{
 			ToLua.CheckArgsCount(L, 1);
-			PBStream arg0 = (PBStream)ToLua.CheckObject(L, 1, typeof(PBStream));
+			PBStreamWriter arg0 = (PBStreamWriter)ToLua.CheckObject(L, 1, typeof(PBStreamWriter));
 			LuaPB.TestStream(arg0);
 			return 0;
 		}

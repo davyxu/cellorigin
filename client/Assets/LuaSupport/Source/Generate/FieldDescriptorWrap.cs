@@ -11,6 +11,7 @@ public class FieldDescriptorWrap
 		L.RegVar("Define", get_Define, null);
 		L.RegVar("Type", get_Type, null);
 		L.RegVar("Number", get_Number, null);
+		L.RegVar("Name", get_Name, null);
 		L.RegVar("MessageType", get_MessageType, null);
 		L.RegVar("EnumType", get_EnumType, null);
 		L.RegVar("IsRepeated", get_IsRepeated, null);
@@ -88,6 +89,25 @@ public class FieldDescriptorWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index Number on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_Name(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			FieldDescriptor obj = (FieldDescriptor)o;
+			string ret = obj.Name;
+			LuaDLL.lua_pushstring(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index Name on a nil value" : e.Message);
 		}
 	}
 

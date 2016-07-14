@@ -7,18 +7,24 @@ using google.protobuf;
 
 public class FileDescriptor : ProtoBase
 {
-    FileDescriptorProto _def;
+    public FileDescriptorProto Define { get; private set; }
 
     [LuaInterface.NoToLuaAttribute]
     public FileDescriptor(DescriptorPool pool, ProtoBase parent, FileDescriptorProto def)        
-    {   
-        _def = def;
+    {
+        Define = def;
 
         base.Init(pool, parent);
     }
 
     protected override string GetRawName()
     {
-        return _def.package;
+        return Define.package;
     }
+
+    public string Name
+    {
+        get { return Define.name; }
+    }
+
 }

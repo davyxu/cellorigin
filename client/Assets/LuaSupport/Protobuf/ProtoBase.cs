@@ -6,7 +6,6 @@ using System.Text;
 
 public class ProtoBase
 {
-    DescriptorPool _pool;
     ProtoBase _parent;    
     protected void Init( DescriptorPool pool, ProtoBase parent )
     {

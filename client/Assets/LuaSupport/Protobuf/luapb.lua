@@ -1,3 +1,6 @@
+local LuaPB_TagSize = LuaPB.TagSize
+local LuaPB_VarintSize32 = LuaPB.VarintSize32
+
 local FieldType_Float = 2
 local FieldType_Int32 = 5
 local FieldType_Bool = 8
@@ -20,25 +23,93 @@ local fieldSizeMapper = {
 	[FieldType_String] = function( str )
 		local len = #str
 
-		return LuaPB.VarintSize32( len ) + len
+		return LuaPB_VarintSize32( len ) + len
 	end,
 }
 
 local fieldWriteMapper = {
 
 	-- float
-	[FieldType_Float] = PBStream.WriteFloat32,
+	[FieldType_Float] = PBStreamWriter.WriteFloat32,
 
 	-- int32
-	[FieldType_Int32] = PBStream.WriteInt32,
+	[FieldType_Int32] = PBStreamWriter.WriteInt32,
 
 	-- bool
-	[FieldType_Bool] = PBStream.WriteBool,
+	[FieldType_Bool] = PBStreamWriter.WriteBool,
 
 	-- string
-	[FieldType_String] = PBStream.WriteString,
+	[FieldType_String] = PBStreamWriter.WriteString,
 
 }
+
+local fieldReaderMapper = {
+
+	-- float
+	[FieldType_Float] = PBStreamReader.ReadFloat,
+
+	-- int32
+	[FieldType_Int32] = PBStreamReader.ReadInt32,
+
+	-- bool
+	[FieldType_Bool] = PBStreamReader.ReadBool,
+
+	-- string
+	[FieldType_String] = PBStreamReader.ReadString,
+
+}
+
+local function ReadValue( stream, fd )
+
+	if fd.Type == FieldType_Enum then
+	
+		local et = fd.EnumType
+		
+		if et ~= nil then
+		
+			local ok, number = stream:ReadInt32( )
+			
+			if ok then		
+				
+				local evd = et:GetValueByNumber( number )
+				
+				if evd == nil then
+					return ""
+				end
+		
+				return evd.Name
+				
+			else
+				return 0
+			
+			end
+		
+		
+		end
+	
+	else
+	
+		local v = fieldReaderMapper[fd.Type]
+	
+		local typeOfV = type(v)
+
+		if typeOfV == "function" then
+					
+			local ok, value = v( stream  )
+			
+			if ok then
+				return value
+			else
+				error("error read value: ".. fd.Name)
+			end
+			
+		else
+			error("unknown field type:" .. fd.Type )
+		end
+		
+	end
+
+end
 
 local function WriteValue( stream, fd, value )
 
@@ -107,6 +178,7 @@ local function FieldSize( fd, value )
 end
 
 
+
 local function RawByteSize( msgD, t )
 
 	local size = 0
@@ -123,16 +195,16 @@ local function RawByteSize( msgD, t )
 			
 					for listK, listV in ipairs(v) do
 					
-						size = size + LuaPB.TagSize( fd.Number )
+						size = size + LuaPB_TagSize( fd.Number )
 						
 						local structSize = RawByteSize( fd.MessageType, listV )
-						size = size + LuaPB.VarintSize32( structSize ) + structSize
+						size = size + LuaPB_VarintSize32( structSize ) + structSize
 					
 					end
 					
 				else
 				
-					size = size + LuaPB.TagSize( fd.Number )
+					size = size + LuaPB_TagSize( fd.Number )
 					size = size + RawByteSize( fd.MessageType, v )
 				end
 			
@@ -142,13 +214,13 @@ local function RawByteSize( msgD, t )
 				if fd.IsRepeated then
 				
 					for listK, listV in ipairs(v) do
-						size = size + LuaPB.TagSize( fd.Number )
+						size = size + LuaPB_TagSize( fd.Number )
 						size = size + FieldSize( fd, listV )
 					end
 					
 				else
 				
-					size = size + LuaPB.TagSize( fd.Number )
+					size = size + LuaPB_TagSize( fd.Number )
 					size = size + FieldSize( fd, v )
 				
 				end
@@ -218,6 +290,77 @@ local function RawEncode( stream, msgD, t )
 end
 
 
+local function RawDecode( msgD, stream )
+
+	local tab = {}
+	
+	while true do
+	
+		local fd = stream:ReadField( msgD )
+		
+		if fd == nil then
+			break
+		end
+	
+
+		if fd.Type == FieldType_Message then
+		
+			local ok, limit = stream:BeginMessage( )
+			
+			local value = RawDecode( fd.MessageType, stream )
+		
+			stream:EndMessage( limit )
+		
+			if fd.IsRepeated then
+			
+				local list = tab[fd.Name]
+				
+				if type(list) == "table" then
+				
+					table.insert(list, value )
+				
+					tab[fd.Name] = list
+				
+				else
+					tab[fd.Name] = {value}
+				end
+				
+			
+			else
+				tab[fd.Name] = value
+			
+			end
+		
+		
+		else
+		
+			local value = ReadValue( stream, fd )
+		
+			if fd.IsRepeated then
+			
+				local list = tab[fd.Name]
+				
+				if type(list) == "table" then
+				
+					table.insert(list, value )
+				
+					tab[fd.Name] = list
+				
+				else
+					tab[fd.Name] = {value}
+				end
+			else
+			
+				tab[fd.Name] = value
+			end
+		
+		end
+	
+	end
+	
+	return tab
+
+end
 
 function luapb_bytesize( name,  t )
 
@@ -235,11 +378,25 @@ function luapb_encode( name, t )
 	
 	local msgD = pool:GetMessage( name )
 
-	local stream = PBStream.New()
+	local stream = PBStreamWriter.New()
 	
 	RawEncode( stream, msgD, t )
 	
+	stream:Flush()
+	
 	return stream
 	
+end
+
+function luapb_decode( name, str )
+
+	local pool = LuaPB.GetPool()
+	
+	local msgD = pool:GetMessage( name )
+	
+	local stream = PBStreamReader.New( str )
+	
+	return RawDecode( msgD, stream )
+
 end
 

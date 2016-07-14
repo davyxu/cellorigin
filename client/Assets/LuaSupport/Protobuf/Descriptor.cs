@@ -7,9 +7,10 @@ using google.protobuf;
 
 public class Descriptor : ProtoBase
 {
-    DescriptorProto _def;
+    public DescriptorProto Define { get; private set; }
 
-    Dictionary<string, FieldDescriptor> _fieldMap = new Dictionary<string, FieldDescriptor>();
+    Dictionary<string, FieldDescriptor> _fieldByNameMap = new Dictionary<string, FieldDescriptor>();
+    Dictionary<int, FieldDescriptor> _fieldByFieldNumberMap = new Dictionary<int, FieldDescriptor>();
 
     Dictionary<string, Descriptor> _nestedMsgMap = new Dictionary<string, Descriptor>();
 
@@ -18,31 +19,32 @@ public class Descriptor : ProtoBase
     [LuaInterface.NoToLuaAttribute]
     public Descriptor(DescriptorPool pool, ProtoBase parent, DescriptorProto def)        
     {
-        _def = def;
+        Define = def;
 
         base.Init(pool, parent);
 
-        for ( int i = 0;i< _def.field.Count;i++)
+        for ( int i = 0;i< def.field.Count;i++)
         {
-            var fieldDef = _def.field[i];
+            var fieldDef = def.field[i];
 
             var fieldD = new FieldDescriptor( this, fieldDef );
 
-            _fieldMap.Add(fieldDef.name, fieldD);
+            _fieldByNameMap.Add(fieldDef.name, fieldD);
+            _fieldByFieldNumberMap.Add(fieldD.Number, fieldD);
         }
 
-        for (int i = 0; i < _def.nested_type.Count; i++)
+        for (int i = 0; i < def.nested_type.Count; i++)
         {
-            var nestedDef = _def.nested_type[i];
+            var nestedDef = def.nested_type[i];
 
             var msgD = new Descriptor(pool, this, nestedDef);
 
             _nestedMsgMap.Add(nestedDef.name, msgD);
         }
 
-        for (int i = 0; i < _def.enum_type.Count; i++)
+        for (int i = 0; i < def.enum_type.Count; i++)
         {
-            var nestedDef = _def.enum_type[i];
+            var nestedDef = def.enum_type[i];
 
             var enumD = new EnumDescriptor(pool, this, nestedDef);
 
@@ -53,7 +55,18 @@ public class Descriptor : ProtoBase
     public FieldDescriptor GetFieldByName( string name )
     {
         FieldDescriptor ret;
-        if (_fieldMap.TryGetValue(name, out ret))
+        if (_fieldByNameMap.TryGetValue(name, out ret))
+        {
+            return ret;
+        }
+
+        return null;
+    }
+
+    public FieldDescriptor GetFieldByFieldNumber(int fieldNumber )
+    {
+        FieldDescriptor ret;
+        if (_fieldByFieldNumberMap.TryGetValue(fieldNumber, out ret))
         {
             return ret;
         }
@@ -86,6 +99,12 @@ public class Descriptor : ProtoBase
 
     protected override string GetRawName()
     {
-        return _def.name;
+        return Define.name;
     }
+
+    public string Name
+    {
+        get { return Define.name; }
+    }
+
 }

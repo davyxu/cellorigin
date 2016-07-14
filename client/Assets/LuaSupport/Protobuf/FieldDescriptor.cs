@@ -28,6 +28,11 @@ public class FieldDescriptor
         get { return Define.number; }
     }
 
+    public string Name
+    {
+        get { return Define.name; }
+    }
+
     public Descriptor MessageType
     {
         get { 

@@ -68,7 +68,8 @@ public static class CustomSettings
         _GT(typeof(LineRenderer)).AddExtendType(typeof(DG.Tweening.ShortcutExtensions)),
         _GT(typeof(TrailRenderer)).AddExtendType(typeof(DG.Tweening.ShortcutExtensions)),  */ 
                            
-        _GT(typeof(PBStream)),
+        _GT(typeof(PBStreamWriter)),
+        _GT(typeof(PBStreamReader)),
         _GT(typeof(LuaPB)),
         _GT(typeof(DescriptorPool)),
         _GT(typeof(Descriptor)),
