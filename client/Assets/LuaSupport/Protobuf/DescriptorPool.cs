@@ -7,9 +7,9 @@ using google.protobuf;
 
 public class DescriptorPool
 {
-    Dictionary<string, Descriptor> _msgMap = new Dictionary<string, Descriptor>();
+    Dictionary<string, Descriptor> _msgByName = new Dictionary<string, Descriptor>();
 
-    Dictionary<string, EnumDescriptor> _enumMap = new Dictionary<string, EnumDescriptor>();
+    Dictionary<string, EnumDescriptor> _enumByName = new Dictionary<string, EnumDescriptor>();
 
     [LuaInterface.NoToLuaAttribute]
     public void Init( FileDescriptorSet fileset )
@@ -20,20 +20,23 @@ public class DescriptorPool
 
             var fileD = new FileDescriptor(this, null, fileDef);
 
+
+            // 全局消息
             for (int f = 0; f < fileDef.message_type.Count; f++)
             {
                 var def = fileDef.message_type[f];
 
                 var msgD = new Descriptor(this, fileD, def);
-                _msgMap.Add(msgD.FullName, msgD);
+                _msgByName.Add(msgD.FullName, msgD);
             }
 
+            // 全局枚举
             for (int f = 0; f < fileDef.enum_type.Count; f++)
             {
                 var def = fileDef.enum_type[f];
 
                 var enumD = new EnumDescriptor(this, fileD, def);
-                _enumMap.Add(enumD.FullName, enumD);
+                _enumByName.Add(enumD.FullName, enumD);
             }
         }
     }
@@ -41,7 +44,7 @@ public class DescriptorPool
     public Descriptor GetMessage( string name )
     {
         Descriptor ret;
-        if ( _msgMap.TryGetValue( name, out ret ) )
+        if ( _msgByName.TryGetValue( name, out ret ) )
         {
             return ret;
         }
@@ -52,7 +55,7 @@ public class DescriptorPool
     public EnumDescriptor GetEnum(string name)
     {
         EnumDescriptor ret;
-        if (_enumMap.TryGetValue(name, out ret))
+        if (_enumByName.TryGetValue(name, out ret))
         {
             return ret;
         }

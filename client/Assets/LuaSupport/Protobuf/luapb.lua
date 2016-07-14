@@ -1,5 +1,6 @@
 local LuaPB_TagSize = LuaPB.TagSize
 local LuaPB_VarintSize32 = LuaPB.VarintSize32
+local LuaPB_Int32Size = LuaPB.Int32Size
 
 local FieldType_Float = 2
 local FieldType_Int32 = 5
@@ -120,6 +121,10 @@ local function WriteValue( stream, fd, value )
 		if et ~= nil then
 		
 			local evd = et:GetValueByName( value )
+			
+			if evd == nil then
+				error(string.format("can not found enum value: %s in %s", value, et.Name)
+			end
 	
 			stream:WriteInt32( fd.Number, evd.Number )
 		
@@ -151,8 +156,12 @@ local function FieldSize( fd, value )
 		if et ~= nil then
 		
 			local evd = et:GetValueByName( value )
+			
+			if evd == nil then
+				error(string.format("can not found enum value: %s in %s", value, et.Name)
+			end
 	
-			return LuaPB.Int32Size( evd.Number )
+			return LuaPB_Int32Size( evd.Number )
 		
 		end
 		
@@ -362,6 +371,7 @@ local function RawDecode( msgD, stream )
 
 end
 
+-- 计算结构序列化后的大小
 function luapb_bytesize( name,  t )
 
 	local pool = LuaPB.GetPool()
@@ -372,6 +382,7 @@ function luapb_bytesize( name,  t )
 end
 
 
+-- 传入table, 返回PBStreamWriter
 function luapb_encode( name, t )
 
 	local pool = LuaPB.GetPool()
@@ -388,6 +399,7 @@ function luapb_encode( name, t )
 	
 end
 
+-- 传入字符串, 返回table
 function luapb_decode( name, str )
 
 	local pool = LuaPB.GetPool()

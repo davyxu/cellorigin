@@ -14,8 +14,10 @@ public class ProtoBase
 
         var nameList = new List<string>();
 
+        // 放入自己
         nameList.Add(GetRawName());
 
+        // 从今到古依次存入父级名字
         var p = this;
         while (p != null)
         {
@@ -31,6 +33,7 @@ public class ProtoBase
 
         var sb = new StringBuilder();
 
+        // 逆向建成.分割的字符串
         for (int i = nameList.Count - 1; i >= 0; i--)
         {
             sb.Append(nameList[i]);
