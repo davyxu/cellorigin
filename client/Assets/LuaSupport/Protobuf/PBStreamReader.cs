@@ -65,6 +65,57 @@ public class PBStreamReader
         return true;
     }
 
+    public bool ReadUInt32(out uint value)
+    {
+
+        try
+        {
+            value = _stream.ReadUInt32();
+        }
+        catch (Exception)
+        {
+            value = 0;
+            return false;
+        }
+
+        return true;
+    }
+
+    public bool ReadInt64(out string value)
+    {
+
+        try
+        {
+            var number = _stream.ReadInt64();
+            value = number.ToString();            
+        }
+        catch (Exception)
+        {
+            value = default(string);
+            return false;
+        }
+
+        return true;
+    }
+
+    public bool ReadUInt64(out string value)
+    {
+
+        try
+        {
+            var number = _stream.ReadUInt64();
+            value = number.ToString();
+        }
+        catch (Exception)
+        {
+            value = default(string);
+            return false;
+        }
+
+        return true;
+    }
+
+
     public bool ReadFloat(out float value)
     {
         try

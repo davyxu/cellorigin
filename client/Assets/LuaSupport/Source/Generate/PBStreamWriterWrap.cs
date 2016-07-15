@@ -8,6 +8,9 @@ public class PBStreamWriterWrap
 	{
 		L.BeginClass(typeof(PBStreamWriter), typeof(System.Object));
 		L.RegFunction("WriteInt32", WriteInt32);
+		L.RegFunction("WriteUInt32", WriteUInt32);
+		L.RegFunction("WriteInt64", WriteInt64);
+		L.RegFunction("WriteUInt64", WriteUInt64);
 		L.RegFunction("WriteFloat32", WriteFloat32);
 		L.RegFunction("WriteBool", WriteBool);
 		L.RegFunction("WriteString", WriteString);
@@ -55,6 +58,60 @@ public class PBStreamWriterWrap
 			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
 			int arg1 = (int)LuaDLL.luaL_checknumber(L, 3);
 			obj.WriteInt32(arg0, arg1);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int WriteUInt32(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			PBStreamWriter obj = (PBStreamWriter)ToLua.CheckObject(L, 1, typeof(PBStreamWriter));
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			uint arg1 = (uint)LuaDLL.luaL_checknumber(L, 3);
+			obj.WriteUInt32(arg0, arg1);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int WriteInt64(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			PBStreamWriter obj = (PBStreamWriter)ToLua.CheckObject(L, 1, typeof(PBStreamWriter));
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			string arg1 = ToLua.CheckString(L, 3);
+			obj.WriteInt64(arg0, arg1);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int WriteUInt64(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			PBStreamWriter obj = (PBStreamWriter)ToLua.CheckObject(L, 1, typeof(PBStreamWriter));
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			string arg1 = ToLua.CheckString(L, 3);
+			obj.WriteUInt64(arg0, arg1);
 			return 0;
 		}
 		catch(Exception e)

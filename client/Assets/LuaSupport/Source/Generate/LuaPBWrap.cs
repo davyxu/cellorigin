@@ -14,6 +14,9 @@ public class LuaPBWrap
 		L.RegFunction("TagSize", TagSize);
 		L.RegFunction("VarintSize32", VarintSize32);
 		L.RegFunction("Int32Size", Int32Size);
+		L.RegFunction("UInt32Size", UInt32Size);
+		L.RegFunction("Int64Size", Int64Size);
+		L.RegFunction("UInt64Size", UInt64Size);
 		L.EndStaticLibs();
 	}
 
@@ -123,6 +126,57 @@ public class LuaPBWrap
 			ToLua.CheckArgsCount(L, 1);
 			int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
 			int o = LuaPB.Int32Size(arg0);
+			LuaDLL.lua_pushinteger(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UInt32Size(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			uint arg0 = (uint)LuaDLL.luaL_checknumber(L, 1);
+			int o = LuaPB.UInt32Size(arg0);
+			LuaDLL.lua_pushinteger(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Int64Size(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			string arg0 = ToLua.CheckString(L, 1);
+			int o = LuaPB.Int64Size(arg0);
+			LuaDLL.lua_pushinteger(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UInt64Size(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			string arg0 = ToLua.CheckString(L, 1);
+			int o = LuaPB.UInt64Size(arg0);
 			LuaDLL.lua_pushinteger(L, o);
 			return 1;
 		}

@@ -3,11 +3,15 @@ local LuaPB_VarintSize32 = LuaPB.VarintSize32
 local LuaPB_Int32Size = LuaPB.Int32Size
 
 local FieldType_Float = 2
+local FieldType_Int64 = 3
+local FieldType_UInt64 = 4
 local FieldType_Int32 = 5
 local FieldType_Bool = 8
 local FieldType_String = 9
 local FieldType_Message = 11
+local FieldType_UInt32 = 13
 local FieldType_Enum = 14
+
 
 local fieldSizeMapper = {
 
@@ -16,6 +20,17 @@ local fieldSizeMapper = {
 
 	-- int32
 	[FieldType_Int32] = LuaPB.Int32Size,
+	
+	-- uint32
+	[FieldType_UInt32] = LuaPB.UInt32Size,
+	
+	-- int64
+	[FieldType_Int64] = LuaPB.Int64Size,
+	
+	-- uint64
+	[FieldType_UInt64] = LuaPB.UInt64Size,
+
+	
 
 	-- bool
 	[FieldType_Bool] = 1,
@@ -35,6 +50,15 @@ local fieldWriteMapper = {
 
 	-- int32
 	[FieldType_Int32] = PBStreamWriter.WriteInt32,
+	
+	-- uint32
+	[FieldType_UInt32] = PBStreamWriter.WriteUInt32,
+	
+	-- int64
+	[FieldType_Int64] = PBStreamWriter.WriteInt64,
+	
+	-- uint64
+	[FieldType_UInt64] = PBStreamWriter.WriteUInt64,
 
 	-- bool
 	[FieldType_Bool] = PBStreamWriter.WriteBool,
@@ -51,6 +75,15 @@ local fieldReaderMapper = {
 
 	-- int32
 	[FieldType_Int32] = PBStreamReader.ReadInt32,
+	
+	-- uint32
+	[FieldType_UInt32] = PBStreamReader.ReadUInt32,
+	
+	-- int64
+	[FieldType_Int64] = PBStreamReader.ReadInt64,
+	
+	-- uint64
+	[FieldType_UInt64] = PBStreamReader.ReadUInt64,
 
 	-- bool
 	[FieldType_Bool] = PBStreamReader.ReadBool,
@@ -218,7 +251,7 @@ local function RawByteSize( msgD, t )
 				end
 			
 			else 
-				-- ÆÕÍ¨Öµ
+				-- æ™®é€šå€¼
 				
 				if fd.IsRepeated then
 				
@@ -275,7 +308,7 @@ local function RawEncode( stream, msgD, t )
 				end
 			
 			else 
-				-- ÆÕÍ¨Öµ
+				-- æ™®é€šå€¼
 				
 				if fd.IsRepeated then
 				
@@ -371,7 +404,7 @@ local function RawDecode( msgD, stream )
 
 end
 
--- ¼ÆËã½á¹¹ĞòÁĞ»¯ºóµÄ´óĞ¡
+-- è®¡ç®—ç»“æ„åºåˆ—åŒ–åçš„å¤§å°
 function luapb_bytesize( name,  t )
 
 	local pool = LuaPB.GetPool()
@@ -382,7 +415,7 @@ function luapb_bytesize( name,  t )
 end
 
 
--- ´«Èëtable, ·µ»ØPBStreamWriter
+-- ä¼ å…¥table, è¿”å›PBStreamWriter
 function luapb_encode( name, t )
 
 	local pool = LuaPB.GetPool()
@@ -399,7 +432,7 @@ function luapb_encode( name, t )
 	
 end
 
--- ´«Èë×Ö·û´®, ·µ»Øtable
+-- ä¼ å…¥å­—ç¬¦ä¸², è¿”å›table
 function luapb_decode( name, str )
 
 	local pool = LuaPB.GetPool()

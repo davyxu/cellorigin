@@ -9,6 +9,9 @@ public class PBStreamReaderWrap
 		L.BeginClass(typeof(PBStreamReader), typeof(System.Object));
 		L.RegFunction("ReadField", ReadField);
 		L.RegFunction("ReadInt32", ReadInt32);
+		L.RegFunction("ReadUInt32", ReadUInt32);
+		L.RegFunction("ReadInt64", ReadInt64);
+		L.RegFunction("ReadUInt64", ReadUInt64);
 		L.RegFunction("ReadFloat", ReadFloat);
 		L.RegFunction("ReadBool", ReadBool);
 		L.RegFunction("ReadString", ReadString);
@@ -73,6 +76,63 @@ public class PBStreamReaderWrap
 			bool o = obj.ReadInt32(out arg0);
 			LuaDLL.lua_pushboolean(L, o);
 			LuaDLL.lua_pushinteger(L, arg0);
+			return 2;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ReadUInt32(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			PBStreamReader obj = (PBStreamReader)ToLua.CheckObject(L, 1, typeof(PBStreamReader));
+			uint arg0;
+			bool o = obj.ReadUInt32(out arg0);
+			LuaDLL.lua_pushboolean(L, o);
+			LuaDLL.lua_pushnumber(L, arg0);
+			return 2;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ReadInt64(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			PBStreamReader obj = (PBStreamReader)ToLua.CheckObject(L, 1, typeof(PBStreamReader));
+			string arg0 = null;
+			bool o = obj.ReadInt64(out arg0);
+			LuaDLL.lua_pushboolean(L, o);
+			LuaDLL.lua_pushstring(L, arg0);
+			return 2;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ReadUInt64(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			PBStreamReader obj = (PBStreamReader)ToLua.CheckObject(L, 1, typeof(PBStreamReader));
+			string arg0 = null;
+			bool o = obj.ReadUInt64(out arg0);
+			LuaDLL.lua_pushboolean(L, o);
+			LuaDLL.lua_pushstring(L, arg0);
 			return 2;
 		}
 		catch(Exception e)

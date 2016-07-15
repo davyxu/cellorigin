@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Text;
 using google.protobuf;
 using Google.Protobuf;
+using System;
 
 public class LuaPB
 {
@@ -119,5 +118,24 @@ public class LuaPB
     public static int Int32Size( int value )
     {
         return CodedOutputStream.ComputeInt32Size(value);
-    }    
+    }
+
+    public static int UInt32Size(uint value)
+    {
+        return CodedOutputStream.ComputeUInt32Size(value);
+    }
+
+    public static int Int64Size(string value)
+    {
+        long number = 0;
+        Int64.TryParse(value, out number);
+        return CodedOutputStream.ComputeInt64Size(number);
+    }
+
+    public static int UInt64Size(string value)
+    {
+        ulong number = 0;
+        UInt64.TryParse(value, out number);
+        return CodedOutputStream.ComputeUInt64Size(number);
+    }
 }
