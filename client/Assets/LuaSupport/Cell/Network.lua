@@ -1,8 +1,9 @@
 Network ={}
 
-function Network.Init( pbfile )
+function Network.Init( )
 
 	--protobuf.register_file(pbfile)
+	LuaPB.RegisterFile("Assets/game.pb")
 	
 	LoginPeer = PeerManager.Instance:Get( "login" )
 	
@@ -12,6 +13,7 @@ end
 
 function Network.DecodeRecv( peer, msgName, stream, callback )
 
+
 	if stream == nil then
 
 		print(string.format("[%s] #recv %s", peer.Name, msgName ) )
@@ -20,14 +22,7 @@ function Network.DecodeRecv( peer, msgName, stream, callback )
 	
 	else
 	
-		local msg, err = protobuf.decode( msgName, stream )
-	
-		if msg == false then
-			logError(msgName .. err)
-			return
-		end
-		
-		dump( msg )
+		local msg = luapb_decode( msgName, stream )
 		
 		print(string.format("[%s] #recv %s|%s", peer.Name, msgName, SeralizeTable( msg ) ) )
 		
@@ -39,11 +34,11 @@ end
 
 local function EncodeSend( peer, msgName, msgTable )
 
-	 local code = protobuf.encode(msgName, msgTable)
+	 local stream = luapb_encode(msgName, msgTable)
 	 
-	 print(string.format("[%s] #send %s|%s", peer.Name, msgName, SeralizeTable( msg ) ) )
+	 print(string.format("[%s] #send %s|%s", peer.Name, msgName, SeralizeTable( msgmsgTable) ) )
 	 
-	 peer:SendMessage( msgName, code )
+	 peer:SendMessage( msgName, stream )
 
 end
 

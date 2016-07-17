@@ -186,7 +186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: login
   Address: 127.0.0.1:8101
-  DebugMessage: 1
+  DebugMessage: 0
 --- !u!114 &881399911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,7 +200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: game
   Address: 
-  DebugMessage: 1
+  DebugMessage: 0
 --- !u!1001 &931129645
 Prefab:
   m_ObjectHideFlags: 0
@@ -377,6 +377,7 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0

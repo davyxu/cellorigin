@@ -13,6 +13,14 @@ public class CellLuaManager
 
     static int _ref;
 
+    public static LuaState State
+    {
+        get{
+            return _state;
+        }
+        
+    }
+
     public static void Attach( )
     {
         if ( _ref == 0 )
@@ -99,7 +107,7 @@ public class CellLuaManager
             }
             else
             {
-                _decodeRecvMethod.Call(peer, msgName, new LuaByteBuffer(stream.ToArray()), func);            
+                _decodeRecvMethod.Call(peer, msgName, new PBStreamReader(stream.ToArray()), func);            
             }
             
         }

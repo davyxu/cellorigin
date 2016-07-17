@@ -9,28 +9,7 @@ Class.Define("LoginView", {
 			
 		self.presenter:Init( self )
 		
-		LuaPB.RegisterFile("game.pb")
-		
-		-- local data = LuaPB.GetTestData()
-		
-		local stream = luapb_encode( "tutorial.Person", {
-			name = "hello",
-			test = {1, 2},	
-			phone = {
-	
-				{number= "789" , type = "WORK" },
 
-				{number= "456" , type = "HOME" },
-			},
-		})
-		
-		LuaPB.TestStream(stream)
-		
-		local outdata = luapb_decode( "tutorial.Person", LuaPB.GetTestData( ) )
-		dump( outdata )
-		
-		--[[
-		
 		LoginPeer:Connect( "127.0.0.1:8101" )
 		
 		LoginPeer:RegisterMessage("gamedef.PeerConnected", function( )
@@ -45,12 +24,11 @@ Class.Define("LoginView", {
 		
 		LoginPeer:RegisterMessage("gamedef.LoginACK", function( msg )
 		
-			print("loginACK",msg.Result)
+			print("loginACK", msg.Result)
 		
 		end )
 		
-		
-		]]
+
 	end,
 	
 	

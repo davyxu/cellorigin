@@ -12,6 +12,29 @@ local FieldType_Message = 11
 local FieldType_UInt32 = 13
 local FieldType_Enum = 14
 
+local fieldDefaultMapper = {
+
+	[FieldType_Float] = 0,
+
+	-- int32
+	[FieldType_Int32] = 0,
+	
+	-- uint32
+	[FieldType_UInt32] = 0,
+	
+	-- int64
+	[FieldType_Int64] = "",
+	
+	-- uint64
+	[FieldType_UInt64] = "",
+
+	-- bool
+	[FieldType_Bool] = false,
+
+	-- string
+	[FieldType_String] = "",
+}
+
 
 local fieldSizeMapper = {
 
@@ -156,7 +179,7 @@ local function WriteValue( stream, fd, value )
 			local evd = et:GetValueByName( value )
 			
 			if evd == nil then
-				error(string.format("can not found enum value: %s in %s", value, et.Name)
+				error(string.format("can not found enum value: %s in %s", value, et.Name) )
 			end
 	
 			stream:WriteInt32( fd.Number, evd.Number )
@@ -191,7 +214,7 @@ local function FieldSize( fd, value )
 			local evd = et:GetValueByName( value )
 			
 			if evd == nil then
-				error(string.format("can not found enum value: %s in %s", value, et.Name)
+				error(string.format("can not found enum value: %s in %s", value, et.Name) )
 			end
 	
 			return LuaPB_Int32Size( evd.Number )
@@ -332,6 +355,36 @@ local function RawEncode( stream, msgD, t )
 end
 
 
+local function defaultFetcher( msg, msgD )
+	
+	return setmetatable( msg, {
+		__newindex = function( self, key, value)
+			rawset( msg, key, value )				
+		end,
+		
+		__index = function( self, key )
+		
+			local v = rawget( msg, key )
+			
+			-- 如果值为空, 返回这个类型的默认值
+			if v == nil then
+				local fd = msgD:GetFieldByName( key )
+				
+				if fd == nil then
+					return v
+				end
+				
+				return fieldDefaultMapper[fd.Type]
+			end
+		
+			return v
+		end,
+		
+	})
+	
+end
+
+
 local function RawDecode( msgD, stream )
 
 	local tab = {}
@@ -400,7 +453,7 @@ local function RawDecode( msgD, stream )
 	
 	end
 	
-	return tab
+	return defaultFetcher( tab, msgD )
 
 end
 
@@ -421,6 +474,10 @@ function luapb_encode( name, t )
 	local pool = LuaPB.GetPool()
 	
 	local msgD = pool:GetMessage( name )
+	
+	if msgD == nil then
+		error("msg not found: ".. name)
+	end
 
 	local stream = PBStreamWriter.New()
 	
@@ -433,13 +490,28 @@ function luapb_encode( name, t )
 end
 
 -- 传入字符串, 返回table
-function luapb_decode( name, str )
+function luapb_decode( name, obj )
 
 	local pool = LuaPB.GetPool()
 	
 	local msgD = pool:GetMessage( name )
 	
-	local stream = PBStreamReader.New( str )
+	if msgD == nil then
+		error("msg not found: ".. name)
+	end
+	
+	local stream
+	
+	if type(obj) == "string" then
+	
+		stream = PBStreamReader.New( str )
+		
+	elseif type(obj) == "userdata" then
+	
+		stream = obj
+	
+	end
+		
 	
 	return RawDecode( msgD, stream )
 

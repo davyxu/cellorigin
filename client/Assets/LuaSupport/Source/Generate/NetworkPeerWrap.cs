@@ -97,11 +97,11 @@ public class NetworkPeerWrap
 				obj.SendMessage(arg0, arg1);
 				return 0;
 			}
-			else if (count == 3 && TypeChecker.CheckTypes(L, 1, typeof(NetworkPeer), typeof(string), typeof(byte[])))
+			else if (count == 3 && TypeChecker.CheckTypes(L, 1, typeof(NetworkPeer), typeof(string), typeof(PBStreamWriter)))
 			{
 				NetworkPeer obj = (NetworkPeer)ToLua.ToObject(L, 1);
 				string arg0 = ToLua.ToString(L, 2);
-				byte[] arg1 = ToLua.CheckByteBuffer(L, 3);
+				PBStreamWriter arg1 = (PBStreamWriter)ToLua.ToObject(L, 3);
 				obj.SendMessage(arg0, arg1);
 				return 0;
 			}

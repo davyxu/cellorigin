@@ -94,8 +94,6 @@ public class LuaPB
             _pool.Init(data);
         }
 
-        var msg = _pool.GetMessage("tutorial.Person");
-
     }
 
     public static DescriptorPool GetPool( )

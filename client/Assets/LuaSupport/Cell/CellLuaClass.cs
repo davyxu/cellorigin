@@ -6,7 +6,6 @@ public class CellLuaClass : MonoBehaviour {
 
     public string ClassName;
 
-
     public enum MethodName
     {
         Awake = 0,

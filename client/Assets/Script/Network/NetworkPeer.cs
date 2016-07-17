@@ -429,14 +429,14 @@ public class NetworkPeer : MonoBehaviour
             callback(stream);
         }
     }
-    public void SendMessage(string msgName, byte[] data)
+    public void SendMessage(string msgName, PBStreamWriter writer )
     {
         if (_socket == null)
             return;
 
         var msgid = StringUtility.HashNoCase(msgName);
-        
-        _socket.SendPacket(msgid, data);
+
+        _socket.SendPacket(msgid, writer.ToArray() );
     }
 
 
