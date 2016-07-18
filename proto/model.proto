@@ -3,12 +3,23 @@ syntax = "proto3";
 package gamedef;
 
 
-message TestBagData
+
+message TestEquipData
+{
+	string ModelKey = 1;
+	
+	bool ModelDelete = 2;
+	
+	string Name = 10;
+}
+
+
+message TestRoleData
 {
 	string ModelKey = 1;
 	bool ModelDelete = 2;
 	
-	string Content = 10;
+	repeated TestEquipData EquipList = 10;
 	
 }
 
@@ -16,7 +27,7 @@ message TestBagData
 
 message ModelACK
 {
-	repeated TestBagData BagList = 1;
+	repeated TestRoleData RoleList = 1;
 }
 
 

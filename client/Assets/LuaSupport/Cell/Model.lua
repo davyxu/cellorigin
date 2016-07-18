@@ -127,11 +127,85 @@ function BindData( modelName, modelKey, view, viewPropertyName, filterFunc )
 end
 
 
+local ModelRoot = {}
+
+local function ApplyModel( tModel, msg )
+
+	for k, v in pairs(msg) do
+	
+		if type(v) == "table" then
+		
+			-- 这是个repeated
+			if #v > 0 then
+			
+				local map = tModel[k]
+			
+				if map == nil then
+					 map = {}
+					 tModel[k] = map
+				end
+			
+			
+				for i, av in ipairs(v) do
+				
+					if av.ModelDelete then
+					
+						if av.ModelKey == nil then
+						
+							map[i] = nil
+						
+						else
+							
+							map[av.ModelKey] = nil
+						
+						end
+					
+					else
+					
+					
+						if av.ModelKey == nil then
+						
+							map[i] = av
+						
+						else
+							
+							map[av.ModelKey] = av
+						
+						end
+						
+					
+					end
+				
+
+
+				end
+			
+			
+			else
+			-- 这是个optional
+			
+				tModel[k] = v
+			
+			end
+		
+		
+		else
+		
+			tModel[k] = v
+		
+		end
+	
+	end
+
+
+end
+
+
 function Model.Init( )
 
 	LoginPeer:RegisterMessage("gamedef.ModelACK", function( msg )
 			
-			
+		ApplyModel( ModelRoot, msg )
 
 	end )
 

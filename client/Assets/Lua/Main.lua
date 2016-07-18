@@ -8,9 +8,9 @@ require "Protobuf.luapb"
 
 function RequireModule( name )
 
-	require( string.format( "%s.View_%s", name, name ) )
-	require( string.format( "%s.Model_%s", name, name ) )
-	require( string.format( "%s.Presenter_%s", name, name ) )
+	require( string.format( "%s.View%s", name, name ) )
+	require( string.format( "%s.Model%s", name, name ) )
+	require( string.format( "%s.Presenter%s", name, name ) )
 
 end
 
