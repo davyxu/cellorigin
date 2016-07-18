@@ -68,6 +68,7 @@ public static class CustomSettings
         _GT(typeof(LineRenderer)).AddExtendType(typeof(DG.Tweening.ShortcutExtensions)),
         _GT(typeof(TrailRenderer)).AddExtendType(typeof(DG.Tweening.ShortcutExtensions)),  */ 
                            
+        _GT(typeof(NetworkPeerLua)),
         _GT(typeof(PBStreamWriter)),
         _GT(typeof(PBStreamReader)),
         _GT(typeof(LuaPB)),
@@ -76,6 +77,8 @@ public static class CustomSettings
         _GT(typeof(FieldDescriptor)),
         _GT(typeof(EnumDescriptor)),
         _GT(typeof(EnumValueDescriptor)),
+        _GT(typeof(PeerManagerLua)), 
+
         _GT(typeof(Component)),
         _GT(typeof(Transform)),
         _GT(typeof(Material)),
@@ -84,7 +87,6 @@ public static class CustomSettings
         _GT(typeof(Camera)),
         _GT(typeof(AudioSource)),     
         _GT(typeof(UnityEngine.PlayerPrefs)),        
-        _GT(typeof(PeerManager)), 
 
         _GT(typeof(Behaviour)),
         _GT(typeof(MonoBehaviour)),        
@@ -146,7 +148,7 @@ public static class CustomSettings
         _GT(typeof(UnityEngine.UI.InputField.OnChangeEvent)),
         _GT(typeof(UnityEngine.UI.InputField.SubmitEvent)),
 
-        _GT(typeof(NetworkPeer)),
+
     };
 
     public static List<Type> dynamicList = new List<Type>()

@@ -97,8 +97,8 @@ GameObject:
   - 124: {fileID: 881399907}
   - 92: {fileID: 881399906}
   - 81: {fileID: 881399905}
-  - 114: {fileID: 881399910}
   - 114: {fileID: 881399911}
+  - 114: {fileID: 881399910}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -181,12 +181,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 881399904}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 421e8f28ca2e61c41aa37ccc753fd7fb, type: 3}
+  m_Script: {fileID: 11500000, guid: ad0ac962e02ca1147b79927bb8f823dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: login
-  Address: 127.0.0.1:8101
-  DebugMessage: 0
+  _name: game
+  Address: 
+  DebugMessage: 1
 --- !u!114 &881399911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,12 +195,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 881399904}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 421e8f28ca2e61c41aa37ccc753fd7fb, type: 3}
+  m_Script: {fileID: 11500000, guid: ad0ac962e02ca1147b79927bb8f823dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: game
-  Address: 
-  DebugMessage: 0
+  _name: login
+  Address: 127.0.0.1:8101
+  DebugMessage: 1
 --- !u!1001 &931129645
 Prefab:
   m_ObjectHideFlags: 0
@@ -377,7 +377,6 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0

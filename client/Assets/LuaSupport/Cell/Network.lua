@@ -1,13 +1,58 @@
 Network ={}
 
+
+
+local function RegisterDebugMessage( peer )
+
+	if peer == nil then
+		return
+	end
+
+	if not peer.DebugMessage then
+		return
+	end
+
+	peer:RegisterMessage("gamedef.PeerConnected", function( )
+	
+		print(string.format("[%s] #connected %s", peer.Name, peer.Address ) )
+
+	end )
+	
+	peer:RegisterMessage("gamedef.PeerDisconnected", function( )
+	
+		print(string.format("[%s] #disconnected %s", peer.Name, peer.Address ) )
+
+	end )
+	
+	peer:RegisterMessage("gamedef.PeerConnectError", function( )
+	
+		print(string.format("[%s] #connecterror %s", peer.Name, peer.Address ) )
+
+	end )
+	
+	peer:RegisterMessage("gamedef.PeerSendError", function( )
+	
+		print(string.format("[%s] #senderror %s", peer.Name, peer.Address ) )
+
+	end )
+	
+	peer:RegisterMessage("gamedef.PeerRecvError", function( )
+	
+		print(string.format("[%s] #recverror %s", peer.Name, peer.Address ) )
+
+	end )
+		
+end
+
+
 function Network.Init( )
 
 	--protobuf.register_file(pbfile)
 	LuaPB.RegisterFile("Assets/game.pb")
 	
-	LoginPeer = PeerManager.Instance:Get( "login" )
-	
+	LoginPeer = PeerManagerLua.Instance:Get( "login" )
 
+	RegisterDebugMessage( LoginPeer )
 end
 
 
@@ -16,7 +61,9 @@ function Network.DecodeRecv( peer, msgName, stream, callback )
 
 	if stream == nil then
 
-		print(string.format("[%s] #recv %s", peer.Name, msgName ) )
+		if peer.DebugMessage then
+			print(string.format("[%s] #recv %s", peer.Name, msgName ) )
+		end
 		
 		callback( )
 	
@@ -24,7 +71,9 @@ function Network.DecodeRecv( peer, msgName, stream, callback )
 	
 		local msg = luapb_decode( msgName, stream )
 		
-		print(string.format("[%s] #recv %s|%s", peer.Name, msgName, SeralizeTable( msg ) ) )
+		if peer.DebugMessage then
+			print(string.format("[%s] #recv %s|%s", peer.Name, msgName, SeralizeTable( msg ) ) )
+		end
 		
 		callback( msg )
 		
@@ -32,11 +81,14 @@ function Network.DecodeRecv( peer, msgName, stream, callback )
 
 end
 
+
 local function EncodeSend( peer, msgName, msgTable )
 
 	 local stream = luapb_encode(msgName, msgTable)
 	 
-	 print(string.format("[%s] #send %s|%s", peer.Name, msgName, SeralizeTable( msgmsgTable) ) )
+	 if peer.DebugMessage then
+		print(string.format("[%s] #send %s|%s", peer.Name, msgName, SeralizeTable( msgmsgTable) ) )
+	 end
 	 
 	 peer:SendMessage( msgName, stream )
 

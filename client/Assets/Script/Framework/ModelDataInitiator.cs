@@ -12,27 +12,6 @@ namespace Framework
         {
             _gamePeer = PeerManager.Instance.Get("game");
 
-            _gamePeer.RegisterMessage<gamedef.ModelDataACK>(obj =>
-            {
-                var msg = obj as gamedef.ModelDataACK;
-
-                var mdm = ModelDataManager.Instance;
-
-                for( int i= 0;i<msg.Data.Count;i++)
-                {
-                    var data = msg.Data[i];
-
-                    string key = null;
-
-
-                    if (key == null)
-                        continue;
-
-                    
-                }
-
-            });
-
         }
     }
 

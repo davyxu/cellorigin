@@ -2,22 +2,20 @@
 using System;
 using LuaInterface;
 
-public class NetworkPeerWrap
+public class NetworkPeerBaseWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginClass(typeof(NetworkPeer), typeof(UnityEngine.MonoBehaviour));
+		L.BeginClass(typeof(NetworkPeerBase), typeof(UnityEngine.MonoBehaviour));
 		L.RegFunction("Stop", Stop);
 		L.RegFunction("Connect", Connect);
-		L.RegFunction("RegisterMessage", RegisterMessage);
-		L.RegFunction("SendMessage", SendMessage);
+		L.RegFunction("PostStream", PostStream);
+		L.RegFunction("Polling", Polling);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", Lua_ToString);
 		L.RegVar("_name", get__name, set__name);
 		L.RegVar("Address", get_Address, set_Address);
 		L.RegVar("DebugMessage", get_DebugMessage, set_DebugMessage);
-		L.RegVar("OnSend", get_OnSend, set_OnSend);
-		L.RegVar("OnRecv", get_OnRecv, set_OnRecv);
 		L.RegVar("Name", get_Name, set_Name);
 		L.RegVar("EmulateDelayMS", get_EmulateDelayMS, set_EmulateDelayMS);
 		L.RegVar("Valid", get_Valid, null);
@@ -30,7 +28,7 @@ public class NetworkPeerWrap
 		try
 		{
 			ToLua.CheckArgsCount(L, 1);
-			NetworkPeer obj = (NetworkPeer)ToLua.CheckObject(L, 1, typeof(NetworkPeer));
+			NetworkPeerBase obj = (NetworkPeerBase)ToLua.CheckObject(L, 1, typeof(NetworkPeerBase));
 			obj.Stop();
 			return 0;
 		}
@@ -46,7 +44,7 @@ public class NetworkPeerWrap
 		try
 		{
 			ToLua.CheckArgsCount(L, 2);
-			NetworkPeer obj = (NetworkPeer)ToLua.CheckObject(L, 1, typeof(NetworkPeer));
+			NetworkPeerBase obj = (NetworkPeerBase)ToLua.CheckObject(L, 1, typeof(NetworkPeerBase));
 			string arg0 = ToLua.CheckString(L, 2);
 			obj.Connect(arg0);
 			return 0;
@@ -58,15 +56,15 @@ public class NetworkPeerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int RegisterMessage(IntPtr L)
+	static int PostStream(IntPtr L)
 	{
 		try
 		{
 			ToLua.CheckArgsCount(L, 3);
-			NetworkPeer obj = (NetworkPeer)ToLua.CheckObject(L, 1, typeof(NetworkPeer));
-			string arg0 = ToLua.CheckString(L, 2);
-			LuaFunction arg1 = ToLua.CheckLuaFunction(L, 3);
-			obj.RegisterMessage(arg0, arg1);
+			NetworkPeerBase obj = (NetworkPeerBase)ToLua.CheckObject(L, 1, typeof(NetworkPeerBase));
+			uint arg0 = (uint)LuaDLL.luaL_checknumber(L, 2);
+			System.IO.MemoryStream arg1 = (System.IO.MemoryStream)ToLua.CheckObject(L, 3, typeof(System.IO.MemoryStream));
+			obj.PostStream(arg0, arg1);
 			return 0;
 		}
 		catch(Exception e)
@@ -76,56 +74,14 @@ public class NetworkPeerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int SendMessage(IntPtr L)
+	static int Polling(IntPtr L)
 	{
 		try
 		{
-			int count = LuaDLL.lua_gettop(L);
-
-			if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(NetworkPeer), typeof(string)))
-			{
-				NetworkPeer obj = (NetworkPeer)ToLua.ToObject(L, 1);
-				string arg0 = ToLua.ToString(L, 2);
-				obj.SendMessage(arg0);
-				return 0;
-			}
-			else if (count == 3 && TypeChecker.CheckTypes(L, 1, typeof(NetworkPeer), typeof(string), typeof(UnityEngine.SendMessageOptions)))
-			{
-				NetworkPeer obj = (NetworkPeer)ToLua.ToObject(L, 1);
-				string arg0 = ToLua.ToString(L, 2);
-				UnityEngine.SendMessageOptions arg1 = (UnityEngine.SendMessageOptions)ToLua.ToObject(L, 3);
-				obj.SendMessage(arg0, arg1);
-				return 0;
-			}
-			else if (count == 3 && TypeChecker.CheckTypes(L, 1, typeof(NetworkPeer), typeof(string), typeof(PBStreamWriter)))
-			{
-				NetworkPeer obj = (NetworkPeer)ToLua.ToObject(L, 1);
-				string arg0 = ToLua.ToString(L, 2);
-				PBStreamWriter arg1 = (PBStreamWriter)ToLua.ToObject(L, 3);
-				obj.SendMessage(arg0, arg1);
-				return 0;
-			}
-			else if (count == 3 && TypeChecker.CheckTypes(L, 1, typeof(NetworkPeer), typeof(string), typeof(object)))
-			{
-				NetworkPeer obj = (NetworkPeer)ToLua.ToObject(L, 1);
-				string arg0 = ToLua.ToString(L, 2);
-				object arg1 = ToLua.ToVarObject(L, 3);
-				obj.SendMessage(arg0, arg1);
-				return 0;
-			}
-			else if (count == 4 && TypeChecker.CheckTypes(L, 1, typeof(NetworkPeer), typeof(string), typeof(object), typeof(UnityEngine.SendMessageOptions)))
-			{
-				NetworkPeer obj = (NetworkPeer)ToLua.ToObject(L, 1);
-				string arg0 = ToLua.ToString(L, 2);
-				object arg1 = ToLua.ToVarObject(L, 3);
-				UnityEngine.SendMessageOptions arg2 = (UnityEngine.SendMessageOptions)ToLua.ToObject(L, 4);
-				obj.SendMessage(arg0, arg1, arg2);
-				return 0;
-			}
-			else
-			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to method: NetworkPeer.SendMessage");
-			}
+			ToLua.CheckArgsCount(L, 1);
+			NetworkPeerBase obj = (NetworkPeerBase)ToLua.CheckObject(L, 1, typeof(NetworkPeerBase));
+			obj.Polling();
+			return 0;
 		}
 		catch(Exception e)
 		{
@@ -176,7 +132,7 @@ public class NetworkPeerWrap
 		try
 		{
 			o = ToLua.ToObject(L, 1);
-			NetworkPeer obj = (NetworkPeer)o;
+			NetworkPeerBase obj = (NetworkPeerBase)o;
 			string ret = obj._name;
 			LuaDLL.lua_pushstring(L, ret);
 			return 1;
@@ -195,7 +151,7 @@ public class NetworkPeerWrap
 		try
 		{
 			o = ToLua.ToObject(L, 1);
-			NetworkPeer obj = (NetworkPeer)o;
+			NetworkPeerBase obj = (NetworkPeerBase)o;
 			string ret = obj.Address;
 			LuaDLL.lua_pushstring(L, ret);
 			return 1;
@@ -214,7 +170,7 @@ public class NetworkPeerWrap
 		try
 		{
 			o = ToLua.ToObject(L, 1);
-			NetworkPeer obj = (NetworkPeer)o;
+			NetworkPeerBase obj = (NetworkPeerBase)o;
 			bool ret = obj.DebugMessage;
 			LuaDLL.lua_pushboolean(L, ret);
 			return 1;
@@ -226,44 +182,6 @@ public class NetworkPeerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_OnSend(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			NetworkPeer obj = (NetworkPeer)o;
-			System.Action<NetworkPeer,uint,object> ret = obj.OnSend;
-			ToLua.Push(L, ret);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnSend on a nil value" : e.Message);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_OnRecv(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			NetworkPeer obj = (NetworkPeer)o;
-			System.Action<NetworkPeer,uint,object> ret = obj.OnRecv;
-			ToLua.Push(L, ret);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnRecv on a nil value" : e.Message);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_Name(IntPtr L)
 	{
 		object o = null;
@@ -271,7 +189,7 @@ public class NetworkPeerWrap
 		try
 		{
 			o = ToLua.ToObject(L, 1);
-			NetworkPeer obj = (NetworkPeer)o;
+			NetworkPeerBase obj = (NetworkPeerBase)o;
 			string ret = obj.Name;
 			LuaDLL.lua_pushstring(L, ret);
 			return 1;
@@ -290,7 +208,7 @@ public class NetworkPeerWrap
 		try
 		{
 			o = ToLua.ToObject(L, 1);
-			NetworkPeer obj = (NetworkPeer)o;
+			NetworkPeerBase obj = (NetworkPeerBase)o;
 			uint ret = obj.EmulateDelayMS;
 			LuaDLL.lua_pushnumber(L, ret);
 			return 1;
@@ -309,7 +227,7 @@ public class NetworkPeerWrap
 		try
 		{
 			o = ToLua.ToObject(L, 1);
-			NetworkPeer obj = (NetworkPeer)o;
+			NetworkPeerBase obj = (NetworkPeerBase)o;
 			bool ret = obj.Valid;
 			LuaDLL.lua_pushboolean(L, ret);
 			return 1;
@@ -328,7 +246,7 @@ public class NetworkPeerWrap
 		try
 		{
 			o = ToLua.ToObject(L, 1);
-			NetworkPeer obj = (NetworkPeer)o;
+			NetworkPeerBase obj = (NetworkPeerBase)o;
 			string arg0 = ToLua.CheckString(L, 2);
 			obj._name = arg0;
 			return 0;
@@ -347,7 +265,7 @@ public class NetworkPeerWrap
 		try
 		{
 			o = ToLua.ToObject(L, 1);
-			NetworkPeer obj = (NetworkPeer)o;
+			NetworkPeerBase obj = (NetworkPeerBase)o;
 			string arg0 = ToLua.CheckString(L, 2);
 			obj.Address = arg0;
 			return 0;
@@ -366,7 +284,7 @@ public class NetworkPeerWrap
 		try
 		{
 			o = ToLua.ToObject(L, 1);
-			NetworkPeer obj = (NetworkPeer)o;
+			NetworkPeerBase obj = (NetworkPeerBase)o;
 			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
 			obj.DebugMessage = arg0;
 			return 0;
@@ -378,68 +296,6 @@ public class NetworkPeerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_OnSend(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			NetworkPeer obj = (NetworkPeer)o;
-			System.Action<NetworkPeer,uint,object> arg0 = null;
-			LuaTypes funcType2 = LuaDLL.lua_type(L, 2);
-
-			if (funcType2 != LuaTypes.LUA_TFUNCTION)
-			{
-				 arg0 = (System.Action<NetworkPeer,uint,object>)ToLua.CheckObject(L, 2, typeof(System.Action<NetworkPeer,uint,object>));
-			}
-			else
-			{
-				LuaFunction func = ToLua.ToLuaFunction(L, 2);
-				arg0 = DelegateFactory.CreateDelegate(typeof(System.Action<NetworkPeer,uint,object>), func) as System.Action<NetworkPeer,uint,object>;
-			}
-
-			obj.OnSend = arg0;
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnSend on a nil value" : e.Message);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_OnRecv(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			NetworkPeer obj = (NetworkPeer)o;
-			System.Action<NetworkPeer,uint,object> arg0 = null;
-			LuaTypes funcType2 = LuaDLL.lua_type(L, 2);
-
-			if (funcType2 != LuaTypes.LUA_TFUNCTION)
-			{
-				 arg0 = (System.Action<NetworkPeer,uint,object>)ToLua.CheckObject(L, 2, typeof(System.Action<NetworkPeer,uint,object>));
-			}
-			else
-			{
-				LuaFunction func = ToLua.ToLuaFunction(L, 2);
-				arg0 = DelegateFactory.CreateDelegate(typeof(System.Action<NetworkPeer,uint,object>), func) as System.Action<NetworkPeer,uint,object>;
-			}
-
-			obj.OnRecv = arg0;
-			return 0;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index OnRecv on a nil value" : e.Message);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_Name(IntPtr L)
 	{
 		object o = null;
@@ -447,7 +303,7 @@ public class NetworkPeerWrap
 		try
 		{
 			o = ToLua.ToObject(L, 1);
-			NetworkPeer obj = (NetworkPeer)o;
+			NetworkPeerBase obj = (NetworkPeerBase)o;
 			string arg0 = ToLua.CheckString(L, 2);
 			obj.Name = arg0;
 			return 0;
@@ -466,7 +322,7 @@ public class NetworkPeerWrap
 		try
 		{
 			o = ToLua.ToObject(L, 1);
-			NetworkPeer obj = (NetworkPeer)o;
+			NetworkPeerBase obj = (NetworkPeerBase)o;
 			uint arg0 = (uint)LuaDLL.luaL_checknumber(L, 2);
 			obj.EmulateDelayMS = arg0;
 			return 0;

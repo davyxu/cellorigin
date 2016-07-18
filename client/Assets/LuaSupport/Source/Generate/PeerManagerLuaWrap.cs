@@ -2,20 +2,19 @@
 using System;
 using LuaInterface;
 
-public class PeerManagerWrap
+public class PeerManagerLuaWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginClass(typeof(PeerManager), typeof(Singleton<PeerManager>));
+		L.BeginClass(typeof(PeerManagerLua), typeof(Singleton<PeerManagerLua>));
 		L.RegFunction("Get", Get);
-		L.RegFunction("New", _CreatePeerManager);
+		L.RegFunction("New", _CreatePeerManagerLua);
 		L.RegFunction("__tostring", Lua_ToString);
-		L.RegVar("MsgMeta", get_MsgMeta, null);
 		L.EndClass();
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int _CreatePeerManager(IntPtr L)
+	static int _CreatePeerManagerLua(IntPtr L)
 	{
 		try
 		{
@@ -23,13 +22,13 @@ public class PeerManagerWrap
 
 			if (count == 0)
 			{
-				PeerManager obj = new PeerManager();
+				PeerManagerLua obj = new PeerManagerLua();
 				ToLua.PushObject(L, obj);
 				return 1;
 			}
 			else
 			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to ctor method: PeerManager.New");
+				return LuaDLL.luaL_throw(L, "invalid arguments to ctor method: PeerManagerLua.New");
 			}
 		}
 		catch(Exception e)
@@ -44,9 +43,9 @@ public class PeerManagerWrap
 		try
 		{
 			ToLua.CheckArgsCount(L, 2);
-			PeerManager obj = (PeerManager)ToLua.CheckObject(L, 1, typeof(PeerManager));
+			PeerManagerLua obj = (PeerManagerLua)ToLua.CheckObject(L, 1, typeof(PeerManagerLua));
 			string arg0 = ToLua.CheckString(L, 2);
-			NetworkPeer o = obj.Get(arg0);
+			NetworkPeerLua o = obj.Get(arg0);
 			ToLua.Push(L, o);
 			return 1;
 		}
@@ -71,25 +70,6 @@ public class PeerManagerWrap
 		}
 
 		return 1;
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_MsgMeta(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			PeerManager obj = (PeerManager)o;
-			MessageMetaSet ret = obj.MsgMeta;
-			ToLua.PushObject(L, ret);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index MsgMeta on a nil value" : e.Message);
-		}
 	}
 }
 

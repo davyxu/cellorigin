@@ -6,10 +6,10 @@ using System;
 partial class LoginPresenter : Framework.BasePresenter
 {
 	LoginModel _Model;
-	
-	NetworkPeer _loginPeer;
-	
-	NetworkPeer _gamePeer;
+
+    NetworkPeer _loginPeer;
+
+    NetworkPeer _gamePeer;
 	
 	public Action OnAccountChanged;
 	public string Account
@@ -56,27 +56,27 @@ partial class LoginPresenter : Framework.BasePresenter
 		LoginServerList = new Framework.ObservableCollection<int, LoginServerInfoPresenter>();
 		_loginPeer = PeerManager.Instance.Get("login");
 		
-		_loginPeer.RegisterMessage<gamedef.PeerConnected>( obj =>
-		{
-			Msg_login_PeerConnected( _loginPeer, obj as gamedef.PeerConnected );
-		});
+        //_loginPeer.RegisterMessage<gamedef.PeerConnected>( obj =>
+        //{
+        //    Msg_login_PeerConnected( _loginPeer, obj as gamedef.PeerConnected );
+        //});
 		
-		_loginPeer.RegisterMessage<gamedef.LoginACK>( obj =>
-		{
-			Msg_login_LoginACK( _loginPeer, obj as gamedef.LoginACK );
-		});
+        //_loginPeer.RegisterMessage<gamedef.LoginACK>( obj =>
+        //{
+        //    Msg_login_LoginACK( _loginPeer, obj as gamedef.LoginACK );
+        //});
 		
-		_gamePeer = PeerManager.Instance.Get("game");
+        //_gamePeer = PeerManager.Instance.Get("game");
 		
-		_gamePeer.RegisterMessage<gamedef.PeerConnected>( obj =>
-		{
-			Msg_game_PeerConnected( _gamePeer, obj as gamedef.PeerConnected );
-		});
+        //_gamePeer.RegisterMessage<gamedef.PeerConnected>( obj =>
+        //{
+        //    Msg_game_PeerConnected( _gamePeer, obj as gamedef.PeerConnected );
+        //});
 		
-		_gamePeer.RegisterMessage<gamedef.VerifyGameACK>( obj =>
-		{
-			Msg_game_VerifyGameACK( _gamePeer, obj as gamedef.VerifyGameACK );
-		});
+        //_gamePeer.RegisterMessage<gamedef.VerifyGameACK>( obj =>
+        //{
+        //    Msg_game_VerifyGameACK( _gamePeer, obj as gamedef.VerifyGameACK );
+        //});
 		
 	}
 	

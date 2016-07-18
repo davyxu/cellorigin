@@ -97,7 +97,7 @@ public class CellLuaManager
     }
 
 
-    public static void NetworkDecodeRecv( NetworkPeer peer, string msgName, MemoryStream stream, LuaFunction func )
+    public static void NetworkDecodeRecv(NetworkPeerLua peer, string msgName, MemoryStream stream, LuaFunction func)
     {
         if (_decodeRecvMethod != null)
         {

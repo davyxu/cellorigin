@@ -22,7 +22,7 @@ partial class LoginCharInfoPresenter : Framework.BasePresenter
 
         var req = new gamedef.EnterGameREQ();
         req.CharName = CharName;
-        peer.SendMessage(req);
+        //peer.SendMessage(req);
     }
 
 

@@ -15,7 +15,7 @@ public class MessageMeta
     public MessageMeta(Type t)
     {
         this.type = t;
-        this.id = StringUtility.HashNoCase(t.FullName);
+        this.id = StringUtility.Hash(t.FullName);
     }
 }
 
@@ -64,7 +64,7 @@ public class MessageMetaSet
         }
 
         var mi = new MessageMeta(t);
-        mi.id = StringUtility.HashNoCase(t.FullName);
+        mi.id = StringUtility.Hash(t.FullName);
         mi.type = t;
 
         _idmap.Add(mi.id, mi);

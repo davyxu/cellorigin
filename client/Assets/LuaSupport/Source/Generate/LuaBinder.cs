@@ -10,6 +10,7 @@ public static class LuaBinder
 		float t = Time.realtimeSinceStartup;
 		L.BeginModule(null);
 		DebuggerWrap.Register(L);
+		NetworkPeerLuaWrap.Register(L);
 		PBStreamWriterWrap.Register(L);
 		PBStreamReaderWrap.Register(L);
 		LuaPBWrap.Register(L);
@@ -18,10 +19,10 @@ public static class LuaBinder
 		FieldDescriptorWrap.Register(L);
 		EnumDescriptorWrap.Register(L);
 		EnumValueDescriptorWrap.Register(L);
-		PeerManagerWrap.Register(L);
-		NetworkPeerWrap.Register(L);
+		PeerManagerLuaWrap.Register(L);
+		NetworkPeerBaseWrap.Register(L);
 		ProtoBaseWrap.Register(L);
-		Singleton_PeerManagerWrap.Register(L);
+		Singleton_PeerManagerLuaWrap.Register(L);
 		L.BeginModule("UnityEngine");
 		UnityEngine_ComponentWrap.Register(L);
 		UnityEngine_TransformWrap.Register(L);
@@ -113,7 +114,6 @@ public static class LuaBinder
 		L.EndModule();
 		L.BeginModule("System");
 		L.RegFunction("Action", System_Action);
-		L.RegFunction("Action_NetworkPeer_uint_object", System_Action_NetworkPeer_uint_object);
 		L.EndModule();
 		L.EndModule();
 		Debugger.Log("Register lua type cost time: {0}", Time.realtimeSinceStartup - t);
@@ -174,22 +174,6 @@ public static class LuaBinder
 		{
 			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
 			Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action), func);
-			ToLua.Push(L, arg1);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int System_Action_NetworkPeer_uint_object(IntPtr L)
-	{
-		try
-		{
-			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
-			Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<NetworkPeer,uint,object>), func);
 			ToLua.Push(L, arg1);
 			return 1;
 		}

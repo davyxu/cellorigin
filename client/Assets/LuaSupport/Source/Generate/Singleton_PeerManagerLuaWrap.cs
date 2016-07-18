@@ -2,11 +2,11 @@
 using System;
 using LuaInterface;
 
-public class Singleton_PeerManagerWrap
+public class Singleton_PeerManagerLuaWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginClass(typeof(Singleton<PeerManager>), typeof(System.Object), "Singleton_PeerManager");
+		L.BeginClass(typeof(Singleton<PeerManagerLua>), typeof(System.Object), "Singleton_PeerManagerLua");
 		L.RegFunction("__tostring", Lua_ToString);
 		L.RegVar("Instance", get_Instance, null);
 		L.EndClass();
@@ -34,7 +34,7 @@ public class Singleton_PeerManagerWrap
 	{
 		try
 		{
-			ToLua.PushObject(L, Singleton<PeerManager>.Instance);
+			ToLua.PushObject(L, Singleton<PeerManagerLua>.Instance);
 			return 1;
 		}
 		catch(Exception e)

@@ -14,13 +14,20 @@ Class.Define("LoginView", {
 		
 		LoginPeer:RegisterMessage("gamedef.PeerConnected", function( )
 		
-			print("connected")
-		
 			SendLoginMessage( "gamedef.LoginREQ", {
 				PlatformName = "dev",
 			})
 		
 		end )
+
+
+		LoginPeer:RegisterMessage("gamedef.PeerConnectError", function( )
+		
+			print("connect error")
+
+		
+		end )
+		
 		
 		LoginPeer:RegisterMessage("gamedef.LoginACK", function( msg )
 		

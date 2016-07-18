@@ -36,10 +36,10 @@ partial class LoginCharBoardPresenter : Framework.BasePresenter
 		LoginCharList = new Framework.ObservableCollection<int, LoginCharInfoPresenter>();
 		_gamePeer = PeerManager.Instance.Get("game");
 		
-		_gamePeer.RegisterMessage<gamedef.CharListACK>( obj =>
-		{
-			Msg_game_CharListACK( _gamePeer, obj as gamedef.CharListACK );
-		});
+        //_gamePeer.RegisterMessage<gamedef.CharListACK>( obj =>
+        //{
+        //    Msg_game_CharListACK( _gamePeer, obj as gamedef.CharListACK );
+        //});
 		
 	}
 	

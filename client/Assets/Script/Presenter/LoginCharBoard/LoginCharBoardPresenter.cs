@@ -10,7 +10,7 @@ partial class LoginCharBoardPresenter : Framework.BasePresenter
         var req = new gamedef.CreateCharREQ();
         req.CharName = CharName;
         req.CandidateID = 0;
-        _gamePeer.SendMessage( req );
+        //_gamePeer.SendMessage( req );
     }
 
 
@@ -66,7 +66,7 @@ partial class LoginCharBoardPresenter : Framework.BasePresenter
     public void Cmd_Request()
     {
         var req = new gamedef.CharListREQ();
-        _gamePeer.SendMessage(req);
+        //_gamePeer.SendMessage(req);
     }
 
 }

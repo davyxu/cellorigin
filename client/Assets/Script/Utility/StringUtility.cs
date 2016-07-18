@@ -31,8 +31,7 @@ public class StringUtility
         }
     }
 
-
-    static public uint HashNoCase(string msgType)
+    public static uint Hash( string msgType )
     {
         if (!_init)
         {
@@ -40,14 +39,13 @@ public class StringUtility
             _init = true;
         }
 
-        string upper = msgType.ToUpper();
 
         uint hash = 0;
         uint b = 0;
 
         for (int i = 0; i < msgType.Length; i++)
         {
-            b = (uint)(upper[i]);
+            b = (uint)(msgType[i]);
             hash = ((hash >> 8) & 0x00FFFFFF) ^ _crcTable[(hash ^ b) & 0x000000FF];
         }
 

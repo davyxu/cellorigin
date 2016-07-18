@@ -92,7 +92,7 @@ partial class LoginPresenter : Framework.BasePresenter
         var req = new gamedef.LoginREQ();
         req.ClientVersion = Constant.ClientVersion;
         req.PlatformToken = Account;
-        _loginPeer.SendMessage(req);
+        //_loginPeer.SendMessage(req);
     }
 
     void Msg_login_LoginACK(NetworkPeer peer, gamedef.LoginACK msg)
@@ -120,7 +120,7 @@ partial class LoginPresenter : Framework.BasePresenter
     {
         var req = new gamedef.VerifyGameREQ();
         req.Token = _verifyToken;
-        peer.SendMessage(req);
+        //peer.SendMessage(req);
     }
 
 
