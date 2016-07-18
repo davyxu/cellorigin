@@ -1,5 +1,5 @@
 
-Model.Define( "LoginModel",{ 
+Model.Define( "ModelLogin",{ 
 	Account = "t1",
 	Address = "127.0.0.1:8101",
 })

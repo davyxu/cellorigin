@@ -2,11 +2,11 @@
 local PlayerPrefs = UnityEngine.PlayerPrefs
 
 
-Class.Define("LoginPresenter", {	
+Class.Define("PresenterLogin", {	
 	
 	Init = function( self, view )
 	
-		BindData( "LoginModel", "Address", view )
+		BindData( "ModelLogin", "Address", view )
 	
 		self:LoadSetting()
 		
@@ -32,14 +32,14 @@ Class.Define("LoginPresenter", {
 	
 	LoadSetting = function( self )
 	
-		LoginModel.Account = PlayerPrefs.GetString("Login.Account")
-		LoginModel.Address = PlayerPrefs.GetString("Login.Address")
+		ModelLogin.Account = PlayerPrefs.GetString("Login.Account")
+		ModelLogin.Address = PlayerPrefs.GetString("Login.Address")
 	end,
 	
 	SaveSetting = function( self )
 	
-		PlayerPrefs.SetString("Login.Account", LoginModel.Account )
-		PlayerPrefs.SetString("Login.Address", LoginModel.Address )
+		PlayerPrefs.SetString("Login.Account", ModelLogin.Account )
+		PlayerPrefs.SetString("Login.Address", ModelLogin.Address )
 
 	end,
 	

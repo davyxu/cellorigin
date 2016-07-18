@@ -9,6 +9,7 @@ It is generated from these files:
 	service.proto
 	game.proto
 	login.proto
+	model.proto
 	tool.proto
 
 It has these top-level messages:
@@ -27,6 +28,9 @@ It has these top-level messages:
 	LoginREQ
 	ServerInfo
 	LoginACK
+	TestBagData
+	ModelACK
+	TestModelCommandACK
 	TableCodeOption
 */
 package gamedef

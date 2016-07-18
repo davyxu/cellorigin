@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package gamedef;
+
+
+message TestBagData
+{
+	string ModelKey = 1;
+	bool ModelDelete = 2;
+	
+	string Content = 10;
+	
+}
+
+
+
+message ModelACK
+{
+	repeated TestBagData BagList = 1;
+}
+
+
+
+message TestModelCommandACK
+{
+	string Command = 1;
+}
