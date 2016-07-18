@@ -1,9 +1,10 @@
-Class.Define("LoginView", {
+
+Class.Define("ViewLogin", {
 
 
 	Awake = function( self )
 	
-		self.presenter = Class.New("LoginPresenter" )
+		self.presenter = Class.New("PresenterLogin" )
 	
 		self:Bind( self.presenter )
 			
@@ -17,14 +18,6 @@ Class.Define("LoginView", {
 			SendLoginMessage( "gamedef.LoginREQ", {
 				PlatformName = "dev",
 			})
-		
-		end )
-
-
-		LoginPeer:RegisterMessage("gamedef.PeerConnectError", function( )
-		
-			print("connect error")
-
 		
 		end )
 		

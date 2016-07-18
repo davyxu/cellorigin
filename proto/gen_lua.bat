@@ -1,0 +1,1 @@
+..\tool\protoc.exe --descriptor_set_out=..\client\Assets\game.pb --proto_path "." %*

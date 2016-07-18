@@ -47,7 +47,6 @@ end
 
 function Network.Init( )
 
-	--protobuf.register_file(pbfile)
 	LuaPB.RegisterFile("Assets/game.pb")
 	
 	LoginPeer = PeerManagerLua.Instance:Get( "login" )
@@ -55,7 +54,7 @@ function Network.Init( )
 	RegisterDebugMessage( LoginPeer )
 end
 
-
+-- C#收到消息后, 通过Dispatcher找到注册的handler, 回调此函数
 function Network.DecodeRecv( peer, msgName, stream, callback )
 
 

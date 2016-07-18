@@ -104,7 +104,7 @@ m.foo= 2
 ]]
 
 
-function BindData( modelName, modelKey, view, viewPropertyName )
+function BindData( modelName, modelKey, view, viewPropertyName, filterFunc )
 
 	viewPropertyName = viewPropertyName and viewPropertyName or modelKey
 
@@ -113,10 +113,27 @@ function BindData( modelName, modelKey, view, viewPropertyName )
 		local obj = view[viewPropertyName]
 		
 		if type(obj) == "userdata" then
-			obj.text = tostring(v)
+		
+			if filterFunc == nil then
+				obj.text = tostring(v)
+			else
+				obj.text = filterFunc(v)
+			end
+			
 		end
 
 	end)
+
+end
+
+
+function Model.Init( )
+
+	LoginPeer:RegisterMessage("gamedef.ModelACK", function( msg )
+			
+			
+
+	end )
 
 end
 
