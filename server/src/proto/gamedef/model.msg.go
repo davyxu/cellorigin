@@ -8,7 +8,9 @@ import (
 )
 
 func init() {
-	cellnet.RegisterMessageMeta("gamedef.TestBagData", (*TestBagData)(nil), 2507115709)
+	cellnet.RegisterMessageMeta("gamedef.TestAccountData", (*TestAccountData)(nil), 3608077311)
+	cellnet.RegisterMessageMeta("gamedef.TestEquipData", (*TestEquipData)(nil), 1792671458)
+	cellnet.RegisterMessageMeta("gamedef.TestRoleData", (*TestRoleData)(nil), 270638963)
 	cellnet.RegisterMessageMeta("gamedef.ModelACK", (*ModelACK)(nil), 515922020)
 	cellnet.RegisterMessageMeta("gamedef.TestModelCommandACK", (*TestModelCommandACK)(nil), 581674490)
 }

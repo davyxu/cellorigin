@@ -15,6 +15,7 @@ local function getDefine( name )
 end
 
 
+
 local function notifyChange( name, key, value )
 
 	--print("changed", name, key, value)
@@ -127,74 +128,64 @@ function BindData( modelName, modelKey, view, viewPropertyName, filterFunc )
 end
 
 
-local ModelRoot = {}
 
-local function ApplyModel( tModel, msg )
 
+
+ModelRoot = {}
+
+local function ApplyModel( msg )	
+	
+	local rootD = LuaPB.GetPool():GetMessage( "gamedef.ModelACK" )
+	
 	for k, v in pairs(msg) do
 	
-		if type(v) == "table" then
+		local modelD = rootD:GetFieldByName( k )
 		
-			-- 这是个repeated
-			if #v > 0 then
+		-- 多个
+		if modelD.IsRepeated then
+		
+			for listIndex, listValue in ipairs( v ) do
 			
-				local map = tModel[k]
-			
-				if map == nil then
-					 map = {}
-					 tModel[k] = map
+				if listValue.ModelKey == nil then
+					error("repeated model not set 'ModelKey' , " ..k )
 				end
 			
+				local list = ModelRoot[k]
 			
-				for i, av in ipairs(v) do
-				
-					if av.ModelDelete then
-					
-						if av.ModelKey == nil then
-						
-							map[i] = nil
-						
-						else
-							
-							map[av.ModelKey] = nil
-						
-						end
-					
-					else
-					
-					
-						if av.ModelKey == nil then
-						
-							map[i] = av
-						
-						else
-							
-							map[av.ModelKey] = av
-						
-						end
-						
-					
-					end
-				
-
-
+				if list == nil then
+					 list = {}
+					 ModelRoot[k] = list
 				end
 			
-			
-			else
-			-- 这是个optional
-			
-				tModel[k] = v
-			
+				if listValue.ModelDelete then
+								
+					list[listValue.ModelKey] = nil
+				
+				else
+				
+					list[listValue.ModelKey] = listValue
+				
+				end
+
 			end
 		
 		
 		else
+		-- 单个
 		
-			tModel[k] = v
+			if v.ModelDelete then
+							
+				ModelRoot[k] = nil
+			
+			else
+			
+				ModelRoot[k] = v
+			
+			end
 		
 		end
 	
+
 	end
 
 
@@ -203,11 +194,92 @@ end
 
 function Model.Init( )
 
+
+
+--[[
 	LoginPeer:RegisterMessage("gamedef.ModelACK", function( msg )
 			
 		ApplyModel( ModelRoot, msg )
 
 	end )
+	
+	]]
 
 end
+
+
+local function UnitTest( )
+
+	-- 添加
+	ApplyModel{
+	
+		Account = {
+			Name = "hello",
+		},
+	
+		Role = { 
+		
+			{
+				ModelKey = "1",
+				HP = 1,
+			},
+		
+		},
+	
+	
+	}
+	
+	dump( ModelRoot )
+	
+	
+	-- 修改
+	ApplyModel{
+	
+		Account = {
+			Name = "hello2",
+		},
+	
+		Role = { 
+		
+			{
+				ModelKey = "1",
+				HP = 2,
+			},
+			
+			{
+				ModelKey = "2",
+				HP = 100,
+			},
+		
+		},
+	
+	
+	}
+	
+	dump( ModelRoot )
+	
+	-- 删除
+	ApplyModel{
+	
+		Account = {
+			Name = "hello2",
+		},
+	
+		Role = { 
+		
+			{
+				ModelKey = "1",
+				ModelDelete = true,				
+			},
+						
+		
+		},
+	
+	
+	}
+	
+	dump( ModelRoot )
+
+end
+
 

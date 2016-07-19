@@ -20,7 +20,11 @@ RequireModule "Login"
 --主入口函数。从这里开始lua逻辑
 function Main()
 
+	
+
 	Network.Init( )
+	
+	Model.Init( )
 
 	Time.timeSinceLevelLoad = 0
 

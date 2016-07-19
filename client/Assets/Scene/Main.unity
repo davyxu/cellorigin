@@ -304,7 +304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9186e40d30fba3142b161fce2c422453, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ClassName: View_Login
+  ClassName: ViewLogin
 --- !u!1 &1619778879
 GameObject:
   m_ObjectHideFlags: 0

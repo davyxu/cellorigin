@@ -28,7 +28,9 @@ It has these top-level messages:
 	LoginREQ
 	ServerInfo
 	LoginACK
-	TestBagData
+	TestAccountData
+	TestEquipData
+	TestRoleData
 	ModelACK
 	TestModelCommandACK
 	TableCodeOption
