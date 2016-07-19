@@ -24,12 +24,6 @@ local function RegisterDebugMessage( peer )
 
 	end )
 	
-	peer:RegisterMessage("gamedef.PeerConnectError", function( )
-	
-		print(string.format("[%s] #connecterror %s", peer.Name, peer.Address ) )
-
-	end )
-	
 	peer:RegisterMessage("gamedef.PeerSendError", function( )
 	
 		print(string.format("[%s] #senderror %s", peer.Name, peer.Address ) )

@@ -1,28 +1,18 @@
 Model = {}
 
-local modelMap = {}
+local modelMeta = {}
 
-local function getDefine( name )
-
-	local m = modelMap[name]
+local function notifyChange( model, key, value )
 	
-	if m == nil then
-		error("can not found model: ".. name)
+	local path
+	if key == nil then
+		path = model
+	else
+		path = string.format("%s.%s", model, key )
 	end
-
-	return m
-
-end
-
-
-
-local function notifyChange( name, key, value )
-
-	--print("changed", name, key, value)
-
-	local m = getDefine(name)
 	
-	local callbackchain = m.listener[key]
+	
+	local callbackchain = modelMeta[path]
 
 	
 	if callbackchain == nil then
@@ -38,71 +28,25 @@ local function notifyChange( name, key, value )
 
 end
 
-function Model.Define( name, descriptor )
+-- model.field
 
-	if _G[name] then
-		error("model name exist in _G: " .. name )
-	end
+-- model.key.field
 
 
-	local instance =  setmetatable( {}, {
-		__newindex = function( self, key, value)
-			local v = rawget( descriptor, key ) 
-			if v == nil then
-				error("can not dynamic create model value: ".. name .. "." .. key)
-			else
-				rawset( descriptor, key, value )
-				notifyChange( name, key, value )
-			end
-		end,
-		
-		__index = descriptor,
-		
-	})
+function Model.Listen( path, callback )
+
 	
-	
-	modelMap[name] = {
-		instance = instance,
-		descriptor = descriptor,
-		listener = {},
-	}
-	
-	_G[name] = instance	
-end
-
-
-
-
-function Model.Listen( name, key, callback )
-
-	local m = getDefine(name)
-	
-	local callbackchain = m.listener[key]
+	local callbackchain = modelMeta[path]
 	
 	if callbackchain == nil then
 		callbackchain = {}
+		modelMeta[path] = callbackchain
 	end
 	
 	table.insert( callbackchain, callback )
 	
-	m.listener[key] = callbackchain
-
 end
 
---[[
-local m = Model.Define( "a", {
-
-	foo = 1,
-
-})
-
-Model.Listen("a", "foo", function(t, k )
-	print("changed", t, k )
-end)
-
-
-m.foo= 2
-]]
 
 
 function BindData( modelName, modelKey, view, viewPropertyName, filterFunc )
@@ -128,18 +72,45 @@ function BindData( modelName, modelKey, view, viewPropertyName, filterFunc )
 end
 
 
+function Model.Bind( view, viewPropertyName )
+
+
+	viewPropertyName = viewPropertyName and viewPropertyName or modelKey
+
+	Model.Listen( modelName, modelKey, function( v ) 
+		
+		local obj = view[viewPropertyName]
+		
+		if type(obj) == "userdata" then
+		
+			if filterFunc == nil then
+				obj.text = tostring(v)
+			else
+				obj.text = filterFunc(v)
+			end
+			
+		end
+
+	end)
+
+
+end
 
 
 
-ModelRoot = {}
 
-local function ApplyModel( msg )	
+local ModelDataRoot = {}
+function Model.Apply( msg )	
 	
 	local rootD = LuaPB.GetPool():GetMessage( "gamedef.ModelACK" )
 	
 	for k, v in pairs(msg) do
 	
 		local modelD = rootD:GetFieldByName( k )
+		
+		if modelD == nil then
+			error("field not found:" .. k )
+		end
 		
 		-- 多个
 		if modelD.IsRepeated then
@@ -150,22 +121,22 @@ local function ApplyModel( msg )
 					error("repeated model not set 'ModelKey' , " ..k )
 				end
 			
-				local list = ModelRoot[k]
+				local list = ModelDataRoot[k]
 			
 				if list == nil then
 					 list = {}
-					 ModelRoot[k] = list
+					 ModelDataRoot[k] = list
 				end
+				
+				local finalValue
 			
-				if listValue.ModelDelete then
-								
-					list[listValue.ModelKey] = nil
-				
-				else
-				
-					list[listValue.ModelKey] = listValue
-				
+				if not listValue.ModelDelete then
+					finalValue = listValue
 				end
+				
+				list[listValue.ModelKey] = finalValue
+				
+				notifyChange( k, listValue.ModelKey, finalValue )
 
 			end
 		
@@ -173,15 +144,14 @@ local function ApplyModel( msg )
 		else
 		-- 单个
 		
-			if v.ModelDelete then
-							
-				ModelRoot[k] = nil
+			local finalValue
 			
-			else
-			
-				ModelRoot[k] = v
-			
+			if not v.ModelDelete then
+				finalValue = v
 			end
+			
+			ModelDataRoot[k] = finalValue
+			notifyChange( k, nil, finalValue )
 		
 		end
 	
@@ -191,6 +161,21 @@ local function ApplyModel( msg )
 
 end
 
+
+function Model.Get( model, key )
+
+	local msg = ModelDataRoot[model]
+	if msg == nil then
+		return nil
+	end
+	
+	if key == nil then
+		return msg
+	end
+
+	return msg[key]
+
+end
 
 function Model.Init( )
 

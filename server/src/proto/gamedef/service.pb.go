@@ -28,11 +28,8 @@ It has these top-level messages:
 	LoginREQ
 	ServerInfo
 	LoginACK
-	TestAccountData
-	TestEquipData
-	TestRoleData
+	LoginModel
 	ModelACK
-	TestModelCommandACK
 	TableCodeOption
 */
 package gamedef

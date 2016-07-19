@@ -2,46 +2,19 @@ syntax = "proto3";
 
 package gamedef;
 
+import "login.proto";
 
-message TestAccountData
+message LoginModel
 {
-	string Name = 10;
+	string Account = 1;
+	string Address = 2;
 }
-
-
-message TestEquipData
-{
-	int64 ModelKey = 1;
-	bool ModelDelete = 2;
-	
-	string Name = 10;
-}
-
-
-message TestRoleData
-{
-	int64 ModelKey = 1;
-	bool ModelDelete = 2;
-	
-	int32 HP = 10;
-	
-	repeated int64 EquipList = 20;
-}
-
 
 
 message ModelACK
 {
-	TestAccountData Account = 10;
+	LoginModel Login = 1;
 	
-	repeated TestRoleData Role = 20;
-	
-	repeated TestEquipData Equip = 30;
+	repeated ServerInfo ServerList = 2;
 }
 
-
-
-message TestModelCommandACK
-{
-	string Command = 1;
-}

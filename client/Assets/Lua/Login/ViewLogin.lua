@@ -9,26 +9,6 @@ Class.Define("ViewLogin", {
 		self:Bind( self.presenter )
 			
 		self.presenter:Init( self )
-		
-
-		LoginPeer:Connect( "127.0.0.1:8101" )
-		
-		LoginPeer:RegisterMessage("gamedef.PeerConnected", function( )
-		
-			SendLoginMessage( "gamedef.LoginREQ", {
-				PlatformName = "dev",
-			})
-		
-		end )
-		
-		
-		LoginPeer:RegisterMessage("gamedef.LoginACK", function( msg )
-		
-			print("loginACK", msg.Result)
-		
-		end )
-		
-
 	end,
 	
 	
@@ -54,6 +34,12 @@ Class.Define("ViewLogin", {
 		end)
 		
 		
+	end,
+	
+	Start = function( self )
+	
+		self.presenter:Cmd_Start( )
+	
 	end,
 	
 	
