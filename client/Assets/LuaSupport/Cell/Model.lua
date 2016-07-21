@@ -46,62 +46,36 @@ end
 
 
 
-function Model.Bind( view, viewPropertyName )
-
-
-	viewPropertyName = viewPropertyName and viewPropertyName or modelKey
-
-	Model.Listen( modelName, modelKey, function( v ) 
-		
-		local obj = view[viewPropertyName]
-		
-		if type(obj) == "userdata" then
-		
-			if filterFunc == nil then
-				obj.text = tostring(v)
-			else
-				obj.text = filterFunc(v)
-			end
-			
-		end
-
-	end)
-
-
-end
-
-
-
-
 local ModelDataRoot = {}
 function Model.Apply( msg )	
 	
 	local rootD = LuaPB.GetPool():GetMessage( "gamedef.ModelACK" )
 	
-	for k, v in pairs(msg) do
+	for modelName, modelValue in pairs(msg) do
 	
 
-		local modelD = rootD:GetFieldByName( k )
+		local modelD = rootD:GetFieldByName( modelName )
 		
 		if modelD == nil then
-			error("field not found:" .. k )
+			error("field not found:" .. modelName )
 		end
 		
 		-- 多个
 		if modelD.IsRepeated then
 		
-			for listIndex, listValue in ipairs( v ) do
+			-- 遍历数组的值
+			for listIndex, listValue in ipairs( modelValue ) do
 			
 			
 				if listValue.ModelKey == nil then
-					error("repeated model not set 'ModelKey' , " ..k )
+					error("repeated model not set 'ModelKey' , " ..modelName )
 				end
 				
-				local list = ModelDataRoot[k]
+				local modelList = ModelDataRoot[modelName]
 			
-				if list == nil then
-					 list = {}
-					 ModelDataRoot[k] = list
+				if modelList == nil then
+					 modelList = {}
+					 ModelDataRoot[modelName] = modelList
 				end
 				
 				local finalValue
@@ -116,7 +90,7 @@ function Model.Apply( msg )
 					op = "del"
 				else
 				
-					if list[listValue.ModelKey] == nil then
+					if modelList[listValue.ModelKey] == nil then
 						op = "add"
 					else
 						op = "mod"
@@ -124,17 +98,17 @@ function Model.Apply( msg )
 				end
 							
 				
-				list[listValue.ModelKey] = finalValue
+				modelList[listValue.ModelKey] = finalValue
 				
-				notifyChange( k, listValue.ModelKey, finalValue, op )
+				notifyChange( modelName, listValue.ModelKey, finalValue, op )
 
 			end
 		
 		
 		else
 		-- 单个
-			ModelDataRoot[k] = v
-			notifyChange( k, nil, v, "mod" )
+			ModelDataRoot[modelName] = modelValue
+			notifyChange( modelName, nil, modelValue, "mod" )
 		
 		end
 	

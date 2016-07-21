@@ -6,6 +6,14 @@ require "Cell.Network"
 require "Cell.Utility"
 require "Protobuf.luapb"
 
+-- 常量通过metatable进行限定
+LoginConstant = 
+{
+	DevAddress = "127.0.0.1:8101",
+	PublicAddress = "www.test.com:8101",
+}
+
+
 function RequireModule( name )
 
 	require( string.format( "%s.View%s", name, name ) )
