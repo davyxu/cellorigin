@@ -20,6 +20,7 @@ public static class LuaBinder
 		EnumDescriptorWrap.Register(L);
 		EnumValueDescriptorWrap.Register(L);
 		PeerManagerLuaWrap.Register(L);
+		CellLuaClassWrap.Register(L);
 		NetworkPeerBaseWrap.Register(L);
 		ProtoBaseWrap.Register(L);
 		Singleton_PeerManagerLuaWrap.Register(L);
@@ -32,6 +33,7 @@ public static class LuaBinder
 		UnityEngine_CameraWrap.Register(L);
 		UnityEngine_AudioSourceWrap.Register(L);
 		UnityEngine_PlayerPrefsWrap.Register(L);
+		UnityEngine_ResourcesWrap.Register(L);
 		UnityEngine_BehaviourWrap.Register(L);
 		UnityEngine_MonoBehaviourWrap.Register(L);
 		UnityEngine_GameObjectWrap.Register(L);

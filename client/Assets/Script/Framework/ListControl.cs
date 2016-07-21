@@ -12,7 +12,7 @@ namespace Framework
         public void Add<ViewType, PresenterType>(object key, PresenterType value)
             where ViewType : BaseView
             where PresenterType : BasePresenter
-        {
+        {            
             var newItem = GameObject.Instantiate<GameObject>(ItemPrefab);
             newItem.transform.SetParent(Content.transform, false);
 

@@ -1,4 +1,4 @@
--- 常量通过metatable进行限定
+-- 甯搁噺閫氳繃metatable杩涜闄愬畾
 LoginConstant = 
 {
 	DevAddress = "127.0.0.1:8101",

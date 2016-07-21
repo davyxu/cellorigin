@@ -15,13 +15,11 @@ Class.Define("ViewLoginServerInfo", {
 	Bind = function( self, presenter  )
 
 		local trans = self.gameObject.transform
-		
-		-- ²é¿Ø¼þ
+				
 		self.Select = trans:Find("Select"):GetComponent("Button")
 		self.Name = trans:Find("Select/Name"):GetComponent("Text")
 				
-	
-		-- Ö¸Áî
+			
 		self.Select.onClick:AddListener( function( )
 			presenter:Cmd_Select( )
 		end)
@@ -29,5 +27,8 @@ Class.Define("ViewLoginServerInfo", {
 		
 		
 	end,
+	
+	
+	
 })
 

@@ -2,50 +2,11 @@ Network ={}
 
 
 
-local function RegisterDebugMessage( peer )
-
-	if peer == nil then
-		return
-	end
-
-	if not peer.DebugMessage then
-		return
-	end
-
-	peer:RegisterMessage("gamedef.PeerConnected", function( )
-	
-		print(string.format("[%s] #connected %s", peer.Name, peer.Address ) )
-
-	end )
-	
-	peer:RegisterMessage("gamedef.PeerDisconnected", function( )
-	
-		print(string.format("[%s] #disconnected %s", peer.Name, peer.Address ) )
-
-	end )
-	
-	peer:RegisterMessage("gamedef.PeerSendError", function( )
-	
-		print(string.format("[%s] #senderror %s", peer.Name, peer.Address ) )
-
-	end )
-	
-	peer:RegisterMessage("gamedef.PeerRecvError", function( )
-	
-		print(string.format("[%s] #recverror %s", peer.Name, peer.Address ) )
-
-	end )
-		
-end
-
-
 function Network.Init( )
 
 	LuaPB.RegisterFile("Assets/game.pb")
 	
 	LoginPeer = PeerManagerLua.Instance:Get( "login" )
-
-	RegisterDebugMessage( LoginPeer )
 end
 
 -- C#收到消息后, 通过Dispatcher找到注册的handler, 回调此函数

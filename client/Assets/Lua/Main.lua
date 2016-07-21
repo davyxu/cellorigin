@@ -15,12 +15,12 @@ function RequireModule( name )
 end
 
 RequireModule "Login"
+require "Login.PresenterLoginServerInfo"
+require "Login.ViewLoginServerInfo"
 
 	
 --主入口函数。从这里开始lua逻辑
 function Main()
-
-	
 
 	Network.Init( )
 	

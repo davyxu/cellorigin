@@ -2,17 +2,9 @@ Model = {}
 
 local modelMeta = {}
 
-local function notifyChange( model, key, value )
+local function notifyChange( name, key, value, op )
 	
-	local path
-	if key == nil then
-		path = model
-	else
-		path = string.format("%s.%s", model, key )
-	end
-	
-	
-	local callbackchain = modelMeta[path]
+	local callbackchain = modelMeta[name]
 
 	
 	if callbackchain == nil then
@@ -22,54 +14,36 @@ local function notifyChange( model, key, value )
 	
 	for _, callback in ipairs(callbackchain) do	
 	
-		callback( value )
+		callback( value, key, op )
 		
 	end
 
 end
 
--- model.field
+--[[
+path格式:
+	
+callback参数: value, key, op
 
--- model.key.field
+optional的结构体op始终为"mod"
+repeated的结构体op可能为"add" "mod" "del"
 
+]]
 
-function Model.Listen( path, callback )
+function Model.Listen( name, callback )
 
 	
-	local callbackchain = modelMeta[path]
+	local callbackchain = modelMeta[name]
 	
 	if callbackchain == nil then
 		callbackchain = {}
-		modelMeta[path] = callbackchain
+		modelMeta[name] = callbackchain
 	end
 	
 	table.insert( callbackchain, callback )
 	
 end
 
-
-
-function BindData( modelName, modelKey, view, viewPropertyName, filterFunc )
-
-	viewPropertyName = viewPropertyName and viewPropertyName or modelKey
-
-	Model.Listen( modelName, modelKey, function( v ) 
-		
-		local obj = view[viewPropertyName]
-		
-		if type(obj) == "userdata" then
-		
-			if filterFunc == nil then
-				obj.text = tostring(v)
-			else
-				obj.text = filterFunc(v)
-			end
-			
-		end
-
-	end)
-
-end
 
 
 function Model.Bind( view, viewPropertyName )
@@ -106,6 +80,7 @@ function Model.Apply( msg )
 	
 	for k, v in pairs(msg) do
 	
+
 		local modelD = rootD:GetFieldByName( k )
 		
 		if modelD == nil then
@@ -117,10 +92,11 @@ function Model.Apply( msg )
 		
 			for listIndex, listValue in ipairs( v ) do
 			
+			
 				if listValue.ModelKey == nil then
 					error("repeated model not set 'ModelKey' , " ..k )
 				end
-			
+				
 				local list = ModelDataRoot[k]
 			
 				if list == nil then
@@ -134,24 +110,31 @@ function Model.Apply( msg )
 					finalValue = listValue
 				end
 				
+				local op
+				
+				if finalValue == nil then
+					op = "del"
+				else
+				
+					if list[listValue.ModelKey] == nil then
+						op = "add"
+					else
+						op = "mod"
+					end
+				end
+							
+				
 				list[listValue.ModelKey] = finalValue
 				
-				notifyChange( k, listValue.ModelKey, finalValue )
+				notifyChange( k, listValue.ModelKey, finalValue, op )
 
 			end
 		
 		
 		else
 		-- 单个
-		
-			local finalValue
-			
-			if not v.ModelDelete then
-				finalValue = v
-			end
-			
-			ModelDataRoot[k] = finalValue
-			notifyChange( k, nil, finalValue )
+			ModelDataRoot[k] = v
+			notifyChange( k, nil, v, "mod" )
 		
 		end
 	

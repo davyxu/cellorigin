@@ -5,8 +5,15 @@ Class.Define("PresenterLoginServerInfo", {
 	
 	Init = function( self, view )
 	
-		BindData( "ModelLoginServerInfo", "Address", view )	
+		self.view = view
 		
+	end,
+	
+	
+	Apply = function( self, model )
+	
+		self.view.Name.text = model.DisplayName
+	
 	end,
 	
 	

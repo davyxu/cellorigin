@@ -78,6 +78,7 @@ public static class CustomSettings
         _GT(typeof(EnumDescriptor)),
         _GT(typeof(EnumValueDescriptor)),
         _GT(typeof(PeerManagerLua)), 
+        _GT(typeof(CellLuaClass)), 
 
         _GT(typeof(Component)),
         _GT(typeof(Transform)),
@@ -87,6 +88,7 @@ public static class CustomSettings
         _GT(typeof(Camera)),
         _GT(typeof(AudioSource)),     
         _GT(typeof(UnityEngine.PlayerPrefs)),        
+        _GT(typeof(UnityEngine.Resources)),
 
         _GT(typeof(Behaviour)),
         _GT(typeof(MonoBehaviour)),        

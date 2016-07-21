@@ -20,6 +20,8 @@ Class.Define("ViewLogin", {
 		self.Account = trans:Find("Account"):GetComponent("InputField")
 		self.Address = trans:Find("Address"):GetComponent("InputField")
 		
+		self.LoginServerList = trans:Find("LoginServerList"):GetComponent("Transform")
+		
 		self.SetDevAddress = trans:Find("SetDevAddress"):GetComponent("Button")
 		self.SetPublicAddress = trans:Find("SetPublicAddress"):GetComponent("Button")
 		

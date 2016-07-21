@@ -67,7 +67,7 @@ function Class.HasMethod( className )
 end
    
 
-local instanceMap = {}
+local instanceByGo = {}
 
 function Class.CallMethod( className, name, go )
 
@@ -80,11 +80,11 @@ function Class.CallMethod( className, name, go )
 		
 		ins.gameObject = go
 		
-		instanceMap[go] = ins
+		instanceByGo[go] = ins
 		
 	else
 	
-		ins = instanceMap[go]
+		ins = instanceByGo[go]
 		
 		if ins == nil then
 			error("instance not found", gameObject.name )
@@ -102,7 +102,11 @@ function Class.CallMethod( className, name, go )
 	
 	if name == "OnDestory" then
 	
-		instanceMap[go] = nil
+		instanceByGo[go] = nil
 	
 	end
+end
+
+function Class.GetInstance( go )
+	return instanceByGo[go]
 end

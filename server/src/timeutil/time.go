@@ -1,12 +1,17 @@
 package timeutil
 
 import (
+	"log"
 	"time"
 )
 
 // 1天的时间段
 var Duration1Day time.Duration
+
+// 凌晨0点
 var Duration0AM time.Duration
+
+// 凌晨5点
 var Duration5AM time.Duration
 
 const (
@@ -73,5 +78,5 @@ func GetUTCSecondNow() int64 {
 func init() {
 	Duration0AM, _ = time.ParseDuration("0h")
 	Duration5AM, _ = time.ParseDuration("5h")
-
+	Duration1Day, _ = time.ParseDuration("24h")
 }

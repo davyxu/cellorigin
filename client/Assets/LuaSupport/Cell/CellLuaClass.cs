@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CellLuaClass : MonoBehaviour {
 
-
+    [LuaInterface.NoToLuaAttribute]
     public string ClassName;
 
     public enum MethodName
@@ -22,12 +22,22 @@ public class CellLuaClass : MonoBehaviour {
    
     void Awake()
     {
+        // ClassName直接在Prefab中, 以后要去掉这种方式
+        if ( !string.IsNullOrEmpty(ClassName) )
+        {
+            InitAwake(ClassName);
+        }
+    }
+
+    public void InitAwake( string className )
+    {
+        ClassName = className;
+
         CellLuaManager.Attach();
 
         _hasMethod = CellLuaManager.ClassHasMethod(ClassName);
 
         CallMethod(MethodName.Awake);
-        
     }
 
     void CallMethod( MethodName name )
