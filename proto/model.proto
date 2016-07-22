@@ -3,6 +3,7 @@ syntax = "proto3";
 package gamedef;
 
 import "login.proto";
+import "game.proto";
 
 message LoginModel
 {
@@ -16,5 +17,7 @@ message ModelACK
 	LoginModel Login = 1;
 	
 	repeated ServerInfo ServerList = 2;
+	
+	repeated SimpleCharInfo CharList = 3;
 }
 

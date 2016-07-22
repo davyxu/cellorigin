@@ -2,6 +2,7 @@
 // DO NOT EDIT!
 // Source: model.proto
 	// login.proto
+	// game.proto
 package gamedef
 
 import (
@@ -9,6 +10,6 @@ import (
 )
 
 func init() {
-	cellnet.RegisterMessageMeta("gamedef.LoginModel", (*LoginModel)(nil), 3868584764)
-	cellnet.RegisterMessageMeta("gamedef.ModelACK", (*ModelACK)(nil), 515922020)
+	cellnet.RegisterMessageMeta("gamedef.LoginModel", (*LoginModel)(nil), 3486131741)
+	cellnet.RegisterMessageMeta("gamedef.ModelACK", (*ModelACK)(nil), 1600596047)
 }

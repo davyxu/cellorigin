@@ -1,7 +1,6 @@
 package timeutil
 
 import (
-	"log"
 	"time"
 )
 

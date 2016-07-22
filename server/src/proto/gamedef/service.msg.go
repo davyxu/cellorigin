@@ -8,7 +8,7 @@ import (
 )
 
 func init() {
-	cellnet.RegisterMessageMeta("gamedef.ServiceDefine", (*ServiceDefine)(nil), 3356866334)
-	cellnet.RegisterMessageMeta("gamedef.ServiceFile", (*ServiceFile)(nil), 3212230767)
-	cellnet.RegisterMessageMeta("gamedef.LocalFile", (*LocalFile)(nil), 704300586)
+	cellnet.RegisterMessageMeta("gamedef.ServiceDefine", (*ServiceDefine)(nil), 419771465)
+	cellnet.RegisterMessageMeta("gamedef.ServiceFile", (*ServiceFile)(nil), 2884989903)
+	cellnet.RegisterMessageMeta("gamedef.LocalFile", (*LocalFile)(nil), 2730603477)
 }

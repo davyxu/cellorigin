@@ -51,31 +51,30 @@ function Model.Apply( msg )
 	
 	local rootD = LuaPB.GetPool():GetMessage( "gamedef.ModelACK" )
 	
-	for modelName, modelValue in pairs(msg) do
+	for k, v in pairs(msg) do
 	
 
-		local modelD = rootD:GetFieldByName( modelName )
+		local modelD = rootD:GetFieldByName( k )
 		
 		if modelD == nil then
-			error("field not found:" .. modelName )
+			error("field not found:" .. k )
 		end
 		
 		-- 多个
 		if modelD.IsRepeated then
 		
-			-- 遍历数组的值
-			for listIndex, listValue in ipairs( modelValue ) do
+			for listIndex, listValue in ipairs( v ) do
 			
 			
-				if listValue.ModelKey == nil then
-					error("repeated model not set 'ModelKey' , " ..modelName )
+				if listValue.ModelID == nil then
+					error("repeated model not set 'ModelID' , " ..k )
 				end
 				
-				local modelList = ModelDataRoot[modelName]
+				local list = ModelDataRoot[k]
 			
-				if modelList == nil then
-					 modelList = {}
-					 ModelDataRoot[modelName] = modelList
+				if list == nil then
+					 list = {}
+					 ModelDataRoot[k] = list
 				end
 				
 				local finalValue
@@ -90,7 +89,7 @@ function Model.Apply( msg )
 					op = "del"
 				else
 				
-					if modelList[listValue.ModelKey] == nil then
+					if list[listValue.ModelID] == nil then
 						op = "add"
 					else
 						op = "mod"
@@ -98,17 +97,17 @@ function Model.Apply( msg )
 				end
 							
 				
-				modelList[listValue.ModelKey] = finalValue
+				list[listValue.ModelID] = finalValue
 				
-				notifyChange( modelName, listValue.ModelKey, finalValue, op )
+				notifyChange( k, listValue.ModelID, finalValue, op )
 
 			end
 		
 		
 		else
 		-- 单个
-			ModelDataRoot[modelName] = modelValue
-			notifyChange( modelName, nil, modelValue, "mod" )
+			ModelDataRoot[k] = v
+			notifyChange( k, nil, v, "mod" )
 		
 		end
 	
@@ -136,17 +135,13 @@ end
 
 function Model.Init( )
 
-
-
---[[
 	LoginPeer:RegisterMessage("gamedef.ModelACK", function( msg )
 			
-		ApplyModel( ModelRoot, msg )
+		Model.Apply( msg )
 
 	end )
 	
-	]]
-
+	
 end
 
 
@@ -162,7 +157,7 @@ local function UnitTest( )
 		Role = { 
 		
 			{
-				ModelKey = "1",
+				ModelID = "1",
 				HP = 1,
 			},
 		
@@ -184,12 +179,12 @@ local function UnitTest( )
 		Role = { 
 		
 			{
-				ModelKey = "1",
+				ModelID = "1",
 				HP = 2,
 			},
 			
 			{
-				ModelKey = "2",
+				ModelID = "2",
 				HP = 100,
 			},
 		
@@ -210,7 +205,7 @@ local function UnitTest( )
 		Role = { 
 		
 			{
-				ModelKey = "1",
+				ModelID = "1",
 				ModelDelete = true,				
 			},
 						

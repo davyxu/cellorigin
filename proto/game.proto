@@ -26,7 +26,8 @@ message VerifyGameACK
 
 // 初始角色信息
 message SimpleCharInfo
-{	
+{
+	int64 ModelID 	= 1;
 	string CharName = 2;
 	int64 LastLoginUTC = 3;		// 上次登录时间戳, 可以作为默认选中逻辑
 }
@@ -41,7 +42,7 @@ message CharListREQ
 // game -> client
 message CharListACK
 {
-	repeated SimpleCharInfo CharInfo = 1;	// 角色信息
+	// repeated SimpleCharInfo CharInfo = 1;	// 角色信息通过Model下发
 }
 
 
