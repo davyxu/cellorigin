@@ -7,7 +7,7 @@ Framework = {}
 function Framework.CreateUI( name, parentTransform )
 	
 	local prefabPath = string.format("View/%s", name )
-	local presenterName = string.format("Presenter%s", name )
+	local presenterName = name
 	
 	--  资源暂时用Resources方式加载
 	local prefab = Resources.Load(prefabPath)
@@ -26,7 +26,7 @@ function Framework.CreateUI( name, parentTransform )
 	
 	go.transform:SetParent( parentTransform, false )
 	
-	require(presenterName)
+	require(string.format("Presenter.%s", name ))
 	
 	-- lua的类实例创建
 	local instance = Class.NewGo(presenterName, go)
@@ -157,7 +157,7 @@ function Framework.BindModelToList( self, modelName, name )
 
 	-- list 对应的model名与控件名一致
 	Model.Listen( modelName, function( value, key, op )
-		print( value, key, op )
+		print( "Model :", modelName, key, op )
 	
 		if op == "add" then
 		
