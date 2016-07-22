@@ -15,11 +15,11 @@ func Start(evq cellnet.EventQueue) {
 
 		if acc, ok := gameuser.RawDataByID[u.ID()]; ok {
 
-			ack := gamedef.CharListACK{}
+			ack := gamedef.ModelACK{}
 
 			for _, c := range acc.Char {
 
-				ack.CharInfo = append(ack.CharInfo, &gamedef.SimpleCharInfo{
+				ack.CharList = append(ack.CharList, &gamedef.SimpleCharInfo{
 					CharName:     c.CharName,
 					LastLoginUTC: c.LastLoginUTC,
 

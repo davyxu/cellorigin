@@ -21,7 +21,7 @@ func getServerInfoFromTable() []*gamedef.ServerInfo {
 
 		if def.PeerName == "client->agent" {
 			svinfoList = append(svinfoList, &gamedef.ServerInfo{
-				ModelKey:    def.Name,
+				ModelID:     def.Name,
 				DisplayName: def.DisplayName,
 				Address:     fmt.Sprintf("%s:%d", def.IP, def.Port),
 			})

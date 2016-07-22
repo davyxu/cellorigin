@@ -2,6 +2,7 @@
 // DO NOT EDIT!
 // Source: model.proto
 	// login.proto
+	// game.proto
 package gamedef
 
 import (

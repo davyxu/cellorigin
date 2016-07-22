@@ -1,8 +1,8 @@
-Class.Define("PresenterLoginServerInfo", {	
+Class.Define("LoginServerInfo", {	
 	
 	Awake = function( self )
 	
-		require("ViewLoginServerInfo")( self )		
+		require("View.LoginServerInfo")( self )		
 	end,
 	
 	
@@ -12,7 +12,8 @@ Class.Define("PresenterLoginServerInfo", {
 	end,
 	
 	
-	Command = {
+	Command = 
+	{
 	
 		Select = function( self )
 			print("select ".. self.UI.Name.text )

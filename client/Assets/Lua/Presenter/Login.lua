@@ -25,13 +25,13 @@ local function SaveSetting( self )
 end
 	
 	
-Class.Define("PresenterLogin", {	
+Class.Define("Login", {	
 
 	Awake = function( self )
 	
-		require("ViewLogin")( self )
+		require("View.Login")( self )
 	
-		-- É¢½çÃæµÄÊÖ¶¯°ó¶¨·¨
+		-- æ•£ç•Œé¢çš„æ‰‹åŠ¨ç»‘å®šæ³•
 		Model.Listen( "Login", function( v )
 		
 			Framework.SetViewText( self, "Address", v.Address )
@@ -39,7 +39,7 @@ Class.Define("PresenterLogin", {
 		
 		end )
 		
-		-- ½«½çÃæ°ó¶¨µ½model, Êı¾İÔöÉ¾¸Ä×Ô¶¯¸üĞÂÁĞ±í
+		-- å°†ç•Œé¢ç»‘å®šåˆ°model, æ•°æ®å¢åˆ æ”¹è‡ªåŠ¨æ›´æ–°åˆ—è¡¨
 		Framework.BindModelToList( self, "ServerList", "LoginServerInfo")
 		
 		LoginPeer:RegisterMessage("gamedef.PeerConnected", function( )

@@ -16,7 +16,7 @@ message LoginREQ
 // 服务器信息
 message ServerInfo
 {
-	string ModelKey 	= 1;	// 选服用的名字
+	string ModelID 	= 1;	// 选服用的名字
 	bool ModelDelete 	= 2;
 	
 	string DisplayName 	= 11;	// 看得到的名称
@@ -29,5 +29,6 @@ message LoginACK
 {
 	string 		Result 					= 1;	// 空表示正常登陆
 	string 		Token 					= 2;	// 给后台验证用的令牌, 与PlatformToken不同
-	repeated 	ServerInfo 	ServerList 	= 3;	// 服务器列表
+	
+	// repeated 	ServerInfo 	ServerList 	= 3;	// 服务器列表通过Model下发
 }

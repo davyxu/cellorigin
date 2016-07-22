@@ -66,8 +66,8 @@ function Model.Apply( msg )
 			for listIndex, listValue in ipairs( v ) do
 			
 			
-				if listValue.ModelKey == nil then
-					error("repeated model not set 'ModelKey' , " ..k )
+				if listValue.ModelID == nil then
+					error("repeated model not set 'ModelID' , " ..k )
 				end
 				
 				local list = ModelDataRoot[k]
@@ -89,7 +89,7 @@ function Model.Apply( msg )
 					op = "del"
 				else
 				
-					if list[listValue.ModelKey] == nil then
+					if list[listValue.ModelID] == nil then
 						op = "add"
 					else
 						op = "mod"
@@ -97,9 +97,9 @@ function Model.Apply( msg )
 				end
 							
 				
-				list[listValue.ModelKey] = finalValue
+				list[listValue.ModelID] = finalValue
 				
-				notifyChange( k, listValue.ModelKey, finalValue, op )
+				notifyChange( k, listValue.ModelID, finalValue, op )
 
 			end
 		
@@ -157,7 +157,7 @@ local function UnitTest( )
 		Role = { 
 		
 			{
-				ModelKey = "1",
+				ModelID = "1",
 				HP = 1,
 			},
 		
@@ -179,12 +179,12 @@ local function UnitTest( )
 		Role = { 
 		
 			{
-				ModelKey = "1",
+				ModelID = "1",
 				HP = 2,
 			},
 			
 			{
-				ModelKey = "2",
+				ModelID = "2",
 				HP = 100,
 			},
 		
@@ -205,7 +205,7 @@ local function UnitTest( )
 		Role = { 
 		
 			{
-				ModelKey = "1",
+				ModelID = "1",
 				ModelDelete = true,				
 			},
 						
