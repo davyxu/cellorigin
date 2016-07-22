@@ -16,9 +16,11 @@ message LoginREQ
 // 服务器信息
 message ServerInfo
 {
-	string Name 		= 1;	// 选服用的名字
-	string DisplayName 	= 2;	// 看得到的名称
-	string Address		= 3;	// 连接游戏用地址(agent)
+	string ModelKey 	= 1;	// 选服用的名字
+	bool ModelDelete 	= 2;
+	
+	string DisplayName 	= 11;	// 看得到的名称
+	string Address		= 12;	// 连接游戏用地址(agent)
 }
 
 

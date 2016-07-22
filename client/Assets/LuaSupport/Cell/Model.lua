@@ -46,33 +46,6 @@ end
 
 
 
-function Model.Bind( view, viewPropertyName )
-
-
-	viewPropertyName = viewPropertyName and viewPropertyName or modelKey
-
-	Model.Listen( modelName, modelKey, function( v ) 
-		
-		local obj = view[viewPropertyName]
-		
-		if type(obj) == "userdata" then
-		
-			if filterFunc == nil then
-				obj.text = tostring(v)
-			else
-				obj.text = filterFunc(v)
-			end
-			
-		end
-
-	end)
-
-
-end
-
-
-
-
 local ModelDataRoot = {}
 function Model.Apply( msg )	
 	
@@ -162,17 +135,13 @@ end
 
 function Model.Init( )
 
-
-
---[[
 	LoginPeer:RegisterMessage("gamedef.ModelACK", function( msg )
 			
-		ApplyModel( ModelRoot, msg )
+		Model.Apply( msg )
 
 	end )
 	
-	]]
-
+	
 end
 
 

@@ -4,7 +4,7 @@ using System.Collections;
 public class CellLuaClass : MonoBehaviour {
 
     [LuaInterface.NoToLuaAttribute]
-    public string ClassName;
+    public string LuaClassName;
 
     public enum MethodName
     {
@@ -19,23 +19,13 @@ public class CellLuaClass : MonoBehaviour {
     bool[] _hasMethod = new bool[(int)MethodName.Max];
 
 
-   
-    void Awake()
-    {
-        // ClassName直接在Prefab中, 以后要去掉这种方式
-        if ( !string.IsNullOrEmpty(ClassName) )
-        {
-            InitAwake(ClassName);
-        }
-    }
-
     public void InitAwake( string className )
     {
-        ClassName = className;
+        LuaClassName = className;
 
         CellLuaManager.Attach();
 
-        _hasMethod = CellLuaManager.ClassHasMethod(ClassName);
+        _hasMethod = CellLuaManager.ClassHasMethod(LuaClassName);
 
         CallMethod(MethodName.Awake);
     }
@@ -44,7 +34,7 @@ public class CellLuaClass : MonoBehaviour {
     {
         if ( _hasMethod[(int)name] )
         {
-            CellLuaManager.ClassCallMethod(ClassName, name.ToString(), gameObject);
+            CellLuaManager.ClassCallMethod(LuaClassName, name.ToString(), gameObject);
         }
     }
 

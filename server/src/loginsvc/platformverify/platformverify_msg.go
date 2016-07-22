@@ -21,7 +21,7 @@ func getServerInfoFromTable() []*gamedef.ServerInfo {
 
 		if def.PeerName == "client->agent" {
 			svinfoList = append(svinfoList, &gamedef.ServerInfo{
-				Name:        def.Name,
+				ModelKey:    def.Name,
 				DisplayName: def.DisplayName,
 				Address:     fmt.Sprintf("%s:%d", def.IP, def.Port),
 			})
@@ -49,8 +49,12 @@ func Start(evq cellnet.EventQueue) {
 			return
 		}
 
-		ses.Send(&gamedef.LoginACK{
+		ses.Send(&gamedef.ModelACK{
 			ServerList: svinfoList,
+		})
+
+		ses.Send(&gamedef.LoginACK{
+			Token: "pass",
 		})
 
 	})

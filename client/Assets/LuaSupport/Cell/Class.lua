@@ -1,11 +1,12 @@
 
-local descriptorMap = {}
+local descriptorByName = {}
+local instanceByGo = {}
 
 Class = {}
 
 
 local function getClassDescriptor( className )
-	local descriptor = descriptorMap[className]
+	local descriptor = descriptorByName[className]
 
 	if descriptor == nil then
 		error("class not defined: " .. className)
@@ -17,11 +18,11 @@ end
 
 function Class.Define( className, descriptor )	
 
-	if descriptorMap[className] then
+	if descriptorByName[className] then
 		error("duplicate class className: " .. className)
 	end
 	descriptor.__index = descriptor
-	descriptorMap[className] = descriptor
+	descriptorByName[className] = descriptor
 
 end
 
@@ -38,6 +39,16 @@ function Class.New( className, ... )
 		
 	return ins
 
+end
+
+function Class.NewGo( className, go, ...  )
+
+	local ins = Class.New( className, ... )
+
+	instanceByGo[go] = ins
+	ins.gameObject = go
+	
+	return ins
 end
 
 -- Unity在脚本中存在时会调用这些函数
@@ -67,33 +78,17 @@ function Class.HasMethod( className )
 end
    
 
-local instanceByGo = {}
+
 
 function Class.CallMethod( className, name, go )
 
-	local descriptor = getClassDescriptor( className )
+	local ins = instanceByGo[go]
 	
-	
-	if name == "Awake" then
-	
-		ins = Class.New(className)
-		
-		ins.gameObject = go
-		
-		instanceByGo[go] = ins
-		
-	else
-	
-		ins = instanceByGo[go]
-		
-		if ins == nil then
-			error("instance not found", gameObject.name )
-		end
-		
-	
-	
+	if ins == nil then
+		error("instance not found: " .. className )
 	end
 	
+	local descriptor = getClassDescriptor( className )	
 	
 	local method = descriptor[name]
 	if method then
@@ -106,6 +101,8 @@ function Class.CallMethod( className, name, go )
 	
 	end
 end
+
+
 
 function Class.GetInstance( go )
 	return instanceByGo[go]

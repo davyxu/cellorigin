@@ -28,7 +28,6 @@ GameObject:
   - 222: {fileID: 22291232}
   - 114: {fileID: 11401352}
   - 114: {fileID: 11444036}
-  - 114: {fileID: 11406950}
   m_Layer: 5
   m_Name: Login
   m_TagString: Untagged
@@ -102,10 +101,9 @@ GameObject:
   - 114: {fileID: 11464998}
   - 222: {fileID: 22275186}
   - 114: {fileID: 11470340}
-  - 114: {fileID: 11413620}
   - 114: {fileID: 11453142}
   m_Layer: 5
-  m_Name: LoginServerList
+  m_Name: LoginServerInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -312,17 +310,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &11406950
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 126032}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c28f30722a9eda448e687eaf04babc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11412526
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -336,19 +323,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 1
   SyncType: 0
---- !u!114 &11413620
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 149378}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8bbe60797488744e8fd6cd0eafb5c16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Content: {fileID: 197896}
-  ItemPrefab: {fileID: 167208, guid: 4c27c6805e3157d4b98c66aaa664bda8, type: 2}
 --- !u!114 &11416528
 MonoBehaviour:
   m_ObjectHideFlags: 1

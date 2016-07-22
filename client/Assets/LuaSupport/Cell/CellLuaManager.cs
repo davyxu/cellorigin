@@ -25,10 +25,11 @@ public class CellLuaManager
     {
         if ( _ref == 0 )
         {
+            _ref++;
             Init();
         }
 
-        _ref++;
+       
     }
 
     public static void Detach()
