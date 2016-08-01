@@ -7,6 +7,9 @@ function Network.Init( )
 	LuaPB.RegisterFile("Assets/game.pb")
 	
 	LoginPeer = PeerManagerLua.Instance:Get( "login" )
+	
+	GamePeer = PeerManagerLua.Instance:Get( "game" )
+	
 end
 
 -- C#收到消息后, 通过Dispatcher找到注册的handler, 回调此函数

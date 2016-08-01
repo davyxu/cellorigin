@@ -8,13 +8,13 @@ import (
 )
 
 func init() {
-	cellnet.RegisterMessageMeta("gamedef.VerifyGameREQ", (*VerifyGameREQ)(nil), 3363420635)
-	cellnet.RegisterMessageMeta("gamedef.VerifyGameACK", (*VerifyGameACK)(nil), 2736997817)
-	cellnet.RegisterMessageMeta("gamedef.SimpleCharInfo", (*SimpleCharInfo)(nil), 121208014)
-	cellnet.RegisterMessageMeta("gamedef.CharListREQ", (*CharListREQ)(nil), 2518736022)
-	cellnet.RegisterMessageMeta("gamedef.CharListACK", (*CharListACK)(nil), 4252639476)
-	cellnet.RegisterMessageMeta("gamedef.CreateCharREQ", (*CreateCharREQ)(nil), 3034886093)
-	cellnet.RegisterMessageMeta("gamedef.CreateCharACK", (*CreateCharACK)(nil), 3753792431)
-	cellnet.RegisterMessageMeta("gamedef.EnterGameREQ", (*EnterGameREQ)(nil), 1204407910)
-	cellnet.RegisterMessageMeta("gamedef.EnterGameACK", (*EnterGameACK)(nil), 747844100)
+	cellnet.RegisterMessageMeta("gamedef.VerifyGameREQ", (*VerifyGameREQ)(nil), 2361853280)
+	cellnet.RegisterMessageMeta("gamedef.VerifyGameACK", (*VerifyGameACK)(nil), 3885889794)
+	cellnet.RegisterMessageMeta("gamedef.SimpleCharInfo", (*SimpleCharInfo)(nil), 2837064547)
+	cellnet.RegisterMessageMeta("gamedef.CharListREQ", (*CharListREQ)(nil), 124166400)
+	cellnet.RegisterMessageMeta("gamedef.CharListACK", (*CharListACK)(nil), 1815895394)
+	cellnet.RegisterMessageMeta("gamedef.CreateCharREQ", (*CreateCharREQ)(nil), 4032435062)
+	cellnet.RegisterMessageMeta("gamedef.CreateCharACK", (*CreateCharACK)(nil), 2600529684)
+	cellnet.RegisterMessageMeta("gamedef.EnterGameREQ", (*EnterGameREQ)(nil), 683865339)
+	cellnet.RegisterMessageMeta("gamedef.EnterGameACK", (*EnterGameACK)(nil), 1134037145)
 }

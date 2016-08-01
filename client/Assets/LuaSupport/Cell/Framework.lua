@@ -59,6 +59,11 @@ end
 
 -- 将一个值设置到view控件上
 function Framework.SetViewText( instance, name, value )
+
+	-- 一个model element里只修改了1个字段, 其他字段是空的, 表示不需要通知变化
+	if value == nil then
+		return
+	end
 	
 	local view = instance.UI[name]
 	if view == nil then

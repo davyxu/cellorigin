@@ -33,7 +33,7 @@ Class.Define("Login", {
 	
 		-- 散界面的手动绑定法
 		Model.Listen( "Login", function( v )
-		
+
 			Framework.SetViewText( self, "Address", v.Address )
 			Framework.SetViewText( self, "Account", v.Account )
 		
@@ -66,12 +66,28 @@ Class.Define("Login", {
 	{
 	
 		SetDevAddress = function( self )
-			LoginModel.Address = LoginConstant.DevAddress
+		
+			Model.Apply
+			{
+				Login = 
+				{					
+					Address = LoginConstant.DevAddress,
+				}
+			}
+			
 		end,
 		
 		
 		SetPublicAddress = function( self )
-			LoginModel.Address = LoginConstant.PublicAddress
+		
+			Model.Apply
+			{
+				Login = 
+				{					
+					Address = LoginConstant.PublicAddress,
+				}
+			}
+			
 		end,
 		
 	},
