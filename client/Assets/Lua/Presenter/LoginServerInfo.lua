@@ -20,7 +20,7 @@ Class.Define("LoginServerInfo", {
 		Select = function( self )
 			print("select ".. self.model.DisplayName )
 			
-			GamePeer:Connect( model.Address )
+			GamePeer:Connect( self.model.Address )
 		end,
 	
 	},

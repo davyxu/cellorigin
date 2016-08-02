@@ -4,20 +4,18 @@ local PlayerPrefs = UnityEngine.PlayerPrefs
 
 local function LoadSetting( self )
 
-	Model.Apply
-	{
-		Login = 
-		{
-			Account = PlayerPrefs.GetString("Login.Account"),
-			Address = PlayerPrefs.GetString("Login.Address"),
-		}
-	}
+	Model.Modify( "Login", function( v ) 
+
+			v.Account = PlayerPrefs.GetString("Login.Account")
+			v.Address = PlayerPrefs.GetString("Login.Address")
+	end )
+	
 	
 end
 
 local function SaveSetting( self )
 
-	local loginModel = Model.Get( "Login" )
+	local loginModel = Model.Get( "Login" )	
 
 	PlayerPrefs.SetString("Login.Account", loginModel.Account )
 	PlayerPrefs.SetString("Login.Address", loginModel.Address )
@@ -56,8 +54,26 @@ Class.Define("Login", {
 			print("loginACK", msg.Result)
 		
 		end )
+
 		
 		LoadSetting()
+
+		-- view到model的侦听在手游里很少， 所以特殊处理下就好
+		Framework.ViewListen( self, "Account", function( v )
+			Model.Modify( "Login", function( m )
+				m.Account = v
+			end, false )
+			
+		end )
+		
+		Framework.ViewListen( self, "Address", function( v )
+			Model.Modify( "Login", function( m )
+				m.Address = v
+			end, false )
+			
+		end )
+
+
 
 	end,
 
@@ -67,26 +83,23 @@ Class.Define("Login", {
 	
 		SetDevAddress = function( self )
 		
-			Model.Apply
-			{
-				Login = 
-				{					
-					Address = LoginConstant.DevAddress,
-				}
-			}
+			Model.Modify("Login", function( v )
+			
+				v.Address = LoginConstant.DevAddress
+			
+			end )
+
 			
 		end,
 		
 		
 		SetPublicAddress = function( self )
 		
-			Model.Apply
-			{
-				Login = 
-				{					
-					Address = LoginConstant.PublicAddress,
-				}
-			}
+			Model.Modify("Login", function( v )
+			
+				v.Address = LoginConstant.PublicAddress
+			
+			end )
 			
 		end,
 		

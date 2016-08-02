@@ -9,5 +9,7 @@ return function( self )
 
 	Framework.BindUIToClass( self, "LoginServerInfo", "ScrollRect")
 	
+
+	
 end
 

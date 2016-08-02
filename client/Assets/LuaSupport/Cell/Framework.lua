@@ -85,17 +85,17 @@ ui路径最右斜杠的部分=name
 Command的名称=Button的name
 
 ]]
-function Framework.BindUIToClass( self, path, csharpType )
+function Framework.BindUIToClass( class, path, csharpType )
 	
 	local name = string.gsub(path, "(.*/)(.*)", "%2")
 
-	local trans = self.gameObject.transform
+	local trans = class.gameObject.transform
 	
 	-- 自动创建UI组
-	local UI = self.UI
+	local UI = class.UI
 	if UI == nil then
 		UI = {}
-		self.UI = UI
+		class.UI = UI
 	end
 	
 	local obj = trans:Find( path )
@@ -117,7 +117,7 @@ function Framework.BindUIToClass( self, path, csharpType )
 	if csharpType == "Button" then
 	
 		w.onClick:AddListener( function( )
-			Framework.ExecuteCommand( self, name )
+			Framework.ExecuteCommand( class, name )
 		end)
 		
 	end
@@ -134,9 +134,9 @@ ScrollRect下的page只能在Viewport/Content路径下
 ScrollRect的对象名称与每个元素的Prefab名称统一
 
 ]]
-function Framework.BindModelToList( self, modelName, name )
+function Framework.BindModelToList( class, modelName, name )
 
-	local w = self.UI[name]
+	local w = class.UI[name]
 
 
 	local content = w.transform:Find("Viewport/Content")
@@ -146,18 +146,18 @@ function Framework.BindModelToList( self, modelName, name )
 	end	
 	
 	-- 自动创建List组
-	if self.List == nil then
-		self.List = {}
+	if class.List == nil then
+		class.List = {}
 	end
 	
-	local list = self.List[name]
+	local list = class.List[name]
 	
 	if list ~= nil then
 		error("duplicate list name of path: ".. path )
 	end
 	
 	list = {}
-	self.List[name] = list
+	class.List[name] = list
 	
 
 	-- list 对应的model名与控件名一致
@@ -184,4 +184,18 @@ function Framework.BindModelToList( self, modelName, name )
 	
 	end )
 		
+end
+
+
+
+function Framework.ViewListen( class, modelName, callback )
+
+	local w = class.UI[modelName]
+
+	w.onValueChanged:AddListener( function( )
+	
+		callback( w.text )
+		
+	end)
+
 end
