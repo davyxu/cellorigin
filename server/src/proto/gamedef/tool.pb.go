@@ -13,6 +13,21 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
+//
+// 生成表格的索引例子: 只支持不重复key的类型
+//
+// message SampleDefine
+// {
+// int32 ID = 1;				// [table] GenMapKey: true
+// }
+//
+//
+// // [table] GenTableCode: true # 注释只能加到这里
+// message SampleFile
+// {
+// repeated SampleDefine Sample = 1;
+// }
+//
 type TableCodeOption struct {
 	GenTableCode bool `protobuf:"varint,1,opt,name=GenTableCode,json=genTableCode" json:"GenTableCode,omitempty"`
 	GenMapKey    bool `protobuf:"varint,2,opt,name=GenMapKey,json=genMapKey" json:"GenMapKey,omitempty"`
@@ -21,15 +36,15 @@ type TableCodeOption struct {
 func (m *TableCodeOption) Reset()                    { *m = TableCodeOption{} }
 func (m *TableCodeOption) String() string            { return proto.CompactTextString(m) }
 func (*TableCodeOption) ProtoMessage()               {}
-func (*TableCodeOption) Descriptor() ([]byte, []int) { return fileDescriptor4, []int{0} }
+func (*TableCodeOption) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{0} }
 
 func init() {
 	proto.RegisterType((*TableCodeOption)(nil), "gamedef.TableCodeOption")
 }
 
-func init() { proto.RegisterFile("tool.proto", fileDescriptor4) }
+func init() { proto.RegisterFile("tool.proto", fileDescriptor5) }
 
-var fileDescriptor4 = []byte{
+var fileDescriptor5 = []byte{
 	// 109 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xe2, 0xe2, 0x2a, 0xc9, 0xcf, 0xcf,
 	0xd1, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x4f, 0x4f, 0xcc, 0x4d, 0x4d, 0x49, 0x4d, 0x53,

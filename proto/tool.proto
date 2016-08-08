@@ -2,7 +2,22 @@ syntax = "proto3";
 
 package gamedef;
 
+/*
+生成表格的索引例子: 只支持不重复key的类型
 
+message SampleDefine
+{
+	int32 ID = 1;				// [table] GenMapKey: true
+}
+
+
+// [table] GenTableCode: true # 注释只能加到这里
+message SampleFile
+{
+	repeated SampleDefine Sample = 1;
+}
+
+*/
 message TableCodeOption
 {
 	bool GenTableCode = 1; // 对应消息生成table代码

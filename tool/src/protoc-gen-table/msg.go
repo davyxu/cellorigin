@@ -111,7 +111,7 @@ func printMessage(gen *Generator, msg *pbmeta.Descriptor, file *pbmeta.FileDescr
 	iterateMapKey(rowMsgType, func(keyName string, keyType string) {
 
 		// 声明映射类型
-		gen.Println("var ", name, keyName, "Map = make(map[", keyType, "]*gamedef.", name, "Define)")
+		gen.Println("var ", name, "By", keyName, " = make(map[", keyType, "]*gamedef.", name, "Define)")
 		gen.Println()
 		keyCount++
 
@@ -142,7 +142,7 @@ func printMessage(gen *Generator, msg *pbmeta.Descriptor, file *pbmeta.FileDescr
 
 		// 建立索引
 		iterateMapKey(rowMsgType, func(keyName string, keyType string) {
-			gen.Println(name, keyName, "Map[def.", keyName, "] = def")
+			gen.Println(name, "By", keyName, "[def.", keyName, "] = def")
 			gen.Println()
 		})
 

@@ -10,6 +10,7 @@ It is generated from these files:
 	game.proto
 	login.proto
 	model.proto
+	behavior.proto
 	tool.proto
 
 It has these top-level messages:
@@ -30,6 +31,8 @@ It has these top-level messages:
 	LoginACK
 	LoginModel
 	ModelACK
+	BehaviorDefine
+	BehaviorFile
 	TableCodeOption
 */
 package gamedef
