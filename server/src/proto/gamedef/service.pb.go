@@ -11,6 +11,7 @@ It is generated from these files:
 	login.proto
 	model.proto
 	behavior.proto
+	router.proto
 	tool.proto
 
 It has these top-level messages:
@@ -33,6 +34,10 @@ It has these top-level messages:
 	ModelACK
 	BehaviorDefine
 	BehaviorFile
+	UpstreamACK
+	CloseClientACK
+	DownstreamACK
+	RegisterRouterBackendACK
 	TableCodeOption
 */
 package gamedef

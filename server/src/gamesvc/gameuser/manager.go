@@ -1,11 +1,11 @@
 package gameuser
 
 import (
+	"backend"
 	"table"
 
 	"github.com/davyxu/cellnet"
 	"github.com/davyxu/cellnet/db"
-	"github.com/davyxu/cellnet/router"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -87,7 +87,7 @@ func CreateChar(evq cellnet.EventQueue, acc *DBAccount, char *CharData, callback
 // 注册用户消息, 封装用户回调
 func RegisterMessage(msgName string, userHandler func(interface{}, *GameUser)) {
 
-	router.RegisterMessage(msgName, func(content interface{}, routerSes cellnet.Session, clientid int64) {
+	backend.RegisterMessage(msgName, func(content interface{}, routerSes cellnet.Session, clientid int64) {
 
 		if u, ok := UserByID[clientid]; ok {
 

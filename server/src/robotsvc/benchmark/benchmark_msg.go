@@ -43,7 +43,7 @@ func Start(pipe cellnet.EventPipe, evq cellnet.EventQueue) {
 		//ses.Send(&gamedef.EnterGameREQ{})
 	})
 
-	socket.RegisterSessionMessage(evq, "coredef.SessionConnected", func(content interface{}, ses cellnet.Session) {
+	socket.RegisterSessionMessage(evq, "gamedef.SessionConnected", func(content interface{}, ses cellnet.Session) {
 
 		ses.Send(&gamedef.EnterGameREQ{})
 

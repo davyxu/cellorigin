@@ -10,6 +10,10 @@
 
 * 基于MVVM的框架, 自动生成View, ViewModel及网络处理关联代码
 
+* Lua脚本框架(基于Tolua#), MVP框架 Model自动同步, View自动绑定
+
+* 基于Trigger-Condition-Action的服务器框架, 强大扩展性
+
 
 # 文档请参考
 https://github.com/davyxu/cellorigin/tree/master/doc
@@ -22,7 +26,6 @@ https://github.com/davyxu/cellorigin/tree/master/doc
 
 # TODO
 
-* 网络底层的支持连接失败(而不是与断开混合)事件
 
 * 通用对话框系统, UI层
 

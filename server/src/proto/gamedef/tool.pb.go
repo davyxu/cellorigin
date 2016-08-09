@@ -36,15 +36,15 @@ type TableCodeOption struct {
 func (m *TableCodeOption) Reset()                    { *m = TableCodeOption{} }
 func (m *TableCodeOption) String() string            { return proto.CompactTextString(m) }
 func (*TableCodeOption) ProtoMessage()               {}
-func (*TableCodeOption) Descriptor() ([]byte, []int) { return fileDescriptor5, []int{0} }
+func (*TableCodeOption) Descriptor() ([]byte, []int) { return fileDescriptor6, []int{0} }
 
 func init() {
 	proto.RegisterType((*TableCodeOption)(nil), "gamedef.TableCodeOption")
 }
 
-func init() { proto.RegisterFile("tool.proto", fileDescriptor5) }
+func init() { proto.RegisterFile("tool.proto", fileDescriptor6) }
 
-var fileDescriptor5 = []byte{
+var fileDescriptor6 = []byte{
 	// 109 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x09, 0x6e, 0x88, 0x02, 0xff, 0xe2, 0xe2, 0x2a, 0xc9, 0xcf, 0xcf,
 	0xd1, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x4f, 0x4f, 0xcc, 0x4d, 0x4d, 0x49, 0x4d, 0x53,

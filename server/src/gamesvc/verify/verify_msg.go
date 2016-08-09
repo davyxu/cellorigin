@@ -1,17 +1,17 @@
 package verify
 
 import (
+	"backend"
 	"gamesvc/gameuser"
 	"proto/gamedef"
 	"user"
 
 	"github.com/davyxu/cellnet"
-	"github.com/davyxu/cellnet/router"
 )
 
 func Start(evq cellnet.EventQueue) {
 
-	router.RegisterMessage("gamedef.VerifyGameREQ", func(content interface{}, routerSes cellnet.Session, clientid int64) {
+	backend.RegisterMessage("gamedef.VerifyGameREQ", func(content interface{}, routerSes cellnet.Session, clientid int64) {
 		msg := content.(*gamedef.VerifyGameREQ)
 
 		// 已经有用户了
@@ -50,7 +50,7 @@ func Start(evq cellnet.EventQueue) {
 	})
 
 	// 客户端断开
-	router.RegisterMessage("coredef.SessionClosed", func(content interface{}, routerSes cellnet.Session, clientid int64) {
+	backend.RegisterMessage("gamedef.SessionClosed", func(content interface{}, routerSes cellnet.Session, clientid int64) {
 
 		// 这个组件关联的, 这个组件删除
 		delete(gameuser.RawDataByID, clientid)

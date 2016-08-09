@@ -5,6 +5,7 @@ game.proto ^
 login.proto ^
 model.proto ^
 behavior.proto ^
+router.proto ^
 tool.proto
 
 : 客户端协议

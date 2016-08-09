@@ -1,14 +1,13 @@
 package main
 
 import (
+	"backend"
 	"gamesvc/charinit"
 	"gamesvc/gameuser"
 	"gamesvc/verify"
-
 	"table"
 
 	"github.com/davyxu/cellnet"
-	"github.com/davyxu/cellnet/router"
 	"github.com/davyxu/cellnet/socket"
 	"github.com/davyxu/golog"
 )
@@ -33,8 +32,8 @@ func main() {
 
 	table.LoadServiceTable()
 
-	addMsgLogBlock("coredef.UpstreamACK")
-	addMsgLogBlock("coredef.DownstreamACK")
+	addMsgLogBlock("gamedef.UpstreamACK")
+	addMsgLogBlock("gamedef.DownstreamACK")
 
 	// 屏蔽socket层消息日志, 避免重复
 	socket.SetMessageLogHook(func(info *socket.MessageLogInfo) bool {
@@ -53,7 +52,7 @@ func main() {
 	// DB消息投递
 	evq := pipe.AddQueue()
 
-	router.StartBackendConnector(pipe, table.GetPeerAddressList("svc->agent"), "svc->agent", "game")
+	backend.StartBackendConnector(pipe, table.GetPeerAddressList("svc->agent"), "svc->agent", "game")
 
 	// 组消息初始化
 	gameuser.Start()

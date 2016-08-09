@@ -1,10 +1,10 @@
 package user
 
 import (
+	"backend"
 	"fmt"
 
 	"github.com/davyxu/cellnet"
-	"github.com/davyxu/cellnet/router"
 )
 
 // 网关通信用的用户
@@ -25,12 +25,12 @@ func (self *RouterUser) String() string {
 
 func (self *RouterUser) Send(data interface{}) {
 
-	router.SendToClient(self.routerSes, self.clientid, data)
+	backend.SendToClient(self.routerSes, self.clientid, data)
 }
 
 func (self *RouterUser) Close() {
 
-	router.CloseClient(self.routerSes, self.clientid)
+	backend.CloseClient(self.routerSes, self.clientid)
 }
 
 func NewRouterUser(routerSes cellnet.Session, clientid int64) *RouterUser {

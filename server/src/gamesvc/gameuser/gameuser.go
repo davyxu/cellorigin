@@ -9,4 +9,5 @@ type GameUser struct {
 	*user.RouterUser
 
 	*CharData
+	*AccountData
 }
