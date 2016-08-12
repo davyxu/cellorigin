@@ -3,7 +3,7 @@ package main
 import (
 	"backend"
 	"gamesvc/charinit"
-	"gamesvc/gameuser"
+	"gamesvc/player"
 	"gamesvc/verify"
 	"table"
 
@@ -55,7 +55,7 @@ func main() {
 	backend.StartBackendConnector(pipe, table.GetPeerAddressList("svc->agent"), "svc->agent", "game")
 
 	// 组消息初始化
-	gameuser.Start()
+	player.Start()
 	verify.Start(evq)
 	charinit.Start(evq)
 
