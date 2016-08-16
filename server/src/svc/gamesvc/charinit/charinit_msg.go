@@ -1,8 +1,8 @@
 package charinit
 
 import (
-	"gamesvc/player"
 	"proto/gamedef"
+	"svc/gamesvc/player"
 	"timeutil"
 
 	"github.com/davyxu/cellnet"

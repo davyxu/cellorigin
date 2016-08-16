@@ -4,6 +4,7 @@ package gamedef;
 
 import "login.proto";
 import "game.proto";
+import "char.proto";
 
 message LoginModel
 {
@@ -16,8 +17,10 @@ message ModelACK
 {
 	LoginModel Login = 1;
 	
-	repeated ServerInfo ServerList = 2;
+	CharModel Char = 2;
 	
-	repeated SimpleCharInfo CharList = 3;
+	repeated ServerInfo ServerList = 3;
+	
+	repeated SimpleCharInfo CharList = 4;
 }
 

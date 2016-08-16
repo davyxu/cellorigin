@@ -8,7 +8,7 @@ import (
 
 // 逻辑中使用到的对象
 type Player struct {
-	*user.RouterUser
+	*user.RouterUser `model:"-"`
 
 	*MemChar
 	*MemAccount

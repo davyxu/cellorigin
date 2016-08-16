@@ -6,6 +6,7 @@ login.proto ^
 model.proto ^
 behavior.proto ^
 router.proto ^
+char.proto ^
 tool.proto
 
 : 客户端协议
@@ -16,6 +17,7 @@ client.proto ^
 descriptor.proto ^
 addressbook.proto ^
 model.proto ^
+char.proto ^
 login.proto
 
 call gen_csharp.bat ^

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"loginsvc/platformverify"
+	"svc/loginsvc/platformverify"
 	"table"
 
 	"github.com/davyxu/cellnet"

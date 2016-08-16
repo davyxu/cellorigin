@@ -3,6 +3,7 @@
 // Source: model.proto
 	// login.proto
 	// game.proto
+	// char.proto
 package gamedef
 
 import (

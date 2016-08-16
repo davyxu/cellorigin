@@ -65,11 +65,10 @@ func (self *StringFilter) Replace(txt string) string {
 		if _, exists := node.children[key[i]]; exists {
 			node = node.children[key[i]]
 			if node.end { // 单个单词匹配
-				c, _ := utf8.DecodeRuneInString("*")
 				if chars == nil {
 					chars = key
 				}
-				chars[i] = c
+				chars[i] = starRune
 			}
 			for j := i + 1; j < slen; j++ {
 				if _, exists := node.children[key[j]]; !exists {
@@ -94,8 +93,7 @@ func (self *StringFilter) Replace(txt string) string {
 					chars = key
 				}
 				for t := i; t <= endPos; t++ { // 从敏感词开始到结束依次替换为*
-					c, _ := utf8.DecodeRuneInString("*")
-					chars[t] = c
+					chars[t] = starRune
 				}
 
 			}
@@ -147,4 +145,10 @@ func (self *StringFilter) LoadFile(fileName string) {
 
 func (self *StringFilter) Empty() bool {
 	return len(self.root.children) == 0
+}
+
+var starRune rune
+
+func init() {
+	starRune, _ = utf8.DecodeRuneInString("*")
 }

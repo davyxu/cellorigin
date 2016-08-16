@@ -12,6 +12,7 @@ It is generated from these files:
 	model.proto
 	behavior.proto
 	router.proto
+	char.proto
 	tool.proto
 
 It has these top-level messages:
@@ -38,6 +39,7 @@ It has these top-level messages:
 	CloseClientACK
 	DownstreamACK
 	RegisterRouterBackendACK
+	CharModel
 	TableCodeOption
 */
 package gamedef

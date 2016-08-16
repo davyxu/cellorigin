@@ -4,7 +4,7 @@ import (
 	"flag"
 	"table"
 
-	"agentsvc/router"
+	"svc/agentsvc/router"
 
 	"github.com/davyxu/cellnet"
 	"github.com/davyxu/golog"

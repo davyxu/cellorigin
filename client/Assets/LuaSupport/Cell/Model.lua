@@ -98,7 +98,7 @@ local function ModValue( modelName, modelValue, doNotify )
 				end
 			end
 						
-			
+			-- TODO 支持逐个字段合并
 			list[listValue.ModelID] = finalValue
 			
 			if doNotify ~= false then
@@ -109,7 +109,8 @@ local function ModValue( modelName, modelValue, doNotify )
 	
 	
 	else
-	-- 单个
+		-- TODO 支持逐个字段合并
+		-- 单个
 		ModelDataRoot[modelName] = modelValue
 		
 		if doNotify ~= false then

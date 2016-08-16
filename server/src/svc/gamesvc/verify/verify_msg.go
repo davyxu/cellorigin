@@ -2,8 +2,8 @@ package verify
 
 import (
 	"backend"
-	"gamesvc/player"
 	"proto/gamedef"
+	"svc/gamesvc/player"
 
 	"github.com/davyxu/cellnet"
 )

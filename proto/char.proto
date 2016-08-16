@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package gamedef;
+
+message CharModel
+{
+	string 	CharName = 1;
+	int32 	Coin = 2;
+	int32 	Diamond = 3;
+	
+}

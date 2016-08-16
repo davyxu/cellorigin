@@ -9,9 +9,9 @@ import (
 // 存入DB的角色信息
 type DBChar struct {
 	// Model需要同步的
-	CharName string `sync:"m"`
-	Coin     int32  `sync:"m"`
-	Diamond  int32  `sync:"m"`
+	CharName string `model:"Char.CharName"`
+	Coin     int32  `model:"Char.Coin"`
+	Diamond  int32  `model:"Char.Diamond"`
 
 	// 不需要同步的变量,但需要存盘
 
@@ -23,6 +23,10 @@ type MemChar struct {
 	*DBChar
 
 	// 不需要存盘的变量
+}
+
+func (self *MemChar) ChangeValue(key string, value interface{}) {
+
 }
 
 // 创建角色

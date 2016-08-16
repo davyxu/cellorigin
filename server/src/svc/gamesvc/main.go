@@ -2,9 +2,9 @@ package main
 
 import (
 	"backend"
-	"gamesvc/charinit"
-	"gamesvc/player"
-	"gamesvc/verify"
+	"svc/gamesvc/charinit"
+	"svc/gamesvc/player"
+	"svc/gamesvc/verify"
 	"table"
 
 	"github.com/davyxu/cellnet"
