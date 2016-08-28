@@ -24,3 +24,28 @@ message ModelACK
 	repeated SimpleCharInfo CharList = 4;
 }
 
+
+// 第三代同步
+
+message ModelValue
+{
+	// 字段分隔路径
+	repeated int32 FieldPath = 1;	
+	
+	// 容器ID标示
+	int32 FieldID = 2;
+	
+	// 删除字段
+	bool Delete = 3;
+	
+	// 值类型
+	int32 Integer 	= 11;
+	float Number 	= 12;
+	string String 	= 13;
+	bool Boolean 	= 14;
+}
+
+message ModelSyncACK
+{
+	repeated ModelValue Value = 1;
+}

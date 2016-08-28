@@ -8,6 +8,6 @@ import (
 )
 
 func init() {
-	cellnet.RegisterMessageMeta("gamedef.BehaviorDefine", (*BehaviorDefine)(nil), 2092243896)
-	cellnet.RegisterMessageMeta("gamedef.BehaviorFile", (*BehaviorFile)(nil), 2108506812)
+	cellnet.RegisterMessageMeta("gamedef.BehaviorDefine", (*BehaviorDefine)(nil), 791402043)
+	cellnet.RegisterMessageMeta("gamedef.BehaviorFile", (*BehaviorFile)(nil), 2539894295)
 }

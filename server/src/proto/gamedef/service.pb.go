@@ -33,6 +33,8 @@ It has these top-level messages:
 	LoginACK
 	LoginModel
 	ModelACK
+	ModelValue
+	ModelSyncACK
 	BehaviorDefine
 	BehaviorFile
 	UpstreamACK

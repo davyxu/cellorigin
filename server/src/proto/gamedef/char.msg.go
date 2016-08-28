@@ -8,5 +8,5 @@ import (
 )
 
 func init() {
-	cellnet.RegisterMessageMeta("gamedef.CharModel", (*CharModel)(nil), 1710240108)
+	cellnet.RegisterMessageMeta("gamedef.CharModel", (*CharModel)(nil), 1830671205)
 }

@@ -8,8 +8,8 @@ import (
 )
 
 func init() {
-	cellnet.RegisterMessageMeta("gamedef.UpstreamACK", (*UpstreamACK)(nil), 3582740848)
-	cellnet.RegisterMessageMeta("gamedef.CloseClientACK", (*CloseClientACK)(nil), 3483582153)
-	cellnet.RegisterMessageMeta("gamedef.DownstreamACK", (*DownstreamACK)(nil), 487544680)
-	cellnet.RegisterMessageMeta("gamedef.RegisterRouterBackendACK", (*RegisterRouterBackendACK)(nil), 3288936586)
+	cellnet.RegisterMessageMeta("gamedef.UpstreamACK", (*UpstreamACK)(nil), 1704656533)
+	cellnet.RegisterMessageMeta("gamedef.CloseClientACK", (*CloseClientACK)(nil), 2995936107)
+	cellnet.RegisterMessageMeta("gamedef.DownstreamACK", (*DownstreamACK)(nil), 2028020128)
+	cellnet.RegisterMessageMeta("gamedef.RegisterRouterBackendACK", (*RegisterRouterBackendACK)(nil), 2210534204)
 }
