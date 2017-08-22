@@ -1,22 +1,7 @@
-: 服务器协议
-call gen_server.bat ^
-service.proto ^
-game.proto ^
-login.proto ^
-model.proto ^
-behavior.proto ^
-router.proto ^
-tool.proto
+set CURR=%cd%
+cd tool
+call gen_sproto ^
+..\login.sp ^
+..\clientnet.sp
 
-: 客户端协议
-call gen_lua.bat ^
-network.proto ^
-game.proto ^
-client.proto ^
-descriptor.proto ^
-addressbook.proto ^
-model.proto ^
-login.proto
-
-call gen_csharp.bat ^
-network.proto
+cd %CURR%

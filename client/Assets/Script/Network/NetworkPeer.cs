@@ -7,6 +7,8 @@ public class NetworkPeer : NetworkPeerBase
 {
 
     MessageDispatcher _dispatcher = new MessageDispatcher();
+    static Printer printer = new Printer();
+    Sproto.SprotoPack spack = new Sproto.SprotoPack();
 
     protected MessageMetaSet _metaSet;
 
@@ -14,11 +16,11 @@ public class NetworkPeer : NetworkPeerBase
     {
         _metaSet = PeerManager.Instance.MsgMeta;
 
-        MsgID_Connected = _metaSet.GetByType<gamedef.PeerConnected>().id;
-        MsgID_Disconnected = _metaSet.GetByType<gamedef.PeerDisconnected>().id;
-        MsgID_ConnectError = _metaSet.GetByType<gamedef.PeerConnectError>().id;
-        MsgID_SendError = _metaSet.GetByType<gamedef.PeerSendError>().id;
-        MsgID_RecvError = _metaSet.GetByType<gamedef.PeerRecvError>().id;
+        MsgID_Connected = _metaSet.GetByType<proto.PeerConnected>().id;
+        MsgID_Disconnected = _metaSet.GetByType<proto.PeerDisconnected>().id;
+        MsgID_ConnectError = _metaSet.GetByType<proto.PeerConnectError>().id;
+        MsgID_SendError = _metaSet.GetByType<proto.PeerSendError>().id;
+        MsgID_RecvError = _metaSet.GetByType<proto.PeerRecvError>().id;
     }
 
     HashSet<string> _group = new HashSet<string>();
@@ -40,7 +42,7 @@ public class NetworkPeer : NetworkPeerBase
     /// <typeparam name="T">消息类型</typeparam>
     /// <param name="msg">消息内容</param>
 
-    public void SendMessage<T>(T msg)
+    public void SendMessage<T>(T msg) where T : Sproto.SprotoTypeBase
     {
         if (_socket == null)
             return;
@@ -56,13 +58,13 @@ public class NetworkPeer : NetworkPeerBase
         {
             ReflectMessage(msgID, msg);
         }
-
-
-        MemoryStream data = new MemoryStream();
+        
 
         try
         {
-            ProtoBuf.Serializer.Serialize(data, msg);
+            var data = spack.pack(msg.encode());
+
+            _socket.SendPacket(msgID, data);
         }
         catch (Exception e)
         {
@@ -70,30 +72,8 @@ public class NetworkPeer : NetworkPeerBase
             return;
         }
 
-        _socket.SendPacket(msgID, data.ToArray());
+        
 
-    }
-
-    /// <summary>
-    /// 手工投递一个消息
-    /// </summary>
-    /// <typeparam name="T">消息类型</typeparam>
-    /// <param name="msg">消息内容</param>\
-
-    public void PostMessage<T>(T msg)
-    {
-        var meta = _metaSet.GetByType<T>();
-
-        if (meta == MessageMetaSet.NullMeta)
-        {
-            Debug.LogError("未注册的消息: " + typeof(T).FullName);
-            return;
-        }
-
-        MemoryStream data = new MemoryStream();
-        ProtoBuf.Serializer.Serialize(data, msg);
-
-        PostStream(meta.id, data);
     }
     /// <summary>
     /// 注册一个消息
@@ -126,6 +106,9 @@ public class NetworkPeer : NetworkPeerBase
         _dispatcher.Remove(meta.id, callback);
     }
 
+    Type[] tCache = new Type[] { typeof(byte[]) };
+    object[] pCache = new object[1];
+
     protected override void ProcessStream(uint msgid, MemoryStream stream)
     {
         try
@@ -133,8 +116,15 @@ public class NetworkPeer : NetworkPeerBase
             var meta = _metaSet.GetByID(msgid);
             if (meta != MessageMetaSet.NullMeta)
             {
-                var msg = ProtoBuf.Serializer.NonGeneric.Deserialize(meta.type, stream);
+                object msg = null;
 
+                if (stream != null)
+                {
+                    pCache[0] = spack.unpack(stream.ToArray());
+                    msg = meta.type.GetConstructor(tCache).Invoke(pCache);
+                }
+                
+               
                 if (DebugMessage)
                 {
                     ReflectMessage(msgid, msg);
@@ -173,7 +163,7 @@ public class NetworkPeer : NetworkPeerBase
         }
         else
         {
-            Debug.Log(string.Format("[{0}] {1}|{2}", Name, msg.GetType().FullName, ProtobufText.Serializer.Serialize(msg)));
+            Debug.Log(string.Format("[{0}] {1}|{2}", Name, msg.GetType().FullName, printer.Print(msg)));
         }
     }
 }

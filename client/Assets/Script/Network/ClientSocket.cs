@@ -23,7 +23,7 @@ public struct PacketHeader
     //Tag
     public UInt16 Tag;
     //消息长度 （包含消息头）
-    public UInt16 Size;
+    public UInt32 Size;
 
     public bool Valid(UInt16 expect)
     {
@@ -50,7 +50,7 @@ public class ClientSocket
     /// <summary>
     /// 消息头长度
     /// </summary>
-    const Int32 PacketHeaderSize = 4 + 2 + 2;
+    const Int32 PacketHeaderSize = 4 + 2 + 4;
 
     enum Stage
     {
@@ -304,9 +304,9 @@ public class ClientSocket
 
         using (BinaryReader reader = new BinaryReader(stream))
         {
-            header.MsgID = reader.ReadUInt32();
-            header.Tag = reader.ReadUInt16();
-            header.Size = reader.ReadUInt16();
+			header.Tag = reader.ReadUInt16();
+            header.MsgID = reader.ReadUInt32();    
+            header.Size = reader.ReadUInt32();
 
 
             // 检查包头
@@ -316,7 +316,7 @@ public class ClientSocket
                 return;
             }
 
-            var dataSize = (Int32)(header.Size - PacketHeaderSize);
+            var dataSize = (int)header.Size;
                
 
             if ( dataSize > 0 )
@@ -423,7 +423,8 @@ public class ClientSocket
     #endregion
 
     #region SendMessage
-
+    MemoryStream pktStream;
+    BinaryWriter writer;
     public void SendPacket(UInt32 msgID, byte[] data)
     {
         if (_socket == null || !_socket.Connected || data == null)
@@ -431,11 +432,17 @@ public class ClientSocket
             return;
         }
 
-        MemoryStream pktStream = new MemoryStream();
-        BinaryWriter writer = new BinaryWriter(pktStream);            
-        writer.Write(msgID);
+        if (pktStream == null)
+        {
+            pktStream = new MemoryStream();
+            writer = new BinaryWriter(pktStream);
+        }
+        //pktStream.Position = 0;
+        writer.Seek(0, SeekOrigin.Begin);
+
         writer.Write(GenSendTag());
-        writer.Write((UInt16)(PacketHeaderSize + data.Length));
+        writer.Write(msgID);
+        writer.Write((UInt32)(data.Length));
         writer.Write(data, 0, (int)data.Length);
         writer.Flush();
 
@@ -443,7 +450,7 @@ public class ClientSocket
         {
             if ( _socket != null && _socket.Connected )
             {                    
-                _socket.Send(pktStream.GetBuffer(), 0, (int)pktStream.Length, SocketFlags.None );
+                _socket.Send(pktStream.GetBuffer(), 0, PacketHeaderSize + (int)data.Length, SocketFlags.None );
             }
 
 

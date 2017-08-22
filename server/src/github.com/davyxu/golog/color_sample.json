@@ -1,0 +1,16 @@
+{
+	"Rule":[
+		{"Text":"panic:","Color":"Red"},
+		{"Text":"[DB]","Color":"Green"},		
+		{"Text":"#recv","Color":"Blue"},
+		{"Text":"#send","Color":"Purple"},
+		{"Text":"#connected","Color":"Blue"},
+		{"Text":"#listen","Color":"Blue"},
+		{"Text":"#accepted","Color":"Blue"},
+		{"Text":"#closed","Color":"Blue"},
+		{"Text":"agent->backend","Color":"White"},
+		{"Text":"backend->agent","Color":"White"},
+		{"Text":"client->backend","Color":"White"},
+		{"Text":"backend->client","Color":"White"}
+	]
+}

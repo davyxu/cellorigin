@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package gamedef;
+
+
+enum MyCar {
+	Monkey =	0;
+	Monk =	1;
+	Pig  =	2;
+}
+
+
+//  This is phone number
+message PhoneNumber {
+			
+	string Number = 1; // mobile phone number
+	
+	int32 Type = 2; // phone type
+}
+
+// Person
+message Person {
+		
+	string Name = 1;
+			
+	int32 Id = 2;
+		
+	string Email = 3;	
+	
+	repeated PhoneNumber phone = 4;	
+	
+	bool Staff = 5;
+	
+}
+
+// All person list
+message AddressBook {
+		
+	repeated Person person = 1;
+	
+}
+

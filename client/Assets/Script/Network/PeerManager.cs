@@ -12,7 +12,7 @@ public class PeerManager : Singleton<PeerManager>
     public PeerManager( )
     {
         _meta = new MessageMetaSet();
-        _meta.Scan("gamedef");
+        _meta.Scan("proto");
     }
 
     /// <summary>

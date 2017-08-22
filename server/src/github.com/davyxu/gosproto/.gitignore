@@ -1,0 +1,4 @@
+*.exe
+pb2sproto/meta.pb
+
+example/luadll.dll
