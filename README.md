@@ -1,6 +1,14 @@
 # cellorigin
-基于cellnet(https://github.com/davyxu/cellnet)的服务器框架, 以及配套Unity客户端框架
+基于cellnet和Unity3D的游戏框架
 
+
+# 第三方依赖
+
+    https://github.com/davyxu/cellnet
+    https://github.com/davyxu/golexer
+    https://github.com/davyxu/golog
+    https://github.com/davyxu/goobjfmt
+    https://github.com/davyxu/gosproto
 
 # 文件夹功能
 ```
@@ -66,5 +74,15 @@ sproto协议格式简单, 方便解析, 对lua开发较为友好
     client/Assets/Scene/Launch.unity
 
     运行后, 点击hello, 将连接服务器127.0.0.1:8001端口发送LoginREQ消息并接收LoginACK消息
+
+
+
+# 备注
+
+感觉不错请star, 谢谢!
+
+博客: http://www.cppblog.com/sunicdavy
+
+知乎: http://www.zhihu.com/people/sunicdavy
 
 

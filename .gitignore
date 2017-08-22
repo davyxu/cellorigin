@@ -2,6 +2,7 @@
 *.pb
 *.suo
 *.user
+.idea
 /client/*.csproj
 /client/*.csproj
 /client/*.sln
